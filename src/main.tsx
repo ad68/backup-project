@@ -8,10 +8,10 @@ import App from './App.tsx'
 registerSW()
 const updateSW = registerSW({
   onNeedRefresh() {
-    // نمایش پیام به کاربر
+
     const confirmed = window.confirm('نسخه جدید در دسترس است. آیا می‌خواهید بروزرسانی کنید؟')
     if (confirmed) {
-      updateSW(true) // بروزرسانی و رفرش
+      updateSW(true)
     }
   },
   onOfflineReady() {
