@@ -5,9 +5,8 @@ import { Button } from './components/ui/button'
 function App() {
   return (
     <>
-      <section className='w-[100px] h-[100px] bg-[black]'>hi 554345345</section>
-      <Button variant="default">Button</Button>
-
+      <section className='w-[100px] h-[100px] bg-[#ff9d9d] rounded-full flex justify-center items-center'>hi</section>
+      <Button className='mt-10' variant="default">Button</Button>
     </>
   )
 }
