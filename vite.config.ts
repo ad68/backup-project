@@ -9,7 +9,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'My App',
+        name: 'BackUp',
         short_name: 'App',
         description: 'My Vite PWA',
         theme_color: '#ffffff',
