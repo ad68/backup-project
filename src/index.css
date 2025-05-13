@@ -1,17 +1,87 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: YekanBakh;
+  font-style: normal;
+  font-weight: 100;
+  font-stretch: normal;
+  src:
+    url("./assets/fonts/yekanBakh/woff/YekanBakhFaNum-Thin.woff") format("woff"),
+    url("./assets/fonts/yekanBakh/woff2/YekanBakhFaNum-Thin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: YekanBakh;
+  font-style: normal;
+  font-weight: 300;
+  font-stretch: normal;
+  src:
+    url("./assets/fonts/yekanBakh/woff/YekanBakhFaNum-Light.woff") format("woff"),
+    url("./assets/fonts/yekanBakh/woff2/YekanBakhFaNum-Light.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: YekanBakh;
+  font-style: normal;
+  font-weight: normal;
+  font-stretch: normal;
+  src:
+    url("./assets/fonts/yekanBakh/woff/YekanBakhFaNum-Regular.woff") format("woff"),
+    url("./assets/fonts/yekanBakh/woff2/YekanBakhFaNum-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: YekanBakh;
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: normal;
+  src:
+    url("./assets/fonts/yekanBakh/woff/YekanBakhFaNum-SemiBold.woff") format("woff"),
+    url("./assets/fonts/yekanBakh/woff2/YekanBakhFaNum-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: YekanBakh;
+  font-style: normal;
+  font-weight: bold;
+  font-stretch: normal;
+  src:
+    url("./assets/fonts/yekanBakh/woff/YekanBakhFaNum-Bold.woff") format("woff"),
+    url("./assets/fonts/yekanBakh/woff2/YekanBakhFaNum-Bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: YekanBakh;
+  font-style: normal;
+  font-weight: 800;
+  font-stretch: normal;
+  src:
+    url("./assets/fonts/yekanBakh/woff/YekanBakhFaNum-ExtraBold.woff") format("woff"),
+    url("./assets/fonts/yekanBakh/woff2/YekanBakhFaNum-ExtraBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: YekanBakh;
+  font-style: normal;
+  font-weight: 900;
+  font-stretch: normal;
+  src:
+    url("./assets/fonts/yekanBakh/woff/YekanBakhFaNum-Black.woff") format("woff"),
+    url("./assets/fonts/yekanBakh/woff2/YekanBakhFaNum-Black.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: YekanBakh;
+  font-style: normal;
+  font-weight: 950;
+  font-stretch: normal;
+  src:
+    url("./assets/fonts/yekanBakh/woff/YekanBakhFaNum-ExtraBlack.woff") format("woff"),
+    url("./assets/fonts/yekanBakh/woff2/YekanBakhFaNum-ExtraBlack.woff2") format("woff2");
+}
 :root {
-  /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; */
+  font-family: YekanBakh, Avenir, Helvetica, Arial, sans-serif;
 }
 
 @media (prefers-color-scheme: light) {
