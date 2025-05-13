@@ -13,8 +13,8 @@ export default defineConfig({
         name: 'BackUp',
         short_name: 'App',
         description: 'My Vite PWA',
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
+        theme_color: '#8dc53f',
+        background_color: '#8dc53f',
         display: 'standalone',
         start_url: '/',
         icons: [
