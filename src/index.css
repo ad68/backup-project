@@ -91,3 +91,44 @@
     @apply bg-background text-foreground;
   }
 }
+.blob {
+  width: 300px;
+  position: absolute;
+  background-color: #ffffff8a;
+  top: -25px;
+  right: -137px;
+  aspect-ratio: 1;
+  aspect-ratio: 1;
+  clip-path: shape(
+    from 69.99% 8.6%,
+    curve to 74.96% 18.31% with 73.09% 13.61%,
+    curve to 80.54% 25.48% with 76.82% 23.01%,
+    curve to 84.86% 32.39% with 84.26% 27.94%,
+    curve to 87.92% 40.6% with 85.47% 36.84%,
+    curve to 94.46% 49.08% with 90.37% 44.37%,
+    curve to 97.48% 58.94% with 98.56% 53.79%,
+    curve to 89.9% 66.41% with 96.4% 64.08%,
+    curve to 80.81% 71.94% with 83.41% 68.75%,
+    curve to 77.01% 80.42% with 78.2% 75.14%,
+    curve to 71.85% 88.45% with 75.82% 85.69%,
+    curve to 62.5% 88.82% with 67.89% 91.21%,
+    curve to 53.1% 87.27% with 57.11% 86.42%,
+    curve to 44.78% 88.5% with 49.09% 88.12%,
+    curve to 36.43% 87.34% with 40.47% 88.88%,
+    curve to 26.02% 86.9% with 32.39% 85.8%,
+    curve to 16.43% 83.89% with 19.65% 88.01%,
+    curve to 10.45% 75.46% with 13.2% 79.78%,
+    curve to 7.73% 65.9% with 7.69% 71.15%,
+    curve to 8.9% 55.93% with 7.76% 60.65%,
+    curve to 5.47% 45.98% with 10.04% 51.21%,
+    curve to 8.43% 38.11% with 0.9% 40.74%,
+    curve to 12.77% 28.33% with 15.95% 35.48%,
+    curve to 14.93% 19.13% with 9.59% 21.17%,
+    curve to 22.86% 11.99% with 20.28% 17.08%,
+    curve to 31.17% 7.36% with 25.44% 6.89%,
+    curve to 41.67% 7.86% with 36.9% 7.83%,
+    curve to 51.31% 5.7% with 46.43% 7.89%,
+    curve to 61.53% 3.55% with 56.18% 3.51%,
+    curve to 69.99% 8.6% with 66.88% 3.59%
+  );
+}
