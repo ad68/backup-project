@@ -1,6 +1,11 @@
 
 import { CloudyIcon } from '@/assets/icons/CloudyIcon';
 import Header from './components/Header'
+import Footer from './components/Footer'
+import { DropIcon } from '@/assets/icons/DropIcon';
+import { UploadIcon } from '@/assets/icons/UploadIcon';
+import { MapIcon } from '@/assets/icons/MapIcon';
+import { ArticleIcon } from '@/assets/icons/ArticleIcon';
 export default function Index() {
     return <section className="m-auto w-[440px] h-screen max-w-full relative">
         <Header />
@@ -24,20 +29,44 @@ export default function Index() {
                     </section>
                 </section>
             </section>
-            <section className='h-full  gap-2 pt-[100px] pb-[80px] overflow-scroll rounded-t-[40px]'>
-                <section className='w-[90%] h-[90px] m-auto bg-slate-200  rounded-lg border'></section>
-                <section className='w-[90%] h-[90px] m-auto mt-3 bg-slate-200  rounded-lg border'></section>
-                <section className='w-[90%] h-[90px] m-auto mt-3 bg-slate-200  rounded-lg border'></section>
-                <section className='w-[90%] h-[90px] m-auto mt-3 bg-slate-200  rounded-lg border'></section>
-                <section className='w-[90%] h-[90px] m-auto mt-3 bg-slate-200  rounded-lg border'></section>
-                <section className='w-[90%] h-[90px] m-auto mt-3 bg-slate-200  rounded-lg border'></section>
-                <section className='w-[90%] h-[90px] m-auto mt-3 bg-slate-200  rounded-lg border'></section>
-                <section className='w-[90%] h-[90px] m-auto mt-3 bg-slate-200  rounded-lg border'></section>
-                <section className='w-[90%] h-[90px] m-auto mt-3 bg-slate-200  rounded-lg border'></section>
-                <section className='w-[90%] h-[90px] m-auto mt-3 bg-slate-200  rounded-lg border'></section>
+            <section className='h-full px-5 grid grid-cols-2 gap-4 pt-[100px] pb-[80px] overflow-scroll rounded-t-[40px]'>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <ArticleIcon className='stroke-primary w-[80px]' />
+                    <span className='text-slate-400'>مقالات</span>
+                </section>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <DropIcon className='fill-primary w-[80px]' />
+                    <span className='text-slate-400'>آبیاری</span>
+                </section>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <UploadIcon className='stroke-primary w-[80px]' />
+                    <span className='text-slate-400'>آپلود فایل</span>
+                </section>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <MapIcon className='stroke-primary w-[80px]' />
+                    <span className='text-slate-400'>ثبت نقشه</span>
+                </section>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <ArticleIcon className='stroke-primary w-[80px]' />
+                    <span className='text-slate-400'>مقالات</span>
+                </section>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <DropIcon className='fill-primary w-[80px]' />
+                    <span className='text-slate-400'>آبیاری</span>
+                </section>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <UploadIcon className='stroke-primary w-[80px]' />
+                    <span className='text-slate-400'>آپلود فایل</span>
+                </section>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <MapIcon className='stroke-primary w-[80px]' />
+                    <span className='text-slate-400'>ثبت نقشه</span>
+                </section>
+
+
 
             </section>
-
         </section>
+        <Footer />
     </section>
 }
