@@ -62,8 +62,38 @@ export default function Index() {
                     <MapIcon className='stroke-primary w-[80px]' />
                     <span className='text-slate-400'>ثبت نقشه</span>
                 </section>
-
-
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <ArticleIcon className='stroke-primary w-[80px]' />
+                    <span className='text-slate-400'>مقالات</span>
+                </section>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <DropIcon className='fill-primary w-[80px]' />
+                    <span className='text-slate-400'>آبیاری</span>
+                </section>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <UploadIcon className='stroke-primary w-[80px]' />
+                    <span className='text-slate-400'>آپلود فایل</span>
+                </section>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <MapIcon className='stroke-primary w-[80px]' />
+                    <span className='text-slate-400'>ثبت نقشه</span>
+                </section>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <ArticleIcon className='stroke-primary w-[80px]' />
+                    <span className='text-slate-400'>مقالات</span>
+                </section>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <DropIcon className='fill-primary w-[80px]' />
+                    <span className='text-slate-400'>آبیاری</span>
+                </section>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <UploadIcon className='stroke-primary w-[80px]' />
+                    <span className='text-slate-400'>آپلود فایل</span>
+                </section>
+                <section className='w-full gap-3 p-4 flex flex-col justify-center items-center h-[110px] m-auto bg-white rounded-lg shadow-sm'>
+                    <MapIcon className='stroke-primary w-[80px]' />
+                    <span className='text-slate-400'>ثبت نقشه</span>
+                </section>
 
             </section>
         </section>
