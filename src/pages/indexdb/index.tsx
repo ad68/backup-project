@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { saveData, getAllData } from '@/lib/indexdb';
+import { saveData, getAllData, deleteData } from '@/lib/indexdb';
 
 export default function LocationList() {
     const [locations, setLocations] = useState<
@@ -16,24 +16,26 @@ export default function LocationList() {
 
     const handleAddLocation = async () => {
         const newItem = {
-            name: 'Example Place1',
-            lat: 35.6892,
+            name: 'fff',
+            lat: 35.68222,
             lng: 51.3890,
             base64: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...',
-        };
+        }
         await saveData(newItem);
         const updatedData = await getAllData();
         setLocations(updatedData);
+
     };
 
     return (
         <div>
             <button onClick={handleAddLocation}>افزودن موقعیت</button>
             <ul>
+                <button onClick={() => deleteData("fff")}>delete</button>
                 {locations.map((loc) => (
                     <li key={loc.name}>
                         {loc.name} - ({loc.lat}, {loc.lng})<br />
-                        <img src={loc.base64} alt={loc.name} width={100} />
+                        {/*  <img src={loc.base64} alt={loc.name} width={100} /> */}
                     </li>
                 ))}
             </ul>

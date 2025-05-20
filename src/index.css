@@ -202,3 +202,26 @@
     curve to 69.99% 8.6% with 66.88% 3.59%
   );
 }
+
+.blob2 {
+  aspect-ratio: 1;
+  background-color: white;
+  position: absolute;
+  top: -68px;
+  right: -143px;
+  width: 401px;
+  clip-path: shape(
+    from 55% 77.73%,
+    curve to 36.36% 83.97% with 47.88% 83.72%,
+    curve to 15.99% 75.31% with 24.84% 84.22%,
+    curve to 14.93% 55.36% with 7.14% 66.41%,
+    curve to 23.85% 34.85% with 22.72% 44.31%,
+    curve to 32.84% 17.19% with 24.97% 25.4%,
+    curve to 53.67% 6.6% with 40.71% 8.99%,
+    curve to 69.27% 18.76% with 66.63% 4.21%,
+    curve to 85.46% 39.69% with 71.91% 33.3%,
+    curve to 91.58% 57.17% with 99% 46.07%,
+    curve to 73.14% 70.01% with 84.16% 68.27%,
+    curve to 55% 77.73% with 62.12% 71.74%
+  );
+}
