@@ -1,5 +1,5 @@
 import { LockIcon } from "@/assets/icons/LockIcon";
-import { UserIcon } from "@/assets/icons/userIcon";
+import { UserIcon } from "@/assets/icons/UserIcon";
 
 
 export default function Index() {
@@ -20,6 +20,6 @@ export default function Index() {
             </section>
         </section>
         <button className="w-full bg-primary rounded-sm h-[48px] mt-[80px] text-white">ورود</button>
-        <section className="w-full absolute bottom-[5px] left-0 text-center font-light text-sm">تمام حقوق این اپلیکیشن متعلق به شرکت سناپ می باشد</section>
+        <section className="w-full absolute bottom-[5px] left-0 text-center font-light text-[12px]">تمام حقوق این اپلیکیشن متعلق به شرکت ایرانیان پوشش می باشد</section>
     </section>
 }
