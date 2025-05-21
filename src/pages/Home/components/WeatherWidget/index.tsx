@@ -1,11 +1,10 @@
 import { CloudIcon } from '@/assets/icons/CloudIcon';
-import Sun from '../../../../../public/images/home/sun.png';
 export default function Index() {
-    return <section className='w-full absolute top-[-60px] flex justify-center'>
+    return <section className='w-full absolute top-[-52px] flex justify-center'>
         <section className='w-[320px] px-[20px] flex justify-between items-center relative overflow-hidden gap-4 h-[130px] m-auto bg-primary rounded-[10px] shadow-2xl'>
             <section className="blob2"></section>
             <section className='absolute flex items-center gap-4 top-[10px] '>
-                <img src={Sun} alt='' className='w-[60px]' />
+                <img src="/images/home/sun.png" alt='' className='w-[60px]' />
                 <section className='flex flex-col'>
                     <span>33°</span>
                     <span className='text-sm font-light'>آفتابی</span>

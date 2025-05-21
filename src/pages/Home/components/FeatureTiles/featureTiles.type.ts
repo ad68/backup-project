@@ -4,5 +4,6 @@ export type TileProp = {
     title: string,
     image: ReactNode,
     iconBgColor: string,
-    borderColorClass: string
+    borderColorClass: string,
+    width?: string
 }

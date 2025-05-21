@@ -12,7 +12,10 @@ export default function Index() {
                 <Tile iconBgColor='bg-[#effff2]' borderColorClass={'border-primary'} title="پیوست فنی" image={<AttachIcon className="text-primary stroke-primary w-[25px]" />} />
                 <Tile iconBgColor='bg-[#fffaf4]' borderColorClass={'border-orange-300'} title="خسارت" image={<FireIcon className="text-orange-300 w-[25px]" />} />
                 <Tile iconBgColor='bg-[#fff5f5]' borderColorClass={'border-red-400'} title="گزارشات" image={<ReportIcon className="text-red-400 w-[21px]" />} />
-                <Tile iconBgColor='bg-[#fbf2fb]' borderColorClass={'border-purple-400'} title="کیف پول" image={<WalletIcon className="text-purple-400 w-[25px]" />} />
+
+            </section>
+            <section className='flex-center mt-5'>
+                <Tile width="157px" iconBgColor='bg-[#fbf2fb]' borderColorClass={'border-purple-400'} title="کیف پول" image={<WalletIcon className="text-purple-400 w-[25px]" />} />
             </section>
 
         </section>

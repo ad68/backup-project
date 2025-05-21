@@ -159,11 +159,15 @@
   }
   body {
     @apply bg-background text-foreground;
+    height: 100%;
   }
 }
 @layer utilities {
   .flex-center {
     @apply flex justify-center items-center;
+  }
+  .custom-screen {
+    height: calc(var(--vh, 1vh) 100);
   }
 }
 .blob {
