@@ -1,8 +1,19 @@
-/* import Plant from '@/assets/icons/plant1.svg' */
-
+import Profile from './components/Profile'
+import Notification from './components/Notification'
+import Wallet from './components/Wallet'
+import ActionsCount from './components/ActionsCount'
 export default function Index() {
+    return <section className="h-[300px] bg-gradient-to-b from-primary to-[#247f4d] overflow-hidden relative z-0">
+        <section className='flex items-center justify-between py-2 px-3'>
+            <Profile />
+            <Notification />
 
-    return <section className="h-[300px] bg-[whitesmoke] overflow-hidden relative z-0">
-
-    </section>;
+        </section>
+        <section>
+            <Wallet />
+        </section>
+        <section>
+            <ActionsCount />
+        </section>
+    </section>
 }
