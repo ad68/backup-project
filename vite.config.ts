@@ -13,8 +13,8 @@ export default defineConfig({
         name: 'بکاپ-صندوق کشاورزی',
         short_name: 'بکاپ',
         description: 'My Vite PWA',
-        theme_color: '#8dc53f',
-        background_color: '#8dc53f',
+        theme_color: '#2ebf70',
+        background_color: '#2ebf70',
         display: 'standalone',
         start_url: '/',
         icons: [
