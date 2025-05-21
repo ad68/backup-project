@@ -7,7 +7,7 @@ import useLoginForm from "./loginForm.biz";
 
 export default function Index() {
     const { showPassword, setShowPassword, setPassword, setUserName, password, userName, login } = useLoginForm()
-    return <section className="w-full  h-[calc(60%-400px)] rounded-t-2xl absolute bottom-0 bg-white py-[38px] px-[25px]">
+    return <section className="w-full h-[600px] rounded-t-2xl absolute bottom-0 bg-white py-[38px] px-[25px]">
         <section>
             <span className="text-slate-500 text-sm">نام کاربری</span>
             <section className="relative  border rounded-md h-[50px] overflow-hidden mt-1">
@@ -24,6 +24,6 @@ export default function Index() {
             </section>
         </section>
         <button onClick={login} className="w-full bg-primary rounded-sm h-[48px] mt-[80px] text-white">ورود</button>
-        <section className="w-full absolute bottom-[5px] left-0 text-center font-light text-[12px]">تمام حقوق این اپلیکیشن متعلق به شرکت ایرانیان پوشش می باشد</section>
+        <section className="w-full absolute bottom-[20px] left-0 text-center font-light text-[12px]">تمام حقوق این اپلیکیشن متعلق به شرکت ایرانیان پوشش می باشد</section>
     </section>
 }
