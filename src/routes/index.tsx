@@ -11,8 +11,8 @@ import Indexdb from '@/pages/indexdb'
 export default function Index() {
 
     return <Routes>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/indexdb" element={<Indexdb />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Login />} />
     </Routes>;
 }
