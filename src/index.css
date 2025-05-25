@@ -234,3 +234,15 @@
     curve to 55% 77.73% with 62.12% 71.74%
   );
 }
+.leaflet-draw-draw-polygon {
+  display: none !important;
+}
+.leaflet-draw-actions {
+  display: none !important;
+}
+.leaflet-draw-edit-edit {
+  display: none !important;
+}
+.leaflet-draw-edit-remove {
+  display: none !important;
+}
