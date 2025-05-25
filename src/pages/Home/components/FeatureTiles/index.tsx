@@ -19,7 +19,6 @@ export default function Index() {
             <section className='flex-center mt-5'>
                 <Tile width="157px" iconBgColor='bg-[#fbf2fb]' borderColorClass={'border-purple-400'} title="کیف پول" image={<WalletIcon className="text-purple-400 w-[25px]" />} />
             </section>
-
         </section>
     </section>
 }

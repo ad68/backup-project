@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Home from '@/pages/Home'
+import Map from '@/pages/Map'
 import Login from '@/pages/Login'
 import Indexdb from '@/pages/indexdb'
 //
@@ -13,6 +14,7 @@ export default function Index() {
     return <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/indexdb" element={<Indexdb />} />
+        <Route path="/map" element={<Map />} />
         <Route path="/" element={<Login />} />
     </Routes>;
 }
