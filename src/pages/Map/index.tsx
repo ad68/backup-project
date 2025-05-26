@@ -4,6 +4,8 @@ import "leaflet-draw";
 import "leaflet-draw/dist/leaflet.draw.css";
 import moment from "moment-jalaali";
 
+
+
 import { useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 
@@ -161,7 +163,61 @@ export default function Index() {
         link.click();
         document.body.removeChild(link);
     };
+    const downloadKml = () => {
+        if (!drawnItemsRef.current) return;
 
+        // گرفتن GeoJSON از لایه‌های رسم شده
+        const geojson = drawnItemsRef.current.toGeoJSON();
+
+        // ساخت دستی KML با افزودن ارتفاع صفر به هر مختصات
+        let kml = `<?xml version="1.0" encoding="UTF-8"?>
+        <kml xmlns="http://www.opengis.net/kml/2.2">
+          <Document>
+        `;
+        if ('features' in geojson) {
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            geojson.features.forEach((feature: any) => {
+                if (feature.geometry.type === "Polygon") {
+                    const coordinates = feature.geometry.coordinates[0]
+                        .map(([lng, lat]: [number, number]) => `${lng},${lat},0`)
+                        .join(" ");
+
+                    kml += `
+                <Placemark>
+                  <Polygon>
+                    <outerBoundaryIs>
+                      <LinearRing>
+                        <coordinates>${coordinates}</coordinates>
+                      </LinearRing>
+                    </outerBoundaryIs>
+                  </Polygon>
+                </Placemark>
+                `;
+                }
+            });
+        }
+
+
+        kml += `
+          </Document>
+        </kml>`;
+
+        // ساخت blob از متن kml
+        const blob = new Blob([kml], { type: "application/vnd.google-earth.kml+xml" });
+
+        // ساخت لینک دانلود موقت
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "polygons.kml";
+        document.body.appendChild(link);
+        link.click();
+
+        // پاک کردن لینک بعد از دانلود
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    };
     return (
         <div style={{ height: "100vh", width: "100%", position: "relative" }}>
             <div ref={mapRef} style={{ height: "100%", width: "100%" }} >
@@ -181,10 +237,7 @@ export default function Index() {
                 >
                     {currentTime}
                 </div>
-
             </div>
-
-
             <div
                 style={{
                     position: "absolute",
@@ -201,6 +254,8 @@ export default function Index() {
                 <button onClick={enableEdit}>ویرایش</button>
                 <button onClick={disableEditAndLog}>خروج از ویرایش + گرفتن مختصات</button>
                 <button onClick={captureMapWithPolygon}>اسکرین‌شات نقشه با Polygon</button>
+                <button onClick={downloadKml}>دانلود KML از Polygonها</button>
+
             </div>
 
 
