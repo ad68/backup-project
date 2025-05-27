@@ -4,6 +4,8 @@ import Map from '@/pages/Map'
 import Login from '@/pages/Login'
 import Indexdb from '@/pages/indexdb'
 import ScreenShot from '@/pages/ScreenShot'
+import TechnicalAttachment from '@/pages/TechnicalAttachment'
+
 //
 // ────────────────────────────────────────────────────────── I ──────────
 //   :::::: C O M P O N E N T : :  :   :    :     :        :          :
@@ -18,5 +20,6 @@ export default function Index() {
         <Route path="/map" element={<Map />} />
         <Route path="/screenshot" element={<ScreenShot />} />
         <Route path="/" element={<Login />} />
-    </Routes>;
+        <Route path="/TechnicalAttachment" element={<TechnicalAttachment />} />
+    </Routes>
 }
