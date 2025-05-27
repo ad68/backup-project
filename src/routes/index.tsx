@@ -5,6 +5,7 @@ import Login from '@/pages/Login'
 import Indexdb from '@/pages/indexdb'
 import ScreenShot from '@/pages/ScreenShot'
 import TechnicalAttachment from '@/pages/TechnicalAttachment'
+import CirclePage from '@/pages/CirclePage'
 
 //
 // ────────────────────────────────────────────────────────── I ──────────
@@ -20,6 +21,10 @@ export default function Index() {
         <Route path="/map" element={<Map />} />
         <Route path="/screenshot" element={<ScreenShot />} />
         <Route path="/" element={<Login />} />
-        <Route path="/TechnicalAttachment" element={<TechnicalAttachment />} />
+        <Route path="/technical-attachment" element={<TechnicalAttachment />} />
+
+        <Route path="/circle" element={<CirclePage />} />
+
+
     </Routes>
 }

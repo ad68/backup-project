@@ -1,0 +1,32 @@
+.circle-button {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.progress-ring {
+  transform: rotate(-90deg); /* از بالا شروع بشه */
+}
+
+.ring-bg {
+  fill: none;
+  stroke: #e0e0e0;
+}
+
+.ring-progress {
+  fill: none;
+  stroke: #007bff;
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.button-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  font-weight: bold;
+  pointer-events: none;
+}
