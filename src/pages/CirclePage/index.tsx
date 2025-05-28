@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import "./CircleButton.css";
 
 const CircleButton = () => {
@@ -38,34 +38,37 @@ const CircleButton = () => {
     };
 
     return (
-        <div
-            className="circle-button"
-            onMouseDown={startProgress}
-            onMouseUp={resetProgress}
-            onMouseLeave={resetProgress}
-            onTouchStart={startProgress}
-            onTouchEnd={resetProgress}
-        >
-            <svg className="progress-ring" width="100" height="100">
-                <circle
-                    className="ring-bg"
-                    cx="50"
-                    cy="50"
-                    r={radius}
-                    strokeWidth="8"
-                />
-                <circle
-                    className="ring-progress"
-                    cx="50"
-                    cy="50"
-                    r={radius}
-                    strokeWidth="8"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={circumference * (1 - progress)}
-                />
-            </svg>
-            <span className="button-label">نگه دار</span>
-        </div>
+        <section className="w-[100px] m-auto ">
+            <div
+                className="circle-button"
+                onMouseDown={startProgress}
+                onMouseUp={resetProgress}
+                onMouseLeave={resetProgress}
+                onTouchStart={startProgress}
+                onTouchEnd={resetProgress}
+            >
+                <svg className="progress-ring" width="100" height="100">
+                    <circle
+                        className="ring-bg"
+                        cx="50"
+                        cy="50"
+                        r={radius}
+                        strokeWidth="8"
+                    />
+                    <circle
+                        className="ring-progress"
+                        cx="50"
+                        cy="50"
+                        r={radius}
+                        strokeWidth="8"
+                        strokeDasharray={circumference}
+                        strokeDashoffset={circumference * (1 - progress)}
+                    />
+                </svg>
+                <span className="button-label">نگه دار</span>
+            </div>
+        </section>
+
     );
 };
 

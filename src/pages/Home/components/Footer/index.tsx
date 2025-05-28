@@ -1,6 +1,7 @@
-import { DashboardIcon } from "@/assets/icons/DashboardIcon";
+/* import { DashboardIcon } from "@/assets/icons/DashboardIcon"; */
 import { LogoutIcon } from "@/assets/icons/LogoutIcon";
 import { ProfileIcon } from "@/assets/icons/ProfileIcon";
+import OnlineStatusBtn from "./components/OnlineStatusBtn";
 
 
 export default function Index() {
@@ -9,10 +10,13 @@ export default function Index() {
             <ProfileIcon className="text-slate-400 w-[30px]" />
             <span className="text-xs text-slate-500 mt-[1px]">پروفایل</span>
         </section>
-        <section className="flex flex-col items-center justify-center">
+        <section>
+            <OnlineStatusBtn />
+        </section>
+        {/*  <section className="flex flex-col items-center justify-center">
             <DashboardIcon className="text-primary w-[38px]" />
             <span className="text-xs text-primary mt-[-3px]">داشبورد</span>
-        </section>
+        </section> */}
         <section className="flex flex-col items-center justify-center">
             <LogoutIcon className="text-slate-400 w-[28px] shadow-2xl" />
             <span className="text-xs text-slate-500">خروج</span>

@@ -1,7 +1,7 @@
-.circle-button {
+/* .circle-button {
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background: linear-gradient(145deg, #ff4d4d, #cc0000);
   box-shadow: 0 4px 8px rgba(255, 0, 0, 0.4);
@@ -26,7 +26,7 @@
 
 .ring-progress {
   fill: none;
-  stroke: #fff; /* خط سفید برای تضاد بهتر */
+  stroke: #ffffff;
   transition: stroke-dashoffset 0.05s linear;
 }
 
@@ -35,8 +35,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   color: white;
   pointer-events: none;
 }
+ */
