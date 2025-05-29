@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronUp, SearchIcon, Undo2Icon } from "lucide-react"
+import { ChevronDown, ChevronUp, Undo2Icon } from "lucide-react"
 import useInsuranceAction from "./insuranceAction.biz"
 
 import { Switch } from "@/components/ui/switch"
