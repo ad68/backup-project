@@ -8,20 +8,16 @@ const CircleButton = ({ hideModal, onlineStatus, setOnlineStatus }: { hideModal:
     const animationRef = useRef<number>(0);
     const startTimeRef = useRef<number>(0);
     const doneRef = useRef(false);
-
     const radius = 70;
     const circumference = 2 * Math.PI * radius;
     const duration = 5000;
-
     const startProgress = () => {
         startTimeRef.current = performance.now();
         doneRef.current = false;
-
         const animate = (time: number) => {
             const elapsed = time - startTimeRef.current!;
             const percent = Math.min(elapsed / duration, 1);
             setProgress(percent);
-
             if (percent < 1) {
                 animationRef.current = requestAnimationFrame(animate);
             } else if (!doneRef.current) {

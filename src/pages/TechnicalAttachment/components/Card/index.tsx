@@ -80,11 +80,11 @@ export default function Index() {
                 </section>
             </>}
             <footer className="absolute flex justify-between bottom-2 px-2  w-full left-0">
-                <button className="border w-[100px] bg-white border-primary shadow-md h-[30px] flex justify-center text-primary items-center gap-2 rounded-full">
+                <button className="border w-[100px] bg-primary border-primary shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
                     <span className="font-light text-sm">مشاهده</span>
-                    <EyeIcon color="#2ebf70" className="w-[20px]" />
+                    <EyeIcon color="#2ebf70" className="w-[20px] stroke-white" />
                 </button>
-                <button onClick={() => setIsOpenDtl(!isOpenDtl)} className="bg-primary shadow-md w-[36px] h-[30px] flex justify-center items-center rounded-full">
+                <button onClick={() => setIsOpenDtl(!isOpenDtl)} className="bg-yellow-400 shadow-md w-[36px] h-[30px] flex justify-center items-center rounded-full">
                     {isOpenDtl ? <ChevronUp color="white" className="w-[20px]" /> : <ChevronDown color="white" className="w-[20px]" />}
                 </button>
             </footer>

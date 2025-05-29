@@ -5,16 +5,10 @@ import Login from '@/pages/Login'
 import Indexdb from '@/pages/indexdb'
 import ScreenShot from '@/pages/ScreenShot'
 import TechnicalAttachment from '@/pages/TechnicalAttachment'
+import InsuranceDetail from '@/pages/InsuranceDetail'
+import InsuranceAction from '@/pages/InsuranceAction'
 import CirclePage from '@/pages/CirclePage'
-
-//
-// ────────────────────────────────────────────────────────── I ──────────
-//   :::::: C O M P O N E N T : :  :   :    :     :        :          :
-// ────────────────────────────────────────────────────────────────────
-//
-
 export default function Index() {
-
     return <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/indexdb" element={<Indexdb />} />
@@ -22,9 +16,10 @@ export default function Index() {
         <Route path="/screenshot" element={<ScreenShot />} />
         <Route path="/" element={<Login />} />
         <Route path="/technical-attachment" element={<TechnicalAttachment />} />
+        <Route path="/insurance-detail" element={<InsuranceDetail />} />
+        <Route path="/insurance-action" element={<InsuranceAction />} />
+
 
         <Route path="/circle" element={<CirclePage />} />
-
-
     </Routes>
 }
