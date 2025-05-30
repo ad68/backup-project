@@ -1,12 +1,14 @@
-import { ChevronDown, ChevronUp, Undo2Icon } from "lucide-react"
+import { ChevronDown, ChevronUp, MapPinIcon, Undo2Icon, UploadCloudIcon } from "lucide-react"
 import useInsuranceAction from "./insuranceAction.biz"
-
+import Card from './components/Card'
 import { Switch } from "@/components/ui/switch"
+import SlidingModal from "@/components/kit/SlidingModal"
+import AddPolygonModal from './components/AddPolygonModal'
 export default function Index() {
-    const { isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1 } = useInsuranceAction()
+    const { isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isAddPolygonModalOpen, setIsAddPolygonModalOpen } = useInsuranceAction()
     return <section className='m-auto w-[440px] h-10 max-w-full'>
         <section className='p-2'>
-            <section className={`border ${isOpenDtl ? `h-auto` : `h-[160px]`} pb-12 relative overflow-hidden bg-slate-100 border-slate-200 p-2 rounded-lg mt-5`}>
+            <section className={`border ${isOpenDtl ? `h-auto` : `h-[160px]`} pb-12 relative overflow-hidden bg-slate-50 border-slate-200 p-2 rounded-lg mt-5`}>
                 <span className='block text-center'>مشخصات بیمه نامه</span>
                 <hr className='border-slate-300 my-1' />
                 <section className="flex mt-2 justify-between w-full">
@@ -95,10 +97,9 @@ export default function Index() {
                     {isOpenDtl ? <ChevronUp color="white" className="w-[20px]" /> : <ChevronDown color="white" className="w-[20px]" />}
                 </button>
             </section>
-
         </section>
         <section className='p-2'>
-            <section className={`border ${isOpenDtl1 ? `h-auto` : `h-[160px]`} pb-12 overflow-hidden bg-slate-100 relative border-slate-200 p-2 rounded-lg mt-2`}>
+            <section className={`border ${isOpenDtl1 ? `h-auto` : `h-[160px]`} pb-12 overflow-hidden bg-slate-50 relative border-slate-200 p-2 rounded-lg mt-2`}>
                 <span className='block text-center'>قلم بیمه شده</span>
                 <hr className='border-slate-300 my-1' />
                 <section className="flex mt-2 justify-between w-full">
@@ -199,31 +200,24 @@ export default function Index() {
                 </section>
             </section>
         </section>
-
         <section className="p-2">
             <section className="border border-slate-200  rounded-lg p-2">
                 <span className='block text-center'>مکان</span>
                 <hr className='border-slate-300 my-1' />
-
-                <section className="flex justify-around gap-2 py-2">
-                    <button className="border w-[180px] bg-primary border-primary text-white  shadow-md h-[30px] flex justify-center items-center gap-2 rounded-full">
+                <section className="flex justify-between gap-2 py-2">
+                    <button onClick={() => setIsAddPolygonModalOpen(true)} className="border w-[190px] bg-primary  border-primary text-white  shadow-md h-[30px] flex justify-center items-center gap-2 rounded-full">
+                        <MapPinIcon className="w-[18px]" />
                         <span className="font-light text-sm">تعیین مکان از روی نقشه</span>
                     </button>
-
-                    <button className="border w-[90px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
+                    <button className="border w-[130px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
                         <span className="font-light text-sm">ارسال فایل</span>
-
+                        <UploadCloudIcon className="w-[18px]" />
                     </button>
-                    {/* <button className="border w-[90px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
-                        <span className="font-light text-sm">ویرایش</span>
-
-                    </button>
-                    <button className="border w-[90px] bg-red-500 border-red-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
-                        <span className="font-light text-sm">حذف</span>
-
-                    </button> */}
                 </section>
-
+                <section className="flex flex-col gap-1">
+                    <Card />
+                    <Card />
+                </section>
             </section>
         </section>
         <section className="flex px-2 bg-white bottom-0 gap-2 mt-4  py-3 justify-end w-full">
@@ -233,8 +227,10 @@ export default function Index() {
             </button>
             <button className="bg-primary w-[120px] text-white flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
                 <span>تایید</span>
-
             </button>
         </section>
+        <SlidingModal isOpen={isAddPolygonModalOpen} setIsOpen={setIsAddPolygonModalOpen}>
+            <AddPolygonModal />
+        </SlidingModal>
     </section>
 }

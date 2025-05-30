@@ -15,7 +15,6 @@ export default function Index() {
                     <span className="font-light text-slate-500 text-sm">قلم مورد:</span>
                     <span className="text-sm">160856886</span>
                 </section>
-
             </section>
             <section className="flex justify-between w-full">
                 <section className="flex gap-1">

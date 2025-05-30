@@ -4,19 +4,11 @@ import DetailModal from './components/DetailModal'
 import useItemPlace from './itemPlace.biz'
 import Card from './components/Card'
 export default function Index() {
-    const { isModalOpen } = useItemPlace()
+    const { isModalOpen, setIsModalOpen } = useItemPlace()
     return <>
-        {/*  <section className="relative">
-            <span className="block h-[1px] bg-slate-200 mt-10"></span>
-            <section className="flex justify-center absolute w-full top-[-19px]">
-                <button onClick={() => setIsModalOpen(true)} className="border border-slate-200 flex justify-center items-center gap-1 bg-white  rounded-full w-[150px] py-2">
-                    <ListIcon className="w-[30px] text-slate-600" />
-                    <span className="text-xs font-light">بیمه نامه</span>
-                </button>
-            </section>
-        </section> */}
+
         <section className='p-2'>
-            <section className='border bg-slate-100 border-slate-200 p-2 rounded-lg mt-5'>
+            <section className='border bg-slate-50 border-slate-200 p-2 rounded-lg mt-5'>
                 <span className='block text-center'>مشخصات بیمه نامه</span>
                 <hr className='border-slate-300 my-1' />
                 <section className="flex mt-2 justify-between w-full">
@@ -90,6 +82,6 @@ export default function Index() {
         <Card />
         <Card />
         <Card />
-        <DetailModal isOpen={isModalOpen} />
+        <DetailModal setIsOpen={setIsModalOpen} isOpen={isModalOpen} />
     </>
 }
