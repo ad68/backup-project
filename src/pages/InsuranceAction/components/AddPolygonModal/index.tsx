@@ -4,26 +4,20 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw";
 import "leaflet-draw/dist/leaflet.draw.css";
-import moment from "moment-jalaali";
-import { useEffect, useRef, useState } from "react";
+
+import { useEffect, useRef } from "react";
 import { CheckIcon, DeleteIcon, DownloadIcon, Edit2Icon, MapPinHouseIcon } from "lucide-react";
 
 export default function Index() {
-  const [polyGon, setPolyGon] = useState<L.LatLng[][]>([]);
-  const [currentTime, setCurrentTime] = useState(moment().format("jYYYY/jMM/jDD HH:mm:ss"));
+
+
 
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapRefInstance = useRef<L.Map | null>(null);
   const drawnItemsRef = useRef<L.FeatureGroup>(new L.FeatureGroup());
   const drawControlRef = useRef<L.Control.Draw | null>(null);
 
-  // ⏰ نمایش ساعت جاری
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(moment().format("jYYYY/jMM/jDD HH:mm:ss"));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+
 
   // 📍 راه‌اندازی نقشه و ابزار ترسیم
   useEffect(() => {
@@ -97,7 +91,7 @@ export default function Index() {
       }
     });
 
-    setPolyGon(polygons);
+
     console.log("✅ Polygons updated:", polygons);
   };
 
@@ -113,7 +107,7 @@ export default function Index() {
     console.log('Before clear:', drawnItemsRef.current.getLayers().length);
     drawnItemsRef.current.clearLayers();
     console.log('After clear:', drawnItemsRef.current.getLayers().length);
-    setPolyGon([]);
+
   };
 
   const enableEdit = () => {
