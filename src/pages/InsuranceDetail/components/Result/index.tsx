@@ -11,7 +11,7 @@ export default function Index() {
 
             <button onClick={() => setIsInfoModalOpen(true)} className="border w-[90px]  bg-white border-blue-500 text-blue-500 shadow-md h-[30px] flex justify-center mt-3 items-center gap-2 rounded-full">
                 <InfoIcon className="stroke-blue-500 w-[20px]" />
-                <span className="text-sm">توجه</span>
+                <span className="text-sm">نکات</span>
             </button>
 
             <section className="mt-1">

@@ -9,6 +9,7 @@ import InsuranceDetail from '@/pages/InsuranceDetail'
 import InsuranceAction from '@/pages/InsuranceAction'
 import InsuranceLocation from '@/pages/InsuranceLocation'
 import PrivateInfo from '@/pages/PrivateInfo'
+import LandDivision from '@/pages/LandDivision'
 import CirclePage from '@/pages/CirclePage'
 export default function Index() {
     return <Routes>
@@ -22,6 +23,7 @@ export default function Index() {
         <Route path="/insurance-action" element={<InsuranceAction />} />
         <Route path="/insurance-location" element={<InsuranceLocation />} />
         <Route path="/private-info" element={<PrivateInfo />} />
+        <Route path="/land-division" element={<LandDivision />} />
         <Route path="/circle" element={<CirclePage />} />
     </Routes>
 }

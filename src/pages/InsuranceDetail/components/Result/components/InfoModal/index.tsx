@@ -6,12 +6,12 @@ import { InfoIcon, Undo2Icon } from "lucide-react";
 export default function Index({ isOpen, setIsOpen }: ModalProp) {
 
     return <SlidingModal isOpen={isOpen} setIsOpen={setIsOpen}>
-        <section className="px-2 py-4 text-sm leading-8">
+        <section className="px-8 py-4 text-sm leading-8">
             <section className="flex gap-2 items-center">
                 <InfoIcon className="text-blue-500" />
                 <span className="text font">در زمان تعیین نتیجه به موارد زیر توجه فرمایید:</span>
             </section>
-            <ul className="list-disc mt-5 font-light">
+            <ul className="list-disc mt-5 font-light text-justify">
                 <li><strong>تعیین مکان انجام شد: </strong>در صورتیکه محل بیمه‌نامه و یا اقلام آن به درستی تعیین شده باشد. همچنین در مواردی که مورد بیمه یافت نشد باید اعلام شود</li>
                 <li><strong>آدرس اشتباه است:  </strong>در صورت اشتباه بودن آدرس اعلام شده باید اقدام به ثبت محل صحیح نموده و تعیین مکان توسط ارزیاب جاری انجام نشود. بیمه نامه برای تعیین بسته در آتی در صف انتظار قرار می گیرد و از کارتابل ارزیاب جاری خارج خواهد شد. بعد از گذشت مدتی بیمه‌نامه به بخش بسته‌های پیوست فنی آدرس جدید منتقل می‌شود.</li>
                 <li><strong>بیمه‌نامه باید ابطال و انفساخ شود:</strong>در صورت مغایرت کامل همه اقلام بیمه‌نامه با ضوابط بیمه باید اقدام به درخواست ابطال بیمه‌نامه شود. در این شرایط بعد از تایید شعبه و ... بیمه‌نامه ابطال خواهد شد.</li>
