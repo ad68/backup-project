@@ -1,6 +1,6 @@
 import CustomSelect from "@/components/kit/CustomSelect";
 import CustomTextBox from "@/components/kit/CustomTextBox";
-import { SearchIcon, Undo2Icon } from "lucide-react";
+import { InfoIcon, SearchIcon, Undo2Icon } from "lucide-react";
 
 
 
@@ -10,6 +10,10 @@ export default function Index() {
     return <section className="m-auto w-[440px] h-screen max-w-full relative">
         <section className="mt-5 text-center">
             <span className="text-primary font-bold text-lg">اطلاعات اختصاصی:</span>
+        </section>
+        <section className="bg-blue-500 flex justify-center gap-2 items-center rounded-lg p-2 text-center text-white">
+            <InfoIcon />
+            <span>اصلاح فقط یک بار ممکن است</span>
         </section>
         <section className="mt-5">
             <span className="text-primary font-bold text-sm">مشخصات تکمیلی:</span>
