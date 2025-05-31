@@ -6,4 +6,5 @@ export type TileProp = {
     iconBgColor: string,
     borderColorClass: string,
     width?: string
+    link: string
 }

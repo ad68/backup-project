@@ -1,25 +1,21 @@
-"use client";
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw";
 import "leaflet-draw/dist/leaflet.draw.css";
-
-import { useEffect, useRef } from "react";
-import { CheckIcon, DeleteIcon, DownloadIcon, Edit2Icon, MapPinHouseIcon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { CheckIcon, DeleteIcon, Edit2Icon, MapPinHouseIcon } from "lucide-react";
 
 export default function Index() {
-
-
-
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapRefInstance = useRef<L.Map | null>(null);
   const drawnItemsRef = useRef<L.FeatureGroup>(new L.FeatureGroup());
   const drawControlRef = useRef<L.Control.Draw | null>(null);
 
+  const [polygonsState, setPolygonsState] = useState<L.LatLng[][]>([]);
+  const [hasPolygon, setHasPolygon] = useState(false); // آیا پلی‌گانی وجود دارد؟
+  const [isEditing, setIsEditing] = useState(false); // آیا در حالت ویرایش هستیم؟
 
-
-  // 📍 راه‌اندازی نقشه و ابزار ترسیم
   useEffect(() => {
     if (mapRef.current && !mapRefInstance.current) {
       const map = L.map(mapRef.current, {
@@ -63,7 +59,7 @@ export default function Index() {
       drawControlRef.current = drawControl;
       map.addControl(drawControl);
 
-      // ✅ رویدادها برای اضافه/ویرایش/حذف polygon
+      // رویدادها
       map.on(L.Draw.Event.CREATED, function (event: any) {
         const layer = event.layer;
         drawnItemsRef.current.addLayer(layer);
@@ -80,119 +76,162 @@ export default function Index() {
     }
   }, []);
 
-  // 🧠 تابع به‌روزرسانی state و log گرفتن
+  // آپدیت استیت پلی‌گان‌ها
   const updatePolygonState = () => {
     const polygons: L.LatLng[][] = [];
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     drawnItemsRef.current.eachLayer((layer: any) => {
       if (layer instanceof L.Polygon && layer.getLatLngs) {
-        polygons.push(layer.getLatLngs()[0]); // فقط لایه بیرونی
+        const latlngs = layer.getLatLngs();
+        if (Array.isArray(latlngs) && Array.isArray(latlngs[0])) {
+          polygons.push(latlngs[0] as L.LatLng[]);
+        }
       }
     });
 
-
-    console.log("✅ Polygons updated:", polygons);
+    setPolygonsState(polygons);
+    setHasPolygon(polygons.length > 0); // ✅ بروزرسانی وضعیت وجود پلی‌گان
   };
 
   const startDrawing = () => {
     if (!mapRefInstance.current || !drawControlRef.current) return;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const polygonHandler = (drawControlRef.current as any)._toolbars.draw._modes
-      .polygon.handler;
+    const polygonHandler = (drawControlRef.current as any)._toolbars.draw._modes.polygon.handler;
     polygonHandler.enable();
   };
 
   const deleteAll = () => {
-    console.log('Before clear:', drawnItemsRef.current.getLayers().length);
     drawnItemsRef.current.clearLayers();
-    console.log('After clear:', drawnItemsRef.current.getLayers().length);
-
+    updatePolygonState();
+    setIsEditing(false); // اگر در حال ویرایش بودیم، تمام کن
   };
 
   const enableEdit = () => {
     if (!drawControlRef.current) return;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (drawControlRef.current as any)._toolbars.edit._modes.edit.handler.enable();
+    setIsEditing(true); // ✅ شروع ویرایش
   };
 
   const disableEditAndLog = () => {
     if (!drawControlRef.current) return;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (drawControlRef.current as any)._toolbars.edit._modes.edit.handler.disable();
     updatePolygonState();
+    setIsEditing(false); // ✅ پایان ویرایش
   };
-
-  const downloadKml = () => {
+  useEffect(() => {
+    console.log(polygonsState)
+    if (polygonsState.length > 0) {
+      generateAndUploadKml()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [polygonsState])
+  const generateAndUploadKml = () => {
     if (!drawnItemsRef.current) return;
 
     const geojson = drawnItemsRef.current.toGeoJSON();
+
     let kml = `<?xml version="1.0" encoding="UTF-8"?>
-        <kml xmlns="http://www.opengis.net/kml/2.2">
-          <Document>
-        `;
-    if ('features' in geojson) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      <kml xmlns="http://www.opengis.net/kml/2.2">
+        <Document>
+    `;
+
+    if ("features" in geojson) {
       geojson.features.forEach((feature: any) => {
         if (feature.geometry.type === "Polygon") {
           const coordinates = feature.geometry.coordinates[0]
             .map(([lng, lat]: [number, number]) => `${lng},${lat},0`)
             .join(" ");
+
           kml += `
-                <Placemark>
-                  <Polygon>
-                    <outerBoundaryIs>
-                      <LinearRing>
-                        <coordinates>${coordinates}</coordinates>
-                      </LinearRing>
-                    </outerBoundaryIs>
-                  </Polygon>
-                </Placemark>
-                `;
+            <Placemark>
+              <Polygon>
+                <outerBoundaryIs>
+                  <LinearRing>
+                    <coordinates>${coordinates}</coordinates>
+                  </LinearRing>
+                </outerBoundaryIs>
+              </Polygon>
+            </Placemark>
+          `;
         }
       });
     }
 
-    kml += `</Document></kml>`;
-    const blob = new Blob([kml], { type: "application/vnd.google-earth.kml+xml" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "polygons.kml";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    kml += `
+      </Document>
+    </kml>`;
+
+    uploadKmlToApi(kml);
+  };
+  const uploadKmlToApi = async (kmlText: string) => {
+    const blob = new Blob([kmlText], {
+      type: "application/vnd.google-earth.kml+xml",
+    });
+
+    const formData = new FormData();
+    formData.append("file", blob, "polygons.kml");
+
+    try {
+      const res = await fetch("/api/upload-kml", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) throw new Error("Upload failed");
+      const data = await res.json();
+      console.log("✅ Upload success:", data);
+    } catch (err) {
+      console.error("❌ Upload error:", err);
+    }
   };
 
   return (
     <section style={{ height: "100vh", width: "100%", position: "relative" }}>
       <section ref={mapRef} style={{ height: "100%", width: "100%" }} />
 
-      <section className="fixed bottom-[50px] z-[1000] left-0 flex overflow-x-auto mt-1 w-full">
+      <section className="fixed bottom-[50px] z-[1000] left-0 flex  mt-1 w-full">
         <section className="w-[200%] flex gap-1">
-          <button className="bg-blue-500 w-[150px] flex items-center gap-2 p-2 rounded-md text-white" onClick={startDrawing}>
+          <button
+            className="bg-blue-500 w-[150px] flex items-center gap-2 p-2 rounded-md text-white"
+            onClick={startDrawing}
+          >
             <MapPinHouseIcon />
             <span className="text-xs">شروع رسم polygon</span>
           </button>
-          <button onClick={deleteAll} className="bg-red-500 w-[110px] flex gap-2 p-2 items-center rounded-md text-white">
-            <DeleteIcon />
-            <span className="text-xs">پاک کردن</span>
-          </button>
-          <button onClick={enableEdit} className="bg-yellow-500 w-[90px] flex gap-2 p-2 items-center rounded-md text-white">
-            <Edit2Icon className="w-[18px]" />
-            <span className="text-xs">ویرایش</span>
-          </button>
-          <button onClick={disableEditAndLog} className="bg-emerald-500 w-[120px] flex gap-2 p-2 items-center rounded-md text-white">
-            <CheckIcon className="w-[18px]" />
-            <span className="text-xs">پایان ویرایش</span>
-          </button>
-          <button onClick={downloadKml} className="bg-purple-500 w-[120px] flex gap-2 p-2 items-center rounded-md text-white">
-            <DownloadIcon className="w-[18px]" />
-            <span className="text-xs">دانلود Kml</span>
-          </button>
+
+          {hasPolygon && (
+            <>
+              <button
+                onClick={deleteAll}
+                className="bg-red-500 w-[110px] flex gap-2 p-2 items-center rounded-md text-white"
+              >
+                <DeleteIcon />
+                <span className="text-xs">پاک کردن</span>
+              </button>
+
+              {!isEditing && (
+                <button
+                  onClick={enableEdit}
+                  className="bg-yellow-500 w-[90px] flex gap-2 p-2 items-center rounded-md text-white"
+                >
+                  <Edit2Icon className="w-[18px]" />
+                  <span className="text-xs">ویرایش</span>
+                </button>
+              )}
+
+              {isEditing && (
+                <button
+                  onClick={disableEditAndLog}
+                  className="bg-emerald-500 w-[120px] flex gap-2 p-2 items-center rounded-md text-white"
+                >
+                  <CheckIcon className="w-[18px]" />
+                  <span className="text-xs">پایان ویرایش</span>
+                </button>
+              )}
+            </>
+          )}
         </section>
       </section>
+
+
     </section>
   );
 }
