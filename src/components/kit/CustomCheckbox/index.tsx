@@ -1,4 +1,4 @@
-import * as React from "react";
+
 import { Checkbox } from "@/components/ui/checkbox";
 
 type CustomCheckboxProps = {

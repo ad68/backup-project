@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+/* import { useCallback } from 'react';
 import html2canvas from 'html2canvas';
 import moment from 'moment-jalaali';
 import leafletImage from 'leaflet-image';
@@ -16,8 +16,7 @@ export function useScreenshotWithDate() {
         const padding = 40;
         const fontSize = 22;
 
-        // اگر ref یک نقشه Leaflet است
-        // بررسی دقیق‌تر برای تشخیص اینکه ref.current یک شیء L.Map هست
+
         if (ref.current instanceof L.Map) {
             leafletImage(ref.current, (err: Error | null, canvas: HTMLCanvasElement) => {
                 if (err) {
@@ -49,7 +48,7 @@ export function useScreenshotWithDate() {
             return;
         }
 
-        // اگر ref یک المنت معمولی است
+
         const originalCanvas = await html2canvas(ref.current);
         const newCanvas = document.createElement('canvas');
         const ctx = newCanvas.getContext('2d');
@@ -76,3 +75,4 @@ export function useScreenshotWithDate() {
 
     return { takeScreenshot };
 }
+ */
