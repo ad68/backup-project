@@ -7,6 +7,8 @@ import ScreenShot from '@/pages/ScreenShot'
 import TechnicalAttachment from '@/pages/TechnicalAttachment'
 import InsuranceDetail from '@/pages/InsuranceDetail'
 import InsuranceAction from '@/pages/InsuranceAction'
+import InsuranceLocation from '@/pages/InsuranceLocation'
+import PrivateInfo from '@/pages/PrivateInfo'
 import CirclePage from '@/pages/CirclePage'
 export default function Index() {
     return <Routes>
@@ -18,8 +20,8 @@ export default function Index() {
         <Route path="/technical-attachment" element={<TechnicalAttachment />} />
         <Route path="/insurance-detail" element={<InsuranceDetail />} />
         <Route path="/insurance-action" element={<InsuranceAction />} />
-
-
+        <Route path="/insurance-location" element={<InsuranceLocation />} />
+        <Route path="/private-info" element={<PrivateInfo />} />
         <Route path="/circle" element={<CirclePage />} />
     </Routes>
 }
