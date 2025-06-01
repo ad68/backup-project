@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 /* import { useNavigate } from 'react-router-dom' */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from 'react-hook-form';
 import { useAxios } from '@/hooks';
-import toast from 'react-hot-toast';
+
+import { toastError } from '@/components/kit/toast';
+
 const loginSchema = z.object({
     username: z.string().min(1, "نام کاربری الزامی است"),
     password: z.string().min(3, "کلمه عبور باید حداقل ۶ کاراکتر باشد"),
@@ -24,11 +26,9 @@ const useLoginForm = () => {
             password: "",
         },
     });
-    useEffect(() => {
-        toast.success("hi")
-        console.log("ali")
-    }, [])
+
     const login = (data: LoginFormInputs) => {
+
         const params = {
             username: data.username,
             password: data.password,
@@ -36,7 +36,9 @@ const useLoginForm = () => {
         }
         useAxios.post("/sabka/auth", params).then((res) => {
             console.log(res)
-        }).catch()
+        }).catch(err => {
+            toastError(err.response.data.message)
+        })
 
 
     };

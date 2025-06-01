@@ -1,4 +1,3 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { registerSW } from 'virtual:pwa-register'
 import { BrowserRouter } from "react-router-dom"
@@ -17,10 +16,10 @@ const updateSW = registerSW({
   },
 })
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <BrowserRouter>
-      <ToasterProvider />
-      <App />
-    </BrowserRouter>
-  </StrictMode>,
+
+  <BrowserRouter>
+    <ToasterProvider />
+    <App />
+  </BrowserRouter>
+
 )
