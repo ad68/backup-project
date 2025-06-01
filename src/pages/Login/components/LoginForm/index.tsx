@@ -4,6 +4,7 @@ import { LockIcon } from "@/assets/icons/LockIcon";
 import { UserIcon } from "@/assets/icons/UserIcon";
 import useLoginForm from "./loginForm.biz";
 import { Controller } from "react-hook-form";
+import CustomButton from "@/components/kit/CustomButton";
 
 export default function Index() {
     const { showPassword, setShowPassword, login, control, errors, handleSubmit } = useLoginForm()
@@ -63,12 +64,11 @@ export default function Index() {
                     <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
                 )}
             </section>
-            <button
-                type="submit"
-                className="w-full bg-primary rounded-sm h-[48px] mt-[40px] text-white"
+            <CustomButton
+                className="mt-10 w-full"
             >
                 ورود
-            </button>
+            </CustomButton>
         </form>
         <section className="w-full absolute bottom-[20px] left-0 text-center font-light text-[12px]">
             تمام حقوق این اپلیکیشن متعلق به شرکت ایرانیان پوشش می باشد
