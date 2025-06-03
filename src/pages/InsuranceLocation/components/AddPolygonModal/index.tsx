@@ -4,9 +4,9 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-draw";
 import "leaflet-draw/dist/leaflet.draw.css";
 import { useEffect, useRef, useState } from "react";
-import { CheckIcon, DeleteIcon, Edit2Icon, MapPinHouseIcon } from "lucide-react";
+import { CheckIcon, DeleteIcon, Edit2Icon, MapPinHouseIcon, Undo2 } from "lucide-react";
 
-export default function Index() {
+export default function Index({ setIsAddPolygonModalOpen }: { setIsAddPolygonModalOpen: (value: boolean) => void }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapRefInstance = useRef<L.Map | null>(null);
   const drawnItemsRef = useRef<L.FeatureGroup>(new L.FeatureGroup());
@@ -184,17 +184,15 @@ export default function Index() {
   };
 
   return (
-    <section style={{ height: "100vh", width: "100%", position: "relative" }}>
-      <section ref={mapRef} style={{ height: "100%", width: "100%" }} />
-
-      <section className="fixed bottom-[50px] z-[1000] left-0 flex  mt-1 w-full">
-        <section className="w-[200%] flex gap-1">
+    <section style={{ height: "95%", width: "100%", position: "relative" }}>
+      <section className="bg-white h-[10%] p-2 overflow-x-auto w-full z-[1000] flex mt-1">
+        <section className="w-[200%] flex gap-1 px-2">
           <button
-            className="bg-blue-500 w-[150px] flex items-center gap-2 p-2 rounded-md text-white"
+            className="bg-blue-500 flex items-center gap-2 p-2 rounded-md text-white"
             onClick={startDrawing}
           >
             <MapPinHouseIcon />
-            <span className="text-xs">شروع رسم polygon</span>
+            <span className="text-xs">شروع</span>
           </button>
 
           {hasPolygon && (
@@ -226,9 +224,18 @@ export default function Index() {
                   <span className="text-xs">پایان ویرایش</span>
                 </button>
               )}
+
             </>
           )}
+
         </section>
+      </section>
+      <section ref={mapRef} className="h-[82%] w-full" />
+      <section className="mt-2 h-[8%] flex justify-end pl-2">
+        <button className="bg-slate-300 mr-auto border mt-2 w-[120px] flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm" onClick={() => setIsAddPolygonModalOpen(false)}>
+          <Undo2 className="w-[20px]" />
+          <span className="text-xs">بازگشت</span>
+        </button>
       </section>
 
 

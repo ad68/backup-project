@@ -7,9 +7,9 @@ import { Controller } from "react-hook-form";
 import CustomButton from "@/components/kit/CustomButton";
 
 export default function Index() {
-    const { showPassword, setShowPassword, login, control, errors, handleSubmit } = useLoginForm()
+    const { showPassword, setShowPassword, handleLogin, control, actionLoading, errors, handleSubmit } = useLoginForm()
     return <section className="w-full h-[60%] rounded-t-2xl absolute bottom-0 bg-white py-[38px] px-[25px]">
-        <form onSubmit={handleSubmit(login)}>
+        <form onSubmit={handleSubmit(handleLogin)}>
             <section>
                 <span className="text-slate-500 text-sm">نام کاربری</span>
                 <section className="relative border rounded-md h-[50px] overflow-hidden mt-1">
@@ -65,6 +65,7 @@ export default function Index() {
                 )}
             </section>
             <CustomButton
+                loading={actionLoading}
                 className="mt-10 w-full"
             >
                 ورود

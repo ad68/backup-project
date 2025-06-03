@@ -6,7 +6,7 @@ export default function Index() {
             <section className='absolute flex items-center gap-4 top-[10px] '>
                 <img src="/images/home/sun.png" alt='' className='w-[60px]' />
                 <section className='flex flex-col'>
-                    <span>33°</span>
+                    <span>36°</span>
                     <span className='text-sm font-light'>آفتابی</span>
                 </section>
             </section>
@@ -15,7 +15,7 @@ export default function Index() {
             </section>
             <section className='absolute left-[6px] top-[15px] w-[145px] '>
                 <span className="block text-white">وضعیت هوا</span>
-                <span className="block text-white font-light text-[12px]">چهارشنبه 21 اردیبهشت 1404</span>
+                <span className="block text-white font-light text-[12px]">سه شنبه 13 خرداد 1404</span>
             </section>
             <CloudIcon className='w-[150px] bottom-[-74px] absolute left-[-48px]' />
         </section>

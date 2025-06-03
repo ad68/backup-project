@@ -1,6 +1,7 @@
 
 /* import { NotifyMessage } from "@/enums";
 import { notify } from "@/helper"; */
+import { toastError } from "@/components/kit/toast";
 import BASE_URL from "@/config/api";
 import axios from "axios";
 const useAxios = axios.create({
@@ -13,7 +14,8 @@ useAxios.interceptors.response.use(
     return response;
   },
   function (error) {
-    if (error.response?.data?.messageFa) {
+    if (error.code === "ERR_NETWORK") {
+      toastError("خطای شبکه")
       /*  notify.Error(error.response?.data?.messageFa) */
     }
     else {

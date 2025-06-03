@@ -7,7 +7,7 @@ import { InfoIcon, SearchIcon, Undo2Icon } from "lucide-react";
 
 export default function Index() {
 
-    return <section className="m-auto w-[440px] h-screen max-w-full relative">
+    return <section className="m-auto p-4 w-[440px] h-screen max-w-full relative">
         <section className="mt-5 text-center">
             <span className="text-primary font-bold text-lg">اطلاعات اختصاصی:</span>
         </section>

@@ -7,6 +7,7 @@ import InsuranceAction from '@/pages/InsuranceAction'
 import InsuranceLocation from '@/pages/InsuranceLocation'
 import PrivateInfo from '@/pages/PrivateInfo'
 import LandDivision from '@/pages/LandDivision'
+import Pagination from '@/pages/Pagination'
 /* import CirclePage from '@/pages/CirclePage'
 import Indexdb from '@/pages/indexdb'
 import ScreenShot from '@/pages/ScreenShot'
@@ -23,6 +24,7 @@ export default function Index() {
             <Route path="/insurance-location" element={<InsuranceLocation />} />
             <Route path="/private-info" element={<PrivateInfo />} />
             <Route path="/land-division" element={<LandDivision />} />
+            <Route path="/pagination" element={<Pagination />} />
         </Route>
         {/*  <Route path="/circle" element={<CirclePage />} />
         <Route path="/indexdb" element={<Indexdb />} />

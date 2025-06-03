@@ -4,6 +4,7 @@ import Card from './components/Card'
 import { Switch } from "@/components/ui/switch"
 import SlidingModal from "@/components/kit/SlidingModal"
 import AddPolygonModal from './components/AddPolygonModal'
+import { Link } from "react-router-dom"
 export default function Index() {
     const { isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isAddPolygonModalOpen, setIsAddPolygonModalOpen } = useInsuranceLocation()
     return <section className='m-auto w-[440px] h-10 max-w-full'>
@@ -221,16 +222,19 @@ export default function Index() {
             </section>
         </section>
         <section className="flex px-2 bg-white bottom-0 gap-2 mt-4  py-3 justify-end w-full">
-            <button className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
-                <span>بازگشت</span>
-                <Undo2Icon className="w-[20px]" />
-            </button>
+            <Link to="/insurance-detail">
+                <button className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
+                    <span>بازگشت</span>
+                    <Undo2Icon className="w-[20px]" />
+                </button>
+            </Link>
+
             <button className="bg-primary w-[120px] text-white flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
                 <span>تایید</span>
             </button>
         </section>
         <SlidingModal isOpen={isAddPolygonModalOpen} setIsOpen={setIsAddPolygonModalOpen}>
-            <AddPolygonModal />
+            <AddPolygonModal setIsAddPolygonModalOpen={setIsAddPolygonModalOpen} />
         </SlidingModal>
     </section>
 }

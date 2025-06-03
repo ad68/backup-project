@@ -1,6 +1,7 @@
 
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 export default function Index() {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
 
@@ -54,10 +55,12 @@ export default function Index() {
                         <span className="font-light text-sm">عملیات</span>
 
                     </button>
-                    <button className="border w-[90px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
-                        <span className="font-light text-sm">تعیین مکان</span>
+                    <Link to="/insurance-location">
+                        <button className="border w-[90px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
+                            <span className="font-light text-sm">تعیین مکان</span>
+                        </button>
+                    </Link>
 
-                    </button>
                     <button className="border w-[90px] bg-red-500 border-red-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
                         <span className="font-light text-sm">حذف مکان</span>
 
