@@ -13,6 +13,7 @@ export default function Index() {
             <section className='w-full text-center text-white text-[32px] font-bold mt-[180px]'>بکاپ</section>
             <span className='block mt-[5px] text-white w-full text-center'>بیمه کشاورزی ایرانیان پوشش</span>
         </section>
+        <span>location : {`${location?.lat} ${location?.lng}`}</span>
         <LoginForm />
     </section>
 }
