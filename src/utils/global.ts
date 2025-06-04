@@ -74,3 +74,12 @@ export const gregorianToJalaliDateTime = (value: string) => {
     }
     return ''
 }
+export const getPersianDate = (): string => {
+    moment.loadPersian({ usePersianDigits: false });
+    const now = moment();
+    const weekday = now.format('dddd'); // مثلا "سه‌شنبه"
+    const day = now.format('jD');       // مثلا "13"
+    const month = now.format('jMMMM');  // مثلا "خرداد"
+    const year = now.format('jYYYY');   // مثلا "1404"
+    return `${weekday} ${day} ${month} ${year}`;
+};

@@ -1,6 +1,6 @@
 export function ReportIcon(props: React.SVGProps<SVGSVGElement>) {
 	return (
-		<svg {...props} fill="currentColor" viewBox="0 0 1000 1000" version="1.1" enable-background="new 0 0 1000 1000" >
+		<svg {...props} fill="currentColor" viewBox="0 0 1000 1000" version="1.1" enableBackground="new 0 0 1000 1000" >
 
 			<g>
 
