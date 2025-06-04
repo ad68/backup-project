@@ -15,6 +15,7 @@ const updateSW = registerSW({
     console.log('اپ آماده استفاده آفلاینه')
   },
 })
+
 createRoot(document.getElementById('root')!).render(
 
   <BrowserRouter>

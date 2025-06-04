@@ -1,9 +1,7 @@
 import { openDB } from 'idb';
-
 const DB_NAME = 'myDatabase';
 const STORE_NAME = 'locateReviews';
-
-export async function initDB() {
+/* export async function initDB() {
     const db = await openDB(DB_NAME, 1, {
         upgrade(db) {
             if (!db.objectStoreNames.contains(STORE_NAME)) {
@@ -12,41 +10,34 @@ export async function initDB() {
         },
     });
     return db;
+} */
+export async function initDB() {
+    const db = await openDB(DB_NAME, 1, {
+        upgrade(db) {
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+                db.createObjectStore(STORE_NAME, { keyPath: 'policyId' });
+            }
+            if (!db.objectStoreNames.contains('users')) {
+                db.createObjectStore('users', { keyPath: 'id' });
+            }
+            if (!db.objectStoreNames.contains('messages')) {
+                db.createObjectStore('messages', { keyPath: 'id' });
+            }
+        },
+    });
+
+    return db;
 }
-/* export const initDB = () => {
-    const request = indexedDB.open(DB_NAME, 1);
-  
-    request.onupgradeneeded = function () {
-        const db = request.result;
-        if (!db.objectStoreNames.contains(STORE_NAME)) {
-            db.createObjectStore(STORE_NAME, { keyPath: "id" });
-        }
-    };
-
-    request.onerror = function () {
-        console.error("IndexedDB init error", request.error);
-    };
-
-    request.onsuccess = function () {
-        console.log("IndexedDB initialized successfully");
-    };
- 
-};
- */
 
 
 export async function saveData(item: any): Promise<IDBValidKey> {
     const db = await initDB();
-
-
-
     return await db.put(STORE_NAME, item);
 }
 export async function bulkSaveToIDB(items: any[]): Promise<void> {
     const db = await initDB();
     const tx = db.transaction('locateReviews', 'readwrite');
     const store = tx.objectStore('locateReviews');
-
     for (const item of items) {
         if (!item.policyId) {
             console.warn('Skipping item without policyId:', item);
@@ -54,7 +45,6 @@ export async function bulkSaveToIDB(items: any[]): Promise<void> {
         }
         await store.put(item);
     }
-
     await tx.done;
 }
 export async function getAllData(): Promise<

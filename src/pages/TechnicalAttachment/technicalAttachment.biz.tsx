@@ -5,13 +5,14 @@ import { useEffect, useState } from "react"
 const useTechnicalAttachment = () => {
     const [data, setData] = useState<any>([])
     const [loading, setLoading] = useState(false)
+    const [hasFetched, setHasFetched] = useState(false)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [totalPage, setTotalPage] = useState<number>(1)
     const saveToDataBase = async (data: any) => {
         await bulkSaveToIDB(data);
     };
-    const getList = () => {
-        setLoading(true)
+    const getList = async () => {
+        setLoading(true);
         const params = {
             formReviewId: "",
             productId: "",
@@ -22,15 +23,19 @@ const useTechnicalAttachment = () => {
             districtId: "",
             ruralDistrictId: "",
             placeId: ""
+        };
+        try {
+            const res = await useAxiosWithToken.post("/sabka/technical/annex/search/locate-reviews", params);
+            await saveToDataBase(res.data);
+            setHasFetched(true)
+            loadList(currentPage);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
         }
-        useAxiosWithToken.post("/sabka/technical/annex/search/locate-reviews", params)
-            .then(res => {
-                setLoading(false);
-                saveToDataBase(res.data)
-            })
-            .catch(() => setLoading(false))
-    }
-    async function loadCommentsPage1(pageNumber: number) {
+    };
+    async function loadList(pageNumber: number) {
         const { data, totalPages, totalItems } =
             await getPaginatedDataFromIDB<Comment>(
                 'myDatabase',
@@ -47,8 +52,10 @@ const useTechnicalAttachment = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     useEffect(() => {
-        /*  getList() */
-        loadCommentsPage1(currentPage)
+        if (hasFetched) {
+            loadList(currentPage)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage])
     return {
         data,
