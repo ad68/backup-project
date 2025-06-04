@@ -1,5 +1,11 @@
 import { CloudIcon } from '@/assets/icons/CloudIcon';
+import { useGeoLocation } from '@/hooks';
+import { useEffect } from 'react';
 export default function Index() {
+    const { location } = useGeoLocation()
+    useEffect(() => {
+        alert(location?.lat)
+    }, [location])
     return <section className='w-full absolute top-[-52px] flex justify-center'>
         <section className='w-[320px] px-[20px] flex justify-between items-center relative overflow-hidden gap-4 h-[130px] m-auto bg-primary rounded-[10px] shadow-2xl'>
             <section className="blob2"></section>
