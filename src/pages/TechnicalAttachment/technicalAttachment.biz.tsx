@@ -23,10 +23,11 @@ const useTechnicalAttachment = () => {
             districtId: "",
             ruralDistrictId: "",
             placeId: ""
-        };
+        }
         try {
             const res = await useAxiosWithToken.post("/sabka/technical/annex/search/locate-reviews", params);
-            await saveToDataBase(res.data);
+
+            await saveToDataBase(res.data.reverse());
             setHasFetched(true)
             loadList(currentPage);
         } catch (error) {

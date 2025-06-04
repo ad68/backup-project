@@ -3,6 +3,7 @@ import ReactPaginate from 'react-paginate'
 import Card from './components/Card'
 import Filter from './components/Filter'
 import useTechnicalAttachment from './technicalAttachment.biz'
+import ListLoader from '@/components/kit/ListLoader'
 
 export default function Index() {
     const { data, loading, setCurrentPage, totalPage, currentPage } = useTechnicalAttachment()
@@ -29,7 +30,7 @@ export default function Index() {
                 previousLabel="<"
             />
         </section>
-        {loading && <span className='block text-center mt-5'>در حال بارگزاری...</span>}
+        {loading && <section className='flex justify-center mt-5'><ListLoader /></section>}
         {!loading && <section className='m-auto relative mt-2 w-[440px]  max-w-full'>
             {data?.map((item: any, index: any) => (<Card item={item} key={index} />))}
         </section>}

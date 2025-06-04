@@ -4,9 +4,10 @@ import Card from './components/Card'
 import { Switch } from "@/components/ui/switch"
 import SlidingModal from "@/components/kit/SlidingModal"
 import AddPolygonModal from './components/AddPolygonModal'
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 export default function Index() {
     const { isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isAddPolygonModalOpen, setIsAddPolygonModalOpen } = useInsuranceLocation()
+    const navigate = useNavigate();
     return <section className='m-auto w-[440px] h-10 max-w-full'>
         <section className='p-2'>
             <section className={`border ${isOpenDtl ? `h-auto` : `h-[160px]`} pb-12 relative overflow-hidden bg-slate-50 border-slate-200 p-2 rounded-lg mt-5`}>
@@ -221,14 +222,11 @@ export default function Index() {
                 </section>
             </section>
         </section>
-        <section className="flex px-2 bg-white bottom-0 gap-2 mt-4  py-3 justify-end w-full">
-            <Link to="/insurance-detail">
-                <button className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
-                    <span>بازگشت</span>
-                    <Undo2Icon className="w-[20px]" />
-                </button>
-            </Link>
-
+        <section className="flex px-2 bg-white bottom-0 gap-2 mt-4 py-3 justify-end w-full">
+            <button onClick={() => navigate(-1)} className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
+                <span>بازگشت</span>
+                <Undo2Icon className="w-[20px]" />
+            </button>
             <button className="bg-primary w-[120px] text-white flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
                 <span>تایید</span>
             </button>
