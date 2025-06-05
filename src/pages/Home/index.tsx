@@ -1,7 +1,4 @@
-
-
 import Header from './components/Header'
-import Footer from './components/Footer'
 import FeatureTiles from './components/FeatureTiles'
 import WeatherWidget from './components/WeatherWidget'
 export default function Index() {
@@ -11,6 +8,5 @@ export default function Index() {
             <WeatherWidget />
             <FeatureTiles />
         </section>
-        <Footer />
     </section>
 }

@@ -9,7 +9,6 @@ import ListLoader from '@/components/kit/ListLoader';
 export default function Index() {
     const { weatherData, Reload, actionLoading } = useWeatherWidget()
     return <section className='w-full mt-[-100px] relative flex justify-center'>
-
         <section className='w-[320px] px-[20px] flex justify-between items-center relative overflow-hidden gap-4 h-[130px] m-auto bg-primary rounded-[10px] shadow-2xl'>
             {actionLoading && <section className='w-full h-full absolute flex justify-center items-center bg-white top-0 left-0 z-50'>
                 <ListLoader />

@@ -13,18 +13,22 @@ import Indexdb from '@/pages/indexdb'
 import ScreenShot from '@/pages/ScreenShot'
 import Map from '@/pages/Map' */
 import ProtectedRoute from './ProtectedRoute'
+import MAIN_LAYOUT from '../components/layout/MainLayout'
+
 export default function Index() {
     return <Routes>
         <Route path="/" element={<Login />} />
-        <Route element={<ProtectedRoute />}>
-            <Route path="/home" element={<Home />} />
-            <Route path="/technical-attachment" element={<TechnicalAttachment />} />
-            <Route path="/insurance-detail" element={<InsuranceDetail />} />
-            <Route path="/insurance-action" element={<InsuranceAction />} />
-            <Route path="/insurance-location" element={<InsuranceLocation />} />
-            <Route path="/private-info" element={<PrivateInfo />} />
-            <Route path="/land-division" element={<LandDivision />} />
-            <Route path="/pagination" element={<Pagination />} />
+        <Route element={<MAIN_LAYOUT />}>
+            <Route path="/home" element={<ProtectedRoute>
+                <Home />
+            </ProtectedRoute>} />
+            <Route path="/technical-attachment" element={<ProtectedRoute><TechnicalAttachment /></ProtectedRoute>} />
+            <Route path="/insurance-detail" element={<ProtectedRoute><InsuranceDetail /></ProtectedRoute>} />
+            <Route path="/insurance-action" element={<ProtectedRoute><InsuranceAction /></ProtectedRoute>} />
+            <Route path="/insurance-location" element={<ProtectedRoute><InsuranceLocation /></ProtectedRoute>} />
+            <Route path="/private-info" element={<ProtectedRoute><PrivateInfo /></ProtectedRoute>} />
+            <Route path="/land-division" element={<ProtectedRoute><LandDivision /></ProtectedRoute>} />
+            <Route path="/pagination" element={<ProtectedRoute><Pagination /></ProtectedRoute>} />
         </Route>
         {/*  <Route path="/circle" element={<CirclePage />} />
         <Route path="/indexdb" element={<Indexdb />} />

@@ -1,9 +1,11 @@
 import { ChevronDown, ChevronUp, Undo2Icon, } from "lucide-react"
 import PrivateInfo from './components/PrivateInfo'
 import useLandDivision from "./landDivision.biz"
+import { useNavigate } from "react-router-dom";
 export default function Index() {
     const { isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1 } = useLandDivision()
-    return <section className='m-auto w-[440px] h-10 max-w-full'>
+    const navigate = useNavigate();
+    return <section className='m-auto w-[440px]  max-w-full'>
         <section className='p-2'>
             <section className={`border ${isOpenDtl ? `h-auto` : `h-[160px]`} pb-12 relative overflow-hidden bg-slate-50 border-slate-200 p-2 rounded-lg mt-5`}>
                 <span className='block text-center'>مشخصات بیمه نامه</span>
@@ -185,7 +187,7 @@ export default function Index() {
         </section>
         <PrivateInfo />
         <section className="flex px-2 sticky bg-white bottom-0 gap-2 mt-4  py-3 justify-end w-full">
-            <button className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
+            <button onClick={() => navigate(-1)} className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
                 <span>بازگشت</span>
                 <Undo2Icon className="w-[20px]" />
             </button>

@@ -1,13 +1,15 @@
 import CustomSelect from "@/components/kit/CustomSelect";
 import CustomTextBox from "@/components/kit/CustomTextBox";
 import { InfoIcon, SearchIcon, Undo2Icon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 
 
 
 export default function Index() {
+    const navigate = useNavigate()
 
-    return <section className="m-auto p-4 w-[440px] h-screen max-w-full relative">
+    return <section className="m-auto p-4 w-[440px]  max-w-full relative">
         <section className="mt-5 text-center">
             <span className="text-primary font-bold text-lg">اطلاعات اختصاصی:</span>
         </section>
@@ -84,7 +86,7 @@ export default function Index() {
             <CustomTextBox placeholder="درصد سبز شدن را وارد کنید" onChange={() => { }} />
         </section>
         <section className="flex sticky bg-white bottom-0 gap-2 mt-4 border-t py-3 justify-end w-full">
-            <button className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
+            <button onClick={() => navigate(-1)} className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
                 <span>بازگشت</span>
                 <Undo2Icon className="w-[20px]" />
             </button>

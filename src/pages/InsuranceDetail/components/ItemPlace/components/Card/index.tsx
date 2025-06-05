@@ -3,6 +3,11 @@ import type { PolicyItem } from "@/pages/InsuranceDetail/insuranceDetail.types";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
 export default function Index({ item }: { item: PolicyItem }) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
     return <section className="w-[440px] max-w-full p-2">
@@ -45,9 +50,23 @@ export default function Index({ item }: { item: PolicyItem }) {
             </>}
             <footer className="absolute flex justify-between bottom-2 px-2  w-full left-0">
                 <section className="flex gap-2">
-                    <button className="border w-[90px] bg-primary border-primary text-white  shadow-md h-[30px] flex justify-center items-center gap-2 rounded-full">
-                        <span className="font-light text-sm">عملیات</span>
-                    </button>
+                    <Popover>
+                        <PopoverTrigger>
+                            <button className="border w-[90px] bg-primary border-primary text-white  shadow-md h-[30px] flex justify-center items-center gap-2 rounded-full">
+                                <span className="font-light text-sm">عملیات</span>
+                            </button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                            <section className="flex gap-2">
+                                <Link to="/land-division">
+                                    <button className="text-[10px] bg-white p-2 rounded-lg border border-blue-500 font-light text-blue-500">تکمیل قلم بیمه شده</button>
+                                </Link>
+                                <Link to="/private-info">
+                                    <button className="text-[10px] bg-white p-2 rounded-lg border border-red-500 font-light text-red-500">تکمیل اطلاعات اختصاصی</button>
+                                </Link>
+                            </section>
+                        </PopoverContent>
+                    </Popover>
                     <Link to="/insurance-location">
                         <button className="border w-[90px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
                             <span className="font-light text-sm">تعیین مکان</span>

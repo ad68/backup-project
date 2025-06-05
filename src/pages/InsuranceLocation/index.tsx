@@ -5,10 +5,11 @@ import { Switch } from "@/components/ui/switch"
 import SlidingModal from "@/components/kit/SlidingModal"
 import AddPolygonModal from './components/AddPolygonModal'
 import { useNavigate } from "react-router-dom"
+
 export default function Index() {
     const { isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isAddPolygonModalOpen, setIsAddPolygonModalOpen } = useInsuranceLocation()
     const navigate = useNavigate();
-    return <section className='m-auto w-[440px] h-10 max-w-full'>
+    return <section className='m-auto w-[440px] max-w-full'>
         <section className='p-2'>
             <section className={`border ${isOpenDtl ? `h-auto` : `h-[160px]`} pb-12 relative overflow-hidden bg-slate-50 border-slate-200 p-2 rounded-lg mt-5`}>
                 <span className='block text-center'>مشخصات بیمه نامه</span>
