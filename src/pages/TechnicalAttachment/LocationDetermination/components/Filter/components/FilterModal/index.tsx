@@ -1,7 +1,7 @@
 import CustomSelect from "@/components/kit/CustomSelect";
 import CustomTextBox from "@/components/kit/CustomTextBox";
 import SlidingModal from "@/components/kit/SlidingModal";
-import type { FilterModalProp } from "@/pages/TechnicalAttachment/technicalAttachment.type";
+import type { FilterModalProp } from "@/pages/TechnicalAttachment/LocationDetermination/technicalAttachment.type";
 import { SearchIcon, Undo2Icon } from "lucide-react";
 
 export default function Index({ isOpen, setIsOpen }: FilterModalProp) {

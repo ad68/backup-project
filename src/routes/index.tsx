@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import TechnicalAttachment from '@/pages/TechnicalAttachment'
+import LocationDetermination from '@/pages/TechnicalAttachment/LocationDetermination'
 import InsuranceDetail from '@/pages/InsuranceDetail'
 import InsuranceAction from '@/pages/InsuranceAction'
 import InsuranceLocation from '@/pages/InsuranceLocation'
@@ -14,21 +15,43 @@ import ScreenShot from '@/pages/ScreenShot'
 import Map from '@/pages/Map' */
 import ProtectedRoute from './ProtectedRoute'
 import MAIN_LAYOUT from '../components/layout/MainLayout'
-
+import DashboardLayout from '../components/layout/DashboardLayout'
 export default function Index() {
+    const mainLayoutRoutes = [
+
+        { path: "/location-determination", element: <LocationDetermination /> },
+        { path: "/insurance-detail", element: <InsuranceDetail /> },
+        { path: "/insurance-action", element: <InsuranceAction /> },
+        { path: "/insurance-location", element: <InsuranceLocation /> },
+        { path: "/private-info", element: <PrivateInfo /> },
+        { path: "/land-division", element: <LandDivision /> },
+        { path: "/pagination", element: <Pagination /> },
+
+    ];
+    const dashboardLayoutRoutes = [
+        { path: "/home", element: <Home /> },
+        { path: "/technical-attachment", element: <TechnicalAttachment /> },
+
+    ];
     return <Routes>
         <Route path="/" element={<Login />} />
         <Route element={<MAIN_LAYOUT />}>
-            <Route path="/home" element={<ProtectedRoute>
-                <Home />
-            </ProtectedRoute>} />
-            <Route path="/technical-attachment" element={<ProtectedRoute><TechnicalAttachment /></ProtectedRoute>} />
-            <Route path="/insurance-detail" element={<ProtectedRoute><InsuranceDetail /></ProtectedRoute>} />
-            <Route path="/insurance-action" element={<ProtectedRoute><InsuranceAction /></ProtectedRoute>} />
-            <Route path="/insurance-location" element={<ProtectedRoute><InsuranceLocation /></ProtectedRoute>} />
-            <Route path="/private-info" element={<ProtectedRoute><PrivateInfo /></ProtectedRoute>} />
-            <Route path="/land-division" element={<ProtectedRoute><LandDivision /></ProtectedRoute>} />
-            <Route path="/pagination" element={<ProtectedRoute><Pagination /></ProtectedRoute>} />
+            {mainLayoutRoutes.map(({ path, element }) => (
+                <Route
+                    key={path}
+                    path={path}
+                    element={<ProtectedRoute>{element}</ProtectedRoute>}
+                />
+            ))}
+        </Route>
+        <Route element={<DashboardLayout />}>
+            {dashboardLayoutRoutes.map(({ path, element }) => (
+                <Route
+                    key={path}
+                    path={path}
+                    element={<ProtectedRoute>{element}</ProtectedRoute>}
+                />
+            ))}
         </Route>
         {/*  <Route path="/circle" element={<CirclePage />} />
         <Route path="/indexdb" element={<Indexdb />} />

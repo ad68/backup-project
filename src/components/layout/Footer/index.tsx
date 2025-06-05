@@ -12,7 +12,7 @@ import CustomButton from "@/components/kit/CustomButton";
 export default function Index() {
     const location = useLocation();
     const { logout, isLogoutModalOpen, setIsLogoutModalOpen } = useFooter()
-    return <section className="fixed shadow-[1px_4px_13px_-1px_rgba(156,156,156,0.75)] rounded-t-full flex w-[440px] justify-around max-w-full h-[53px] bg-white bottom-0 z-50">
+    return <section className="fixed shadow-[1px_4px_13px_-1px_rgba(156,156,156,0.75)] rounded-t-full flex w-[440px] justify-around max-w-full h-[60px] pt-1 pb-3 bg-white bottom-0 z-50">
         <section className="flex flex-col items-center justify-center">
             <ProfileIcon className="text-slate-400 w-[30px]" />
             <span className="text-xs text-slate-500 mt-[1px]">پروفایل</span>
@@ -23,9 +23,6 @@ export default function Index() {
             <DashboardIcon className="text-slate-400 w-[38px]" />
             <span className="text-xs text-slate-500 ">داشبورد</span>
         </Link>}
-
-
-
         <section onClick={() => setIsLogoutModalOpen(true)} className="flex flex-col items-center justify-center">
             <LogoutIcon className="text-slate-400 w-[28px] shadow-2xl" />
             <span className="text-xs text-slate-500">خروج</span>

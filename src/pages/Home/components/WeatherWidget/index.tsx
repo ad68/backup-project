@@ -19,7 +19,7 @@ export default function Index() {
                 <img src="/images/home/sun.png" alt='' className='w-[60px]' />
                 <section className='flex flex-col'>
                     <span>{Math.trunc(weatherData?.temperature)}°</span>
-                    <span className='text-sm font-light'>آفتابی</span>
+                    <span className='text-sm'>{weatherData?.cityName}</span>
                 </section>
             </section>
             <section className='absolute flex items-center justify-center w-[140px] text-center gap-4 top-[80px] '>

@@ -1,59 +1,33 @@
 
-import ReactPaginate from 'react-paginate'
-import Card from './components/Card'
-import Filter from './components/Filter'
-import useTechnicalAttachment from './technicalAttachment.biz'
-import ListLoader from '@/components/kit/ListLoader'
+import { ListCheckIcon, MapPinCheckIcon } from "lucide-react";
+import { Link } from "react-router-dom";
+
+
 
 export default function Index() {
-    const { data, loading, setCurrentPage, totalPage, currentPage } = useTechnicalAttachment()
 
-    return <section className='pb-10'>
-        <section className='m-auto w-[440px] max-w-full'>
-            <Filter />
-        </section>
-        <section className='mt-10'>
-            <ReactPaginate
-                pageCount={totalPage}
-                pageRangeDisplayed={1}
-                marginPagesDisplayed={2}
-                onPageChange={({ selected }) => setCurrentPage(selected + 1)}
-                containerClassName="flex gap-2 justify-center items-center mt-4"
-                pageClassName="border rounded-full border-gray-300 rounded px-3 py-1 text-sm cursor-pointer"
-                activeClassName="bg-primary text-white"
-                previousClassName="text-gray-500"
-                nextClassName="text-gray-500"
-                forcePage={currentPage - 1}
-                disabledClassName="opacity-50 text-white cursor-not-allowed"
-                breakClassName="px-2 py-1"
-                nextLabel=">"
-                previousLabel="<"
-            />
-        </section>
-        {loading && <section className='flex justify-center mt-5'><ListLoader /></section>}
-        {!loading && <section className='m-auto relative mt-2 w-[440px]  max-w-full'>
-            {data?.map((item: any, index: any) => (<Card item={item} key={index} />))}
-        </section>}
-        <section className='mt-1'>
-            <ReactPaginate
-                pageCount={totalPage}
-                pageRangeDisplayed={1}
-                marginPagesDisplayed={2}
-                onPageChange={({ selected }) => setCurrentPage(selected + 1)}
-                containerClassName="flex gap-2 justify-center items-center mt-4"
-                pageClassName="border rounded-full border-gray-300 rounded px-3 py-1 text-sm cursor-pointer"
-                activeClassName="bg-primary text-white"
-                previousClassName="text-gray-500"
-                nextClassName="text-gray-500"
-                forcePage={currentPage - 1}
-                disabledClassName="opacity-50 text-white cursor-not-allowed"
-                breakClassName="px-2 py-1"
-                nextLabel=">"
-                previousLabel="<"
-            />
-        </section>
+    return <section className="pt-10 px-2 flex gap-5 justify-center items-center">
+        <Link to="/location-determination" className="w-[45%]">
+            <section className="flex flex-col border-2 border-green-500 active:bg-green-500 shadow-lg items-center p-2 py-5 gap-2  h-auto bg-primary text-white  rounded-2xl">
+                <MapPinCheckIcon className="text-white" />
+                <span className="text-xl">
+                    تعیین مکان
+                </span>
+
+            </section>
+        </Link>
+
+        <Link to="#" className="w-[45%]">
+            <section className="flex flex-col border-2 border-blue-500 shadow-lg items-center p-2 py-5 gap-2 w-full h-auto active:bg-blue-600 bg-blue-500 text-white  rounded-2xl">
+                <ListCheckIcon className="text-white" />
+                <span className="text-xl">
+                    بررسی مشخصات
+                </span>
+
+            </section>
+        </Link>
+
 
 
     </section>
-
 }
