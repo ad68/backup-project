@@ -2,13 +2,19 @@ import { CloudIcon } from '@/assets/icons/CloudIcon';
 import useWeatherWidget from './weatherWidget.biz';
 import { RefreshCcw } from 'lucide-react';
 import { getPersianDate } from '@/utils/global';
+import ListLoader from '@/components/kit/ListLoader';
 
 
 
 export default function Index() {
-    const { weatherData, Reload } = useWeatherWidget()
-    return <section className='w-full absolute top-[-52px] flex justify-center'>
+    const { weatherData, Reload, actionLoading } = useWeatherWidget()
+    return <section className='w-full mt-[-100px] relative flex justify-center'>
+
         <section className='w-[320px] px-[20px] flex justify-between items-center relative overflow-hidden gap-4 h-[130px] m-auto bg-primary rounded-[10px] shadow-2xl'>
+            {actionLoading && <section className='w-full h-full absolute flex justify-center items-center bg-white top-0 left-0 z-50'>
+                <ListLoader />
+            </section>}
+
             <section className="blob2"></section>
             <section className='absolute flex items-center gap-4 top-[10px] '>
                 <img src="/images/home/sun.png" alt='' className='w-[60px]' />

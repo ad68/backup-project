@@ -26,10 +26,9 @@ const useTechnicalAttachment = () => {
         }
         try {
             const res = await useAxiosWithToken.post("/sabka/technical/annex/search/locate-reviews", params);
-
-            await saveToDataBase(res.data.reverse());
+            await saveToDataBase(res.data);
             setHasFetched(true)
-            loadList(currentPage);
+            loadList(1)
         } catch (error) {
             console.error(error);
         } finally {
@@ -45,13 +44,18 @@ const useTechnicalAttachment = () => {
                 10
             );
         setData(data)
+        console.log(totalItems)
         setTotalPage(totalPages)
-        console.log("totalItems", totalItems)
+
     }
+    useEffect(() => {
+        console.log("data", data)
+    }, [data])
     useEffect(() => {
         getList()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
     useEffect(() => {
         if (hasFetched) {
             loadList(currentPage)

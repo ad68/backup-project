@@ -6,6 +6,7 @@ const useWeatherWidget = () => {
     const [currentLat, setCurrentLat] = useState<number>(35.726574)
     const [currentLng, setCurrentLng] = useState<number>(51.4024449)
     const [weatherData, setWeatherData] = useState<any>()
+    const [actionLoading, setActionLoading] = useState(false)
     const [reload, setReload] = useState(false)
     useEffect(() => {
         if (location) {
@@ -14,8 +15,12 @@ const useWeatherWidget = () => {
         }
     }, [location])
     const getWeatherData = () => {
+        setActionLoading(true)
         useAxios.get(`/weather/geo?lat=${currentLat}&lon=${currentLng}`)
-            .then(res => { setWeatherData(res.data) })
+            .then(res => {
+
+                setWeatherData(res.data)
+            }).finally(() => { setActionLoading(false) })
     }
     const Reload = () => {
         setReload(!reload)
@@ -26,7 +31,9 @@ const useWeatherWidget = () => {
     }, [location, reload])
     return {
         weatherData,
-        Reload
+        actionLoading,
+        Reload,
+
     }
 }
 export default useWeatherWidget
