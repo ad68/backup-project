@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { SlidingModalProp } from "./slidingModal.type";
 
-export default function SlidingModal({ isOpen, children }: SlidingModalProp) {
+export default function SlidingModal({ isOpen, children, keepChildren }: SlidingModalProp) {
     const [showChildren, setShowChildren] = useState(false)
     useEffect(() => {
         if (isOpen) {
@@ -14,9 +14,13 @@ export default function SlidingModal({ isOpen, children }: SlidingModalProp) {
         }
     }, [isOpen])
     return <section className={`w-full h-full  overflow-scroll  fixed bg-white ${isOpen ? `top-0` : `top-[-100%]`} transition-all duration-500 left-0 z-[1000]`}>
-        {showChildren && <>
-            {children}
-        </>}
+
+        {
+            keepChildren ? children : showChildren && <>
+                {children}
+            </>
+        }
+
 
     </section>;
 }

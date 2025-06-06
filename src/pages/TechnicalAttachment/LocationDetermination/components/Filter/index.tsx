@@ -1,7 +1,7 @@
 import { FilterIcon } from "lucide-react";
 import FilterModal from './components/FilterModal'
 import { useState } from "react";
-export default function Index() {
+export default function Index({ setSearchParams }: any) {
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
     return <>
         <section className="relative">
@@ -12,9 +12,8 @@ export default function Index() {
                     <span className="text-xs font-bold text-white">جستجوی پیشرفته</span>
                 </button>
             </section>
-
         </section>
-        <FilterModal setIsOpen={setIsFilterModalOpen} isOpen={isFilterModalOpen} />
+        <FilterModal setSearchParams={setSearchParams} setIsOpen={setIsFilterModalOpen} isOpen={isFilterModalOpen} />
     </>
 
 }

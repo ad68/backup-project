@@ -21,7 +21,7 @@ const CustomSelect = forwardRef<HTMLButtonElement, CustomSelectProps>(
                 <SelectTrigger dir="rtl" ref={ref} className={`w-full h-12 bg-white text-black text-xs  rounded-[10px] border border-[#EBEBEB] ${className}`}>
                     <SelectValue placeholder="انتخاب کنید" />
                 </SelectTrigger>
-                <SelectContent className="cursor-pointer text-right">
+                <SelectContent className="cursor-pointer text-right z-[1001]">
                     {options.map((option) => (
                         <SelectItem dir="rtl" className="cursor-pointer text-right bg-white" key={option.value} value={option.value}>
                             {option.label}

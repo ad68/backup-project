@@ -1,5 +1,6 @@
 export type FilterModalProp = {
     isOpen: boolean, setIsOpen: (value: boolean) => void
+    setSearchParams: (value: any) => void
 }
 export type CardProp = {
     item: {

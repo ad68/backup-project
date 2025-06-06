@@ -53,6 +53,14 @@ export async function getAllData(): Promise<
     const db = await initDB();
     return await db.getAll(STORE_NAME);
 }
+export async function clearStore() {
+    const db = await openDB(DB_NAME);
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    await tx.objectStore(STORE_NAME).clear();
+    await tx.done;
+
+    console.log(`All records from "${STORE_NAME}" have been deleted.`);
+}
 
 export async function deleteData(name: string): Promise<void> {
     const db = await initDB();

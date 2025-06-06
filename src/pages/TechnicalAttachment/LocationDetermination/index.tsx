@@ -5,14 +5,17 @@ import Filter from './components/Filter'
 import useTechnicalAttachment from './technicalAttachment.biz'
 import ListLoader from '@/components/kit/ListLoader'
 
+import NoRecord from '@/components/kit/NoRecord'
+
 export default function Index() {
-    const { data, loading, setCurrentPage, totalPage, currentPage } = useTechnicalAttachment()
+    const { data, loading, setCurrentPage, totalPage, currentPage, setSearchParams } = useTechnicalAttachment()
 
     return <section className='pb-10'>
         <section className='m-auto w-[440px] max-w-full'>
-            <Filter />
+            <Filter setSearchParams={setSearchParams} />
         </section>
-        <section className='mt-10'>
+        {data.length !== 0 && <section className='mt-10'>
+
             <ReactPaginate
                 pageCount={totalPage}
                 pageRangeDisplayed={1}
@@ -29,12 +32,15 @@ export default function Index() {
                 nextLabel=">"
                 previousLabel="<"
             />
-        </section>
-        {loading && <section className='flex justify-center mt-5'><ListLoader /></section>}
+        </section>}
+
+        {loading && <section className='flex justify-center mt-7'><ListLoader /></section>}
         {!loading && <section className='m-auto relative mt-2 w-[440px]  max-w-full'>
             {data?.map((item: any, index: any) => (<Card item={item} key={index} />))}
         </section>}
-        <section className='mt-1'>
+        {!loading && data.length === 0 && <NoRecord />}
+
+        {data.length !== 0 && <section className='mt-1'>
             <ReactPaginate
                 pageCount={totalPage}
                 pageRangeDisplayed={1}
@@ -51,7 +57,8 @@ export default function Index() {
                 nextLabel=">"
                 previousLabel="<"
             />
-        </section>
+        </section>}
+
 
 
     </section>
