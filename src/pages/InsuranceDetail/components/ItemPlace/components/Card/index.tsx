@@ -2,7 +2,7 @@
 import type { PolicyItem } from "@/pages/InsuranceDetail/insuranceDetail.types";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
     Popover,
     PopoverContent,
@@ -10,6 +10,9 @@ import {
 } from "@/components/ui/popover"
 export default function Index({ item }: { item: PolicyItem }) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
+    const [searchParams] = useSearchParams();
+    const reviewId = searchParams.get("reviewId")
+
     return <section className="w-[440px] max-w-full p-2">
         <section className={`border relative flex flex-col gap-4 bg-white border-slate-100  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[160px]`} shadow-lg`}>
             <section className="flex justify-between w-full">
@@ -67,7 +70,7 @@ export default function Index({ item }: { item: PolicyItem }) {
                             </section>
                         </PopoverContent>
                     </Popover>
-                    <Link to="/insurance-location">
+                    <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${item.subjectItemId}&featureId=${item.featureId}`}>
                         <button className="border w-[90px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
                             <span className="font-light text-sm">تعیین مکان</span>
                         </button>

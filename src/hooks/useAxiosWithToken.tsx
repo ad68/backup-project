@@ -1,3 +1,4 @@
+import { toastError } from "@/components/kit/toast";
 import BASE_URL from "@/config/api";
 import { useAuthStore } from "@/store/authStore";
 import axios from "axios";
@@ -24,6 +25,7 @@ useAxiosWithToken.interceptors.response.use(
       window.location.href = "/";
       logout()
     }
+    toastError(error.response.data.message)
 
     return Promise.reject(error);
   },

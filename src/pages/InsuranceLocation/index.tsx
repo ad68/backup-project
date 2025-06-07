@@ -5,9 +5,10 @@ import { Switch } from "@/components/ui/switch"
 import SlidingModal from "@/components/kit/SlidingModal"
 import AddPolygonModal from './components/AddPolygonModal'
 import { useNavigate } from "react-router-dom"
+import ListLoader from "@/components/kit/ListLoader"
 
 export default function Index() {
-    const { isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isAddPolygonModalOpen, setIsAddPolygonModalOpen } = useInsuranceLocation()
+    const { isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isAddPolygonModalOpen, setIsAddPolygonModalOpen, fetchLoading, featureData } = useInsuranceLocation()
     const navigate = useNavigate();
     return <section className='m-auto w-[440px] max-w-full'>
         <section className='p-2'>
@@ -31,7 +32,6 @@ export default function Index() {
                         <span className="font-light text-slate-500 text-sm">تاریخ فعال‌سازی:</span>
                         <span className="text-sm">1403/11/06</span>
                     </section>
-
                 </section>
                 <section className='mt-2'>
                     <section className="flex gap-1">
@@ -89,7 +89,6 @@ export default function Index() {
                         <span className="text-sm">ارزیابی خسارت بیمه ای ارزیابان ایرانیان پوشش (محمود دادپور)</span>
                     </section>
                 </section>
-
                 <section className="flex mt-2 justify-between w-full">
                     <section className="flex flex-col gap-1">
                         <span className="font-light text-slate-500 text-sm">نشانی:</span>
@@ -218,8 +217,10 @@ export default function Index() {
                     </button>
                 </section>
                 <section className="flex flex-col gap-1">
-                    <Card />
-                    <Card />
+                    {fetchLoading && <section className="flex justify-center"><ListLoader /></section>}
+                    {featureData?.map((item: any, index: number) => (<Card item={item} key={index} />))}
+                    {/* <Card />
+                    <Card /> */}
                 </section>
             </section>
         </section>

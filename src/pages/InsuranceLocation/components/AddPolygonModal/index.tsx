@@ -1,8 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw";
 import "leaflet-draw/dist/leaflet.draw.css";
+import WKT from "terraformer-wkt-parser";
+
 import { useEffect, useRef, useState } from "react";
 import { CheckIcon, DeleteIcon, Edit2Icon, MapPinHouseIcon, Undo2 } from "lucide-react";
 
@@ -90,6 +92,21 @@ export default function Index({ setIsAddPolygonModalOpen }: { setIsAddPolygonMod
 
     setPolygonsState(polygons);
     setHasPolygon(polygons.length > 0); // ✅ بروزرسانی وضعیت وجود پلی‌گان
+    logPolygonsAsWkt()
+  };
+  const logPolygonsAsWkt = () => {
+    if (!drawnItemsRef.current) return;
+
+    const geojson = drawnItemsRef.current.toGeoJSON();
+
+    if ("features" in geojson) {
+      geojson.features.forEach((feature: any) => {
+        if (feature.geometry.type === "Polygon") {
+          const wkt = WKT.convert(feature.geometry);
+          console.log("✅ Polygon as WKT:", wkt);
+        }
+      });
+    }
   };
 
   const startDrawing = () => {
@@ -117,7 +134,7 @@ export default function Index({ setIsAddPolygonModalOpen }: { setIsAddPolygonMod
     setIsEditing(false); // ✅ پایان ویرایش
   };
   useEffect(() => {
-    console.log(polygonsState)
+
     if (polygonsState.length > 0) {
       generateAndUploadKml()
     }

@@ -17,31 +17,31 @@ const useFilter = (setSearchParams: (value: any) => void) => {
     const [places, setPlaces] = useState<any>([])
     const [placeId, setPlaceId] = useState("")
     const getProvinceList = () => {
-        useAxiosWithToken.post("/sabka/provinces").then(res => {
+        useAxiosWithToken.post("/sabka/admin-levels/get/provinces").then(res => {
             setProvinces(res.data)
         }).catch()
     }
     const getCounties = () => {
         const params = { provinceId: provinceId }
-        useAxiosWithToken.post("/sabkaC/counties", params).then(res => {
+        useAxiosWithToken.post("/sabka/admin-levels/get/counties", params).then(res => {
             setCounties(res.data)
         }).catch()
     }
     const getDistricts = () => {
         const params = { provinceId: provinceId, countyId: countyId }
-        useAxiosWithToken.post("/sabkaD/districts", params).then(res => {
+        useAxiosWithToken.post("/sabka/admin-levels/get/districts", params).then(res => {
             setDistricts(res.data)
         }).catch()
     }
     const getRuralDistricts = () => {
         const params = { provinceId: provinceId, countyId: countyId, districtId: districtId }
-        useAxiosWithToken.post("/sabkaR/rural-districts", params).then(res => {
+        useAxiosWithToken.post("/sabka/admin-levels/get/rural-districts", params).then(res => {
             setRuralDistricts(res.data)
         }).catch()
     }
     const getPlaces = () => {
         const params = { provinceId: provinceId, countyId: countyId, ruralDistrictId: ruralDistrictId, districtId: districtId }
-        useAxiosWithToken.post("/sabkaP/places", params).then(res => {
+        useAxiosWithToken.post("/sabka/admin-levels/get/places", params).then(res => {
             setPlaces(res.data)
         }).catch()
     }

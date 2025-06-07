@@ -1,9 +1,9 @@
-export default function Index() {
+export default function Index({ item }: { item: any }) {
     return (
         <section className="p-2 bg-slate-50 border rounded-lg h-[100px]">
             <section className="flex gap-1">
                 <span className="font-light text-slate-500 text-sm">عنوان:</span>
-                <span className="text-sm">سید عزیز تیموریان 2.5ه</span>
+                <span className="text-sm">{item.name}</span>
             </section>
             <section className="flex gap-2 mt-2">
                 <section className="flex gap-1">
