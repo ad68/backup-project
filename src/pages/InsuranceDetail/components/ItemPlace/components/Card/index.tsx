@@ -70,7 +70,7 @@ export default function Index({ item }: { item: PolicyItem }) {
                             </section>
                         </PopoverContent>
                     </Popover>
-                    <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${item.subjectItemId}&featureId=${item.featureId}`}>
+                    <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${item.subjectItemId}&featureId=${item.featureId}&policyId=${item.policyItemId}`}>
                         <button className="border w-[90px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
                             <span className="font-light text-sm">تعیین مکان</span>
                         </button>

@@ -83,3 +83,18 @@ export const getPersianDate = (): string => {
     const year = now.format('jYYYY');   // مثلا "1404"
     return `${weekday} ${day} ${month} ${year}`;
 };
+export const convertToBase64 = (file: File) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+            resolve(reader.result as string);
+        };
+
+        reader.onerror = error => {
+            reject(error);
+        };
+    });
+};

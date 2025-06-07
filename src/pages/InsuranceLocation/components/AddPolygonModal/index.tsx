@@ -7,8 +7,9 @@ import WKT from "terraformer-wkt-parser";
 
 import { useEffect, useRef, useState } from "react";
 import { CheckIcon, DeleteIcon, Edit2Icon, MapPinHouseIcon, Undo2 } from "lucide-react";
+import type { AddPolyGonProp } from "./addPolygon.typs";
 
-export default function Index({ setIsAddPolygonModalOpen }: { setIsAddPolygonModalOpen: (value: boolean) => void }) {
+export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt }: AddPolyGonProp) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapRefInstance = useRef<L.Map | null>(null);
   const drawnItemsRef = useRef<L.FeatureGroup>(new L.FeatureGroup());
@@ -104,6 +105,7 @@ export default function Index({ setIsAddPolygonModalOpen }: { setIsAddPolygonMod
         if (feature.geometry.type === "Polygon") {
           const wkt = WKT.convert(feature.geometry);
           console.log("✅ Polygon as WKT:", wkt);
+          setGeoInWkt(wkt)
         }
       });
     }

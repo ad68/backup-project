@@ -6,9 +6,10 @@ import SlidingModal from "@/components/kit/SlidingModal"
 import AddPolygonModal from './components/AddPolygonModal'
 import { useNavigate } from "react-router-dom"
 import ListLoader from "@/components/kit/ListLoader"
+import CustomButton from "@/components/kit/CustomButton"
 
 export default function Index() {
-    const { isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isAddPolygonModalOpen, setIsAddPolygonModalOpen, fetchLoading, featureData } = useInsuranceLocation()
+    const { isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isAddPolygonModalOpen, setGeoInWkt, setIsAddPolygonModalOpen, fetchLoading, actionLoading, featureData, setSubjectNotExist, locateSubjectItem } = useInsuranceLocation()
     const navigate = useNavigate();
     return <section className='m-auto w-[440px] max-w-full'>
         <section className='p-2'>
@@ -194,7 +195,7 @@ export default function Index() {
                 <span className='block text-center'>تعیین مکان</span>
                 <hr className='border-slate-300 my-1' />
                 <section dir="ltr" className="flex gap-1 mt-2 justify-end">
-                    <Switch />
+                    <Switch onCheckedChange={(e) => setSubjectNotExist(e)} />
                     <span className="text-sm">مورد وجود ندارد</span>
                 </section>
                 <section className="text-xs mt-1 font-light ">
@@ -225,16 +226,16 @@ export default function Index() {
             </section>
         </section>
         <section className="flex px-2 bg-white bottom-0 gap-2 mt-4 py-3 justify-end w-full">
-            <button onClick={() => navigate(-1)} className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
+            <CustomButton variant="outlined" onClick={() => navigate(-1)} className="rounded-full">
                 <span>بازگشت</span>
                 <Undo2Icon className="w-[20px]" />
-            </button>
-            <button className="bg-primary w-[120px] text-white flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
+            </CustomButton>
+            <CustomButton loading={actionLoading} onClick={locateSubjectItem} className="rounded-full">
                 <span>تایید</span>
-            </button>
+            </CustomButton>
         </section>
         <SlidingModal isOpen={isAddPolygonModalOpen} setIsOpen={setIsAddPolygonModalOpen}>
-            <AddPolygonModal setIsAddPolygonModalOpen={setIsAddPolygonModalOpen} />
+            <AddPolygonModal setIsAddPolygonModalOpen={setIsAddPolygonModalOpen} setGeoInWkt={setGeoInWkt} />
         </SlidingModal>
     </section>
 }

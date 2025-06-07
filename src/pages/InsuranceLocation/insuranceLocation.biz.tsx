@@ -5,10 +5,15 @@ const useInsuranceLocation = () => {
     const [isOpenDtl, setIsOpenDtl] = useState<boolean>(false)
     const [isOpenDtl1, setIsOpenDtl1] = useState<boolean>(false)
     const [fetchLoading, setFetchLoading] = useState<boolean>(false)
+    const [actionLoading, setActionLoading] = useState<boolean>(false)
     const [featureData, setFeatureData] = useState<any>()
+    const [subjectNotExist, setSubjectNotExist] = useState<boolean>(false)
+    const [geoInWkt, setGeoInWkt] = useState("")
     const [searchParams] = useSearchParams();
     const reviewId = searchParams.get("reviewId")
+    const policyId = searchParams.get("policyId")
     const subjectId = searchParams.get("subjectId")
+
     const featureId = searchParams.get("featureId")
     const [isAddPolygonModalOpen, setIsAddPolygonModalOpen] = useState<boolean>(false)
     const getFeatureInfo = () => {
@@ -22,12 +27,23 @@ const useInsuranceLocation = () => {
             setFeatureData(res.data)
         }).finally(() => setFetchLoading(false))
     }
+    const locateSubjectItem = () => {
+        setActionLoading(true)
+        const params = {
+            reviewId: reviewId && parseInt(reviewId),
+            policyId: policyId && parseInt(policyId),
+            subjectItemId: subjectId && parseInt(subjectId),
+            subjectNotExist: subjectNotExist,
+            geoInWkt: geoInWkt
+        }
+        useAxiosWithToken.post("/sabka/technical/annex/add/locate-subject-item", params).finally(() => { setActionLoading(false) })
+    }
     useEffect(() => {
         getFeatureInfo()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return {
-        isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isAddPolygonModalOpen, setIsAddPolygonModalOpen, reviewId, subjectId, featureId, fetchLoading, featureData
+        isOpenDtl, setGeoInWkt, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isAddPolygonModalOpen, setIsAddPolygonModalOpen, setSubjectNotExist, reviewId, subjectId, featureId, fetchLoading, featureData, locateSubjectItem, actionLoading
     }
 }
 export default useInsuranceLocation

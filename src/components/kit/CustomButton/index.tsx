@@ -21,12 +21,12 @@ const CustomButton = forwardRef<HTMLButtonElement, CustomButtonProps>(
                 ref={ref}
                 onClick={onClick}
                 disabled={loading}
-                className={`group active:scale-[0.98] disabled:opacity-70 ${baseStyles} ${variant === "default" ? defaultStyles : outlinedStyles
+                className={`group  active:scale-[0.98] disabled:opacity-70 ${baseStyles} ${variant === "default" ? defaultStyles : outlinedStyles
                     } ${className}`}
                 dir="rtl"
                 style={{ textAlign: "right" }}
             >
-                {loading ? <section className="btnLoader"></section> : <span className="z-10">{children}</span>}
+                {loading ? <section className="btnLoader"></section> : <span className="flex justify-center items-center z-10">{children}</span>}
 
 
             </button>
