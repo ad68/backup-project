@@ -1,9 +1,9 @@
 import { toastError } from "@/components/kit/toast"
 import { useAxiosWithToken } from "@/hooks"
-import { bulkSaveToIDB, clearStore, getPaginatedDataFromIDB, searchByIndex } from "@/lib/indexdb"
+import { bulkSaveToIDB, clearStore, getPaginatedDataFromIDB } from "@/lib/indexdb"
 import { useEffect, useState } from "react"
 
-const useCheckSpecifications = () => {
+const useTechnicalAttachment = () => {
     const [data, setData] = useState<any>([])
     const [loading, setLoading] = useState(false)
     const [hasFetched, setHasFetched] = useState(false)
@@ -13,20 +13,6 @@ const useCheckSpecifications = () => {
     const saveToDataBase = async (data: any) => {
         await bulkSaveToIDB(data);
     };
-    const getSearch = async () => {
-        const result = await searchByIndex<any>(
-            'myDatabase',
-            'locateReviews',
-            'policyId_beneficiary',
-            [23655276, "ناصر نوروزی"]
-        );
-        console.log(result)
-    }
-    useEffect(() => {
-        setTimeout(() => {
-            getSearch()
-        }, 6000);
-    }, [])
     const getList = async () => {
         setLoading(true);
         const params = searchParams ? searchParams : {
@@ -42,9 +28,8 @@ const useCheckSpecifications = () => {
         }
         try {
             const res = await useAxiosWithToken.post("/sabka/technical/annex/search/locate-reviews", params);
-            const aaa = [...res.data]
             await clearStore()
-            await saveToDataBase(aaa);
+            await saveToDataBase(res.data);
             setHasFetched(true)
             loadList(1)
         } catch (error: any) {
@@ -83,4 +68,4 @@ const useCheckSpecifications = () => {
         totalPage, setSearchParams
     }
 }
-export default useCheckSpecifications
+export default useTechnicalAttachment

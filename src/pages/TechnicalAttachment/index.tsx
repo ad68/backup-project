@@ -16,7 +16,7 @@ export default function Index() {
                 </span>
             </section>
         </Link>
-        <Link to="#" className="w-full">
+        <Link to="/check-specifications" className="w-full">
             <section className="flex flex-col border-2 border-blue-500 shadow-lg items-center p-2 py-5 gap-2 w-full h-auto active:bg-blue-600 bg-blue-500 text-white  rounded-2xl">
                 <ListCheckIcon className="text-white" />
                 <span className="text-xl">

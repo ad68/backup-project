@@ -3,11 +3,13 @@ import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import TechnicalAttachment from '@/pages/TechnicalAttachment'
 import LocationDetermination from '@/pages/TechnicalAttachment/LocationDetermination'
+import CheckSpecifications from '@/pages/TechnicalAttachment/CheckSpecifications'
 import InsuranceDetail from '@/pages/InsuranceDetail'
 import InsuranceAction from '@/pages/InsuranceAction'
 import InsuranceLocation from '@/pages/InsuranceLocation'
 import PrivateInfo from '@/pages/PrivateInfo'
 import LandDivision from '@/pages/LandDivision'
+import CheckSpecificationsTabs from '@/pages/TechnicalAttachment/CheckSpecificationsTabs'
 import Pagination from '@/pages/Pagination'
 /* import CirclePage from '@/pages/CirclePage'
 import Indexdb from '@/pages/indexdb'
@@ -19,6 +21,7 @@ import DashboardLayout from '../components/layout/DashboardLayout'
 export default function Index() {
     const mainLayoutRoutes = [
 
+        { path: "/check-specifications", element: <CheckSpecifications /> },
         { path: "/location-determination", element: <LocationDetermination /> },
         { path: "/insurance-detail", element: <InsuranceDetail /> },
         { path: "/insurance-action", element: <InsuranceAction /> },
@@ -26,6 +29,8 @@ export default function Index() {
         { path: "/private-info", element: <PrivateInfo /> },
         { path: "/land-division", element: <LandDivision /> },
         { path: "/pagination", element: <Pagination /> },
+        { path: "/check-specifications-tabs", element: <CheckSpecificationsTabs /> },
+
 
     ];
     const dashboardLayoutRoutes = [

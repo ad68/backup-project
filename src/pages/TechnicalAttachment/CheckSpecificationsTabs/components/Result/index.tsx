@@ -1,20 +1,13 @@
-import useResult from "./result.biz"
-import InfoModal from "./components/InfoModal"
-import { InfoIcon, Undo2Icon } from "lucide-react"
+
+import { Undo2Icon } from "lucide-react"
 import CustomSelect from "@/components/kit/CustomSelect"
 import CustomTextArea from "@/components/kit/CustomTextArea"
 export default function Index() {
-    const { isInfoModalOpen, setIsInfoModalOpen } = useResult()
+
     return <section className="p-2">
         <section className="border border-slate-200  rounded-lg p-2">
             <span className='block text-center'>نتیجه</span>
             <hr className='border-slate-300 my-1' />
-
-            <button onClick={() => setIsInfoModalOpen(true)} className="border w-[90px]  bg-white border-blue-500 text-blue-500 shadow-md h-[30px] flex justify-center mt-3 items-center gap-2 rounded-full">
-                <InfoIcon className="stroke-blue-500 w-[20px]" />
-                <span className="text-sm">نکات</span>
-            </button>
-
             <section className="mt-1">
                 <span className="font-light text-slate-700 text-xs">نتیجه:</span>
                 <CustomSelect options={[{ label: "test 1", value: "1" }]} onChange={() => { }} />
@@ -32,7 +25,7 @@ export default function Index() {
                     <span>تایید</span>
                 </button>
             </section>
-            <InfoModal isOpen={isInfoModalOpen} setIsOpen={setIsInfoModalOpen} />
+
         </section>
     </section>
 }

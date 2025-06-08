@@ -15,7 +15,10 @@ export async function initDB() {
     const db = await openDB(DB_NAME, 1, {
         upgrade(db) {
             if (!db.objectStoreNames.contains(STORE_NAME)) {
-                db.createObjectStore(STORE_NAME, { keyPath: 'policyId' });
+                const store = db.createObjectStore('locateReviews', { autoIncrement: true });
+                store.createIndex('policyId', 'policyId', { unique: true });
+                store.createIndex('beneficiary', 'beneficiary.title');
+                store.createIndex('policyId_beneficiary', ['policyId', 'beneficiary.title'], { unique: false });
             }
             if (!db.objectStoreNames.contains('users')) {
                 db.createObjectStore('users', { keyPath: 'id' });
@@ -30,6 +33,31 @@ export async function initDB() {
 }
 
 
+export async function searchByIndex<T>(
+    databaseName: string,
+    storeName: string,
+    indexName: string,
+    key: IDBValidKey | IDBValidKey[]
+): Promise<T[]> {
+    const db = await openDB(databaseName, 1);
+
+    if (!db.objectStoreNames.contains(storeName)) {
+        throw new Error(`Object store "${storeName}" not found`);
+    }
+
+    const tx = db.transaction(storeName, 'readonly');
+    const store = tx.objectStore(storeName);
+
+    if (!store.indexNames.contains(indexName)) {
+        throw new Error(`Index "${indexName}" not found in store "${storeName}"`);
+    }
+
+    const index = store.index(indexName);
+    const results = await index.getAll(key);
+    await tx.done;
+    return results;
+}
+
 export async function saveData(item: any): Promise<IDBValidKey> {
     const db = await initDB();
     return await db.put(STORE_NAME, item);
@@ -39,6 +67,7 @@ export async function bulkSaveToIDB(items: any[]): Promise<void> {
     const tx = db.transaction('locateReviews', 'readwrite');
     const store = tx.objectStore('locateReviews');
     for (const item of items) {
+
         if (!item.policyId) {
             console.warn('Skipping item without policyId:', item);
             continue;

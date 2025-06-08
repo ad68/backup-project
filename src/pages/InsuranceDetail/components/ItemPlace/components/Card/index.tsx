@@ -75,9 +75,10 @@ export default function Index({ item }: { item: PolicyItem }) {
                             <span className="font-light text-sm">تعیین مکان</span>
                         </button>
                     </Link>
-                    <button className="border w-[90px] bg-red-500 border-red-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
+                    {item.featureId && <button className="border w-[90px] bg-red-500 border-red-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
                         <span className="font-light text-sm">حذف مکان</span>
-                    </button>
+                    </button>}
+
                 </section>
                 <button onClick={() => setIsOpenDtl(!isOpenDtl)} className="bg-yellow-400 shadow-md w-[36px] h-[30px] flex justify-center items-center rounded-full">
                     {isOpenDtl ? <ChevronUp color="white" className="w-[20px]" /> : <ChevronDown color="white" className="w-[20px]" />}
