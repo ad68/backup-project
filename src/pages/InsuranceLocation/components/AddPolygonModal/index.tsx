@@ -6,8 +6,9 @@ import "leaflet-draw/dist/leaflet.draw.css";
 import WKT from "terraformer-wkt-parser";
 
 import { useEffect, useRef, useState } from "react";
-import { CheckIcon, DeleteIcon, Edit2Icon, MapPinHouseIcon, Undo2 } from "lucide-react";
+import { CheckIcon, DeleteIcon, Edit2Icon, MapPinHouseIcon } from "lucide-react";
 import type { AddPolyGonProp } from "./addPolygon.typs";
+import CustomButton from "@/components/kit/CustomButton";
 
 export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt }: AddPolyGonProp) {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -204,21 +205,24 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt }: AddPoly
 
   return (
     <section style={{ height: "95%", width: "100%", position: "relative" }}>
-      <section className="bg-white h-[10%] p-2 overflow-x-auto w-full z-[1000] flex mt-1">
-        <section className="w-[200%] flex gap-1 px-2">
-          <button
-            className="bg-blue-500 flex items-center gap-2 p-2 rounded-md text-white"
-            onClick={startDrawing}
-          >
-            <MapPinHouseIcon />
-            <span className="text-xs">شروع</span>
-          </button>
+      <section className="bg-white h-[8%]  overflow-x-auto w-full z-[1000] flex">
+        <section className="w-[200%] flex shadow-2xl flex-row items-center gap-1 px-2">
+          {!hasPolygon && (
+            <button
+              className="bg-blue-500 flex items-center gap-2 rounded-full py-1 px-3 text-white"
+              onClick={startDrawing}
+            >
+              <MapPinHouseIcon />
+              <span className="text-xs">شروع</span>
+            </button>
+          )}
+
 
           {hasPolygon && (
             <>
               <button
                 onClick={deleteAll}
-                className="bg-red-500 w-[110px] flex gap-2 p-2 items-center rounded-md text-white"
+                className="bg-red-500 w-[110px] flex gap-2 py-1 px-3 items-center rounded-full text-white"
               >
                 <DeleteIcon />
                 <span className="text-xs">پاک کردن</span>
@@ -227,7 +231,7 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt }: AddPoly
               {!isEditing && (
                 <button
                   onClick={enableEdit}
-                  className="bg-yellow-500 w-[90px] flex gap-2 p-2 items-center rounded-md text-white"
+                  className="bg-yellow-500 w-[90px] flex gap-2 py-1 px-3 items-center rounded-full text-white"
                 >
                   <Edit2Icon className="w-[18px]" />
                   <span className="text-xs">ویرایش</span>
@@ -237,7 +241,7 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt }: AddPoly
               {isEditing && (
                 <button
                   onClick={disableEditAndLog}
-                  className="bg-emerald-500 w-[120px] flex gap-2 p-2 items-center rounded-md text-white"
+                  className="bg-emerald-500 w-[120px] flex gap-2 py-1 px-3 items-center rounded-full text-white"
                 >
                   <CheckIcon className="w-[18px]" />
                   <span className="text-xs">پایان ویرایش</span>
@@ -249,12 +253,12 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt }: AddPoly
 
         </section>
       </section>
-      <section ref={mapRef} className="h-[82%] w-full" />
+      <section ref={mapRef} className="h-[87%] w-full" />
       <section className="mt-2 h-[8%] flex justify-end pl-2">
-        <button className="bg-slate-300 mr-auto border mt-2 w-[120px] flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm" onClick={() => setIsAddPolygonModalOpen(false)}>
-          <Undo2 className="w-[20px]" />
-          <span className="text-xs">بازگشت</span>
-        </button>
+        <CustomButton className="rounded-full" onClick={() => setIsAddPolygonModalOpen(false)}>
+          <CheckIcon className="w-[20px]" />
+          <span className="text-xs">تایید</span>
+        </CustomButton>
       </section>
 
 

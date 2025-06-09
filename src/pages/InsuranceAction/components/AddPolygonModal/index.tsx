@@ -13,8 +13,8 @@ export default function Index() {
   const drawControlRef = useRef<L.Control.Draw | null>(null);
 
   const [polygonsState, setPolygonsState] = useState<L.LatLng[][]>([]);
-  const [hasPolygon, setHasPolygon] = useState(false); // آیا پلی‌گانی وجود دارد؟
-  const [isEditing, setIsEditing] = useState(false); // آیا در حالت ویرایش هستیم؟
+  const [hasPolygon, setHasPolygon] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     if (mapRef.current && !mapRefInstance.current) {
@@ -59,7 +59,7 @@ export default function Index() {
       drawControlRef.current = drawControl;
       map.addControl(drawControl);
 
-      // رویدادها
+
       map.on(L.Draw.Event.CREATED, function (event: any) {
         const layer = event.layer;
         drawnItemsRef.current.addLayer(layer);
@@ -76,7 +76,7 @@ export default function Index() {
     }
   }, []);
 
-  // آپدیت استیت پلی‌گان‌ها
+
   const updatePolygonState = () => {
     const polygons: L.LatLng[][] = [];
     drawnItemsRef.current.eachLayer((layer: any) => {
@@ -89,7 +89,7 @@ export default function Index() {
     });
 
     setPolygonsState(polygons);
-    setHasPolygon(polygons.length > 0); // ✅ بروزرسانی وضعیت وجود پلی‌گان
+    setHasPolygon(polygons.length > 0);
   };
 
   const startDrawing = () => {
@@ -101,87 +101,87 @@ export default function Index() {
   const deleteAll = () => {
     drawnItemsRef.current.clearLayers();
     updatePolygonState();
-    setIsEditing(false); // اگر در حال ویرایش بودیم، تمام کن
+    setIsEditing(false);
   };
 
   const enableEdit = () => {
     if (!drawControlRef.current) return;
     (drawControlRef.current as any)._toolbars.edit._modes.edit.handler.enable();
-    setIsEditing(true); // ✅ شروع ویرایش
+    setIsEditing(true);
   };
 
   const disableEditAndLog = () => {
     if (!drawControlRef.current) return;
     (drawControlRef.current as any)._toolbars.edit._modes.edit.handler.disable();
     updatePolygonState();
-    setIsEditing(false); // ✅ پایان ویرایش
+    setIsEditing(false);
   };
   useEffect(() => {
     console.log(polygonsState)
-    if (polygonsState.length > 0) {
-      generateAndUploadKml()
-    }
+    /*  if (polygonsState.length > 0) {
+       generateAndUploadKml()
+     } */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [polygonsState])
-  const generateAndUploadKml = () => {
-    if (!drawnItemsRef.current) return;
-
-    const geojson = drawnItemsRef.current.toGeoJSON();
-
-    let kml = `<?xml version="1.0" encoding="UTF-8"?>
-      <kml xmlns="http://www.opengis.net/kml/2.2">
-        <Document>
-    `;
-
-    if ("features" in geojson) {
-      geojson.features.forEach((feature: any) => {
-        if (feature.geometry.type === "Polygon") {
-          const coordinates = feature.geometry.coordinates[0]
-            .map(([lng, lat]: [number, number]) => `${lng},${lat},0`)
-            .join(" ");
-
-          kml += `
-            <Placemark>
-              <Polygon>
-                <outerBoundaryIs>
-                  <LinearRing>
-                    <coordinates>${coordinates}</coordinates>
-                  </LinearRing>
-                </outerBoundaryIs>
-              </Polygon>
-            </Placemark>
-          `;
-        }
+  /*   const generateAndUploadKml = () => {
+      if (!drawnItemsRef.current) return;
+  
+      const geojson = drawnItemsRef.current.toGeoJSON();
+  
+      let kml = `<?xml version="1.0" encoding="UTF-8"?>
+        <kml xmlns="http://www.opengis.net/kml/2.2">
+          <Document>
+      `;
+  
+      if ("features" in geojson) {
+        geojson.features.forEach((feature: any) => {
+          if (feature.geometry.type === "Polygon") {
+            const coordinates = feature.geometry.coordinates[0]
+              .map(([lng, lat]: [number, number]) => `${lng},${lat},0`)
+              .join(" ");
+  
+            kml += `
+              <Placemark>
+                <Polygon>
+                  <outerBoundaryIs>
+                    <LinearRing>
+                      <coordinates>${coordinates}</coordinates>
+                    </LinearRing>
+                  </outerBoundaryIs>
+                </Polygon>
+              </Placemark>
+            `;
+          }
+        });
+      }
+  
+      kml += `
+        </Document>
+      </kml>`;
+  
+      uploadKmlToApi(kml);
+    }; */
+  /*   const uploadKmlToApi = async (kmlText: string) => {
+      const blob = new Blob([kmlText], {
+        type: "application/vnd.google-earth.kml+xml",
       });
-    }
-
-    kml += `
-      </Document>
-    </kml>`;
-
-    uploadKmlToApi(kml);
-  };
-  const uploadKmlToApi = async (kmlText: string) => {
-    const blob = new Blob([kmlText], {
-      type: "application/vnd.google-earth.kml+xml",
-    });
-
-    const formData = new FormData();
-    formData.append("file", blob, "polygons.kml");
-
-    try {
-      const res = await fetch("/api/upload-kml", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) throw new Error("Upload failed");
-      const data = await res.json();
-      console.log("✅ Upload success:", data);
-    } catch (err) {
-      console.error("❌ Upload error:", err);
-    }
-  };
+  
+      const formData = new FormData();
+      formData.append("file", blob, "polygons.kml");
+  
+      try {
+        const res = await fetch("/api/upload-kml", {
+          method: "POST",
+          body: formData,
+        });
+  
+        if (!res.ok) throw new Error("Upload failed");
+        const data = await res.json();
+        console.log("✅ Upload success:", data);
+      } catch (err) {
+        console.error("❌ Upload error:", err);
+      }
+    }; */
 
   return (
     <section style={{ height: "100vh", width: "100%", position: "relative" }}>
@@ -230,8 +230,6 @@ export default function Index() {
           )}
         </section>
       </section>
-
-
     </section>
   );
 }

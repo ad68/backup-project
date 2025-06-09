@@ -11,7 +11,7 @@ type CustomButtonProps = {
 const CustomButton = forwardRef<HTMLButtonElement, CustomButtonProps>(
     ({ onClick, children, className, loading, variant = "default" }, ref) => {
         const baseStyles =
-            "relative overflow-hidden w-auto min-w-[100px] flex justify-center items-center px-[10px] h-12 rounded-[8px] border transition-all";
+            "relative overflow-hidden w-auto min-w-[100px] flex justify-center items-center px-[10px] h-10 rounded-[8px] border transition-all";
         const defaultStyles =
             "bg-primary active:bg-green-400 text-white border-gray-300";
         const outlinedStyles =
