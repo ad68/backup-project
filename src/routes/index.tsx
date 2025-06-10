@@ -1,26 +1,23 @@
 import { Route, Routes } from "react-router-dom";
-import Home from '@/pages/Home'
-import Login from '@/pages/Login'
-import TechnicalAttachment from '@/pages/TechnicalAttachment'
-import LocationDetermination from '@/pages/TechnicalAttachment/LocationDetermination'
-import CheckSpecifications from '@/pages/TechnicalAttachment/CheckSpecifications'
-import InsuranceDetail from '@/pages/InsuranceDetail'
-import InsuranceAction from '@/pages/InsuranceAction'
-import InsuranceLocation from '@/pages/InsuranceLocation'
-import PrivateInfo from '@/pages/PrivateInfo'
-import LandDivision from '@/pages/LandDivision'
-import CheckSpecificationsTabs from '@/pages/TechnicalAttachment/CheckSpecificationsTabs'
-import Pagination from '@/pages/Pagination'
-/* import CirclePage from '@/pages/CirclePage'
-import Indexdb from '@/pages/indexdb'
-import ScreenShot from '@/pages/ScreenShot'
-import Map from '@/pages/Map' */
+import Home from '@/Modules/Home'
+import Login from '@/Modules/Login'
+import TechnicalAttachment from '@/Modules/TechnicalAttachment'
+import LocationDetermination from '@/Modules/TechnicalAttachment/LocationDetermination'
+import CheckSpecifications from '@/Modules/TechnicalAttachment/CheckSpecifications'
+import InsuranceDetail from '@/Modules/InsuranceDetail'
+import InsuranceAction from '@/Modules/InsuranceAction'
+import InsuranceLocation from '@/Modules/InsuranceLocation'
+import PrivateInfo from '@/Modules/PrivateInfo'
+import LandDivision from '@/Modules/LandDivision'
+import CheckSpecificationsTabs from '@/Modules/TechnicalAttachment/CheckSpecificationsTabs'
+import Pagination from '@/Modules/Pagination'
+import DamageRegistration from '@/Modules/Damage/DamageRegistration'
+import CurrentActions from '@/Modules/Damage/CurrentActions'
 import ProtectedRoute from './ProtectedRoute'
 import MAIN_LAYOUT from '../components/layout/MainLayout'
 import DashboardLayout from '../components/layout/DashboardLayout'
 export default function Index() {
     const mainLayoutRoutes = [
-
         { path: "/check-specifications", element: <CheckSpecifications /> },
         { path: "/location-determination", element: <LocationDetermination /> },
         { path: "/insurance-detail", element: <InsuranceDetail /> },
@@ -30,8 +27,10 @@ export default function Index() {
         { path: "/land-division", element: <LandDivision /> },
         { path: "/pagination", element: <Pagination /> },
         { path: "/check-specifications-tabs", element: <CheckSpecificationsTabs /> },
-
-
+    ];
+    const DamageRoutes = [
+        { path: "damage-registration", element: <DamageRegistration /> },
+        { path: "current-actions", element: <CurrentActions /> },
     ];
     const dashboardLayoutRoutes = [
         { path: "/home", element: <Home /> },
@@ -58,9 +57,16 @@ export default function Index() {
                 />
             ))}
         </Route>
-        {/*  <Route path="/circle" element={<CirclePage />} />
-        <Route path="/indexdb" element={<Indexdb />} />
-        <Route path="/map" element={<Map />} />
-        <Route path="/screenshot" element={<ScreenShot />} /> */}
+        <Route path="damage" element={<DashboardLayout />}>
+            {DamageRoutes.map(({ path, element }) => (
+                <Route
+                    key={path}
+                    path={path}
+                    element={<ProtectedRoute>{element}</ProtectedRoute>}
+                />
+            ))}
+        </Route>
+
+
     </Routes>
 }
