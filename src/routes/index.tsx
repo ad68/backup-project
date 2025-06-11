@@ -13,6 +13,7 @@ import CheckSpecificationsTabs from '@/Modules/TechnicalAttachment/CheckSpecific
 import Pagination from '@/Modules/Pagination'
 import DamageRegistration from '@/Modules/Damage/DamageRegistration'
 import CurrentActions from '@/Modules/Damage/CurrentActions'
+import PreviousActions from '@/Modules/Damage/PreviousActions'
 import ProtectedRoute from './ProtectedRoute'
 import MAIN_LAYOUT from '../components/layout/MainLayout'
 import DashboardLayout from '../components/layout/DashboardLayout'
@@ -31,6 +32,7 @@ export default function Index() {
     const DamageRoutes = [
         { path: "damage-registration", element: <DamageRegistration /> },
         { path: "current-actions", element: <CurrentActions /> },
+        { path: "previous-actions", element: <CurrentActions /> },
     ];
     const dashboardLayoutRoutes = [
         { path: "/home", element: <Home /> },

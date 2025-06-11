@@ -2,12 +2,12 @@
 import { ChevronDown, ChevronUp, EyeIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import type { CardProp } from "../../technicalAttachment.type";
+import type { CardProp } from "../../currentActions.types";
 import { gregorianToJalali } from "@/utils/global";
 export default function Index({ item }: CardProp) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
 
-    return <section className="p-2">
+    return <section className="w-[440px] max-w-full p-2">
         <section className={`border relative flex flex-col gap-4 bg-white border-slate-100  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[122px]`} shadow-lg`}>
             <section className="flex justify-between w-full">
                 <section className="flex gap-1">

@@ -4,14 +4,13 @@ import Card from './components/Card'
 import Filter from './components/Filter'
 import useTechnicalAttachment from './technicalAttachment.biz'
 import ListLoader from '@/components/kit/ListLoader'
-
 import NoRecord from '@/components/kit/NoRecord'
 
 export default function Index() {
     const { data, loading, setCurrentPage, totalPage, currentPage, setSearchParams } = useTechnicalAttachment()
 
     return <section className='pb-10'>
-        <section className='m-auto w-[440px] max-w-full'>
+        <section className=''>
             <Filter setSearchParams={setSearchParams} />
         </section>
         {data.length !== 0 && <section className='mt-10'>
