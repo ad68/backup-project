@@ -8,7 +8,7 @@ export default function Index() {
 
     return <section className="pt-10 px-2 w-[440px] max-w-full m-auto h-[90%] flex flex-col gap-5 justify-center items-center">
         <span className="font-bold text-2xl absolute top-5">پیوست فنی</span>
-        <Link to="/location-determination" className="w-full">
+        <Link to="/location-determination" className="w-full mt-10">
             <section className="flex flex-col border-2 border-green-500 active:bg-green-500 shadow-lg items-center p-2 py-5 gap-2  h-auto bg-primary text-white  rounded-2xl">
                 <MapPinCheckIcon className="text-white" />
                 <span className="text-xl">

@@ -1,0 +1,31 @@
+.myRmdp-input:focus {
+  border: 2px solid #2c8ee8;
+}
+
+.myRmdp-input {
+  font-family: YekanBakh;
+  border-radius: 10px;
+  border: 1px solid silver;
+  min-width: 100%;
+  min-height: 48px;
+  margin-top: 0;
+  outline: none;
+  padding-left: 14px;
+  padding-right: 14px;
+  font-size: 12px;
+}
+.myRmdp-input.error {
+  border-color: #e14856;
+}
+.popup-filter .ui-datepicker {
+  width: 142px !important ;
+}
+.popup-filter .popup-filter-right .ui-datepicker {
+  border-radius: 0 8px 8px 0;
+}
+.popup-filter .popup-filter-left .ui-datepicker {
+  border-radius: 8px 0 0 8px;
+}
+.rmdp-container {
+  width: 100%;
+}

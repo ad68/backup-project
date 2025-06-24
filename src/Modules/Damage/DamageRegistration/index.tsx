@@ -1,5 +1,6 @@
 import CustomTextBox from "@/components/kit/CustomTextBox"
 import { Undo2Icon } from "lucide-react"
+import { Link } from "react-router-dom"
 
 
 export default function Index() {
@@ -16,10 +17,13 @@ export default function Index() {
             <CustomTextBox onChange={() => { }} placeholder="شناسه بیمه را وارد کنید" />
         </section>
         <section className="flex px-2 bg-white bottom-0 gap-2 mt-4  py-3 justify-end w-full">
-            <button className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
-                <span>بازگشت</span>
-                <Undo2Icon className="w-[20px]" />
-            </button>
+            <Link to="/damage/home">
+                <button className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
+                    <span>بازگشت</span>
+                    <Undo2Icon className="w-[20px]" />
+                </button>
+            </Link>
+
             <button className="bg-primary w-[120px] text-white flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
                 <span>تایید</span>
             </button>

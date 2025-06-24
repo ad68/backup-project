@@ -11,9 +11,11 @@ import PrivateInfo from '@/Modules/PrivateInfo'
 import LandDivision from '@/Modules/LandDivision'
 import CheckSpecificationsTabs from '@/Modules/TechnicalAttachment/CheckSpecificationsTabs'
 import Pagination from '@/Modules/Pagination'
+import Damage from '@/Modules/Damage/Home'
 import DamageRegistration from '@/Modules/Damage/DamageRegistration'
 import CurrentActions from '@/Modules/Damage/CurrentActions'
-import PreviousActions from '@/Modules/Damage/PreviousActions'
+import PreviousActions from '@/Modules/Damage/Search'
+import Search from '@/Modules/Damage/Search'
 import ProtectedRoute from './ProtectedRoute'
 import MAIN_LAYOUT from '../components/layout/MainLayout'
 import DashboardLayout from '../components/layout/DashboardLayout'
@@ -30,9 +32,11 @@ export default function Index() {
         { path: "/check-specifications-tabs", element: <CheckSpecificationsTabs /> },
     ];
     const DamageRoutes = [
+        { path: "home", element: <Damage /> },
         { path: "damage-registration", element: <DamageRegistration /> },
         { path: "current-actions", element: <CurrentActions /> },
-        { path: "previous-actions", element: <CurrentActions /> },
+        { path: "previous-actions", element: <PreviousActions /> },
+        { path: "search", element: <Search /> },
     ];
     const dashboardLayoutRoutes = [
         { path: "/home", element: <Home /> },

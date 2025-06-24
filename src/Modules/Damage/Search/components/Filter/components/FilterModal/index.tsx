@@ -32,8 +32,8 @@ export default function Index({ isOpen, setIsOpen, setSearchParams }: FilterModa
                 <CustomTextBox onChange={(e) => { setPolicyId(e) }} placeholder="مورد را وارد کنید" />
             </section>
             <section className="mt-2">
-                <span className="font-light text-slate-700 text-xs">کد ملی ذینفع:</span>
-                <CustomTextBox onChange={(e) => { setPolicyId(e) }} placeholder=" کد ملی ذینفع را وارد کنید" />
+                <span className="font-light text-slate-700 text-xs">شناسه ملی:</span>
+                <CustomTextBox onChange={(e) => { setPolicyId(e) }} placeholder=" شناسه ملی را وارد کنید" />
             </section>
             <section className="mt-5">
                 <span className="text-primary font-bold text-sm">بخش دوم:</span>
@@ -97,22 +97,15 @@ export default function Index({ isOpen, setIsOpen, setSearchParams }: FilterModa
                 <CustomSelect value={provinceId} options={[{ label: "تست", value: "1" }]} onChange={() => { }} />
             </section>
             <section className="mt-1">
-                <span className="font-light text-slate-700 text-xs">نتیجه:</span>
+                <span className="font-light text-slate-700 text-xs">ارزیاب یا نماینده:</span>
                 <CustomSelect value={provinceId} options={[{ label: "تست", value: "1" }]} onChange={() => { }} />
             </section>
-            <section className="mt-1">
-                <span className="font-light text-slate-700 text-xs">ارزیاب:</span>
-                <CustomSelect value={provinceId} options={[{ label: "تست", value: "1" }]} onChange={() => { }} />
-            </section>
-            <section className="mt-1">
-                <span className="font-light text-slate-700 text-xs">نماینده ارزیاب:</span>
-                <CustomSelect value={provinceId} options={[{ label: "تست", value: "1" }]} onChange={() => { }} />
-            </section>
+
             <section className="mt-5">
                 <span className="text-primary font-bold text-sm">بخش پنجم:</span>
             </section>
             <section className="mt-1">
-                <span className="font-light text-slate-700 text-xs">تاریخ ارجاع :</span>
+                <span className="font-light text-slate-700 text-xs">تاریخ شروع :</span>
                 <section className="grid grid-cols-1 gap-2">
                     <CustomDatepicker
                         value={filterFromDate}
@@ -130,7 +123,7 @@ export default function Index({ isOpen, setIsOpen, setSearchParams }: FilterModa
                 </section>
             </section>
             <section className="mt-1">
-                <span className="font-light text-slate-700 text-xs">تاریخ خاتمه اقدام :</span>
+                <span className="font-light text-slate-700 text-xs">تاریخ پایان:</span>
                 <section className="grid grid-cols-1 gap-2">
                     <CustomDatepicker
                         value={filterFromDate}

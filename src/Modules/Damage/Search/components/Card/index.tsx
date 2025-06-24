@@ -14,66 +14,58 @@ export default function Index() {
                 </section>
                 <section className="flex gap-1">
                     <span className="font-light text-slate-500 text-sm">بیمه نامه:</span>
-                    <span className="text-sm">27288986</span>
+                    <span className="text-sm">26440444</span>
                 </section>
 
             </section>
             <section className="flex justify-between w-full">
                 <section className="flex gap-1">
-                    <span className="font-light text-slate-500 text-sm">ذینفع:</span>
-                    <span className="text-sm">آقاجان موسوی لاریجانی</span>
+                    <span className="font-light text-slate-500 text-sm">مورد:</span>
+                    <span className="text-sm">22599740</span>
                 </section>
                 <section className="flex gap-1">
-                    <span className="font-light text-slate-500 text-sm">موضوع:</span>
-                    <span className="text-sm">گندم آبی</span>
+                    <span className="font-light text-slate-500 text-sm">شخص:</span>
+                    <span className="text-sm">سیدحبیب الله نصیری</span>
                 </section>
 
             </section>
             {isOpenDtl && <> <span className="w-full block bg-slate-200 h-[1px]"></span>
                 <section className="flex justify-between w-full">
                     <section className="flex gap-1">
-                        <span className="font-light text-slate-500 text-sm">استان:</span>
-                        <span className="block text-sm break-words">تهران</span>
+                        <span className="font-light text-slate-500 text-sm">سال زراعی:</span>
+                        <span className="block text-sm break-words">1403-04</span>
                     </section>
                     <section className="flex gap-1">
-                        <span className="font-light text-slate-500 text-sm">شعبه:</span>
-                        <span className="block text-sm break-words">پاکدشت</span>
+                        <span className="font-light text-slate-500 text-sm">موضوع:</span>
+                        <span className="block text-sm break-words">گندم آبی</span>
                     </section>
 
                 </section>
                 <section className="flex justify-between w-full">
                     <section className="flex gap-1">
-                        <span className="font-light text-slate-500 text-sm">وضعیت خسارت در زمان اقدام:</span>
-                        <span className="text-sm">ارزیابی</span>
+                        <span className="font-light text-slate-500 text-sm">دسته طرح:</span>
+                        <span className="block text-sm break-words">فراگیر اجباری</span>
+                    </section>
+                    <section className="flex gap-1">
+                        <span className="font-light text-slate-500 text-sm">وضعیت:</span>
+                        <span className="block text-sm break-words">ارزیابی</span>
                     </section>
 
-
                 </section>
 
                 <section className="flex justify-between w-full">
                     <section className="flex gap-1">
-                        <span className="font-light text-slate-500 text-sm">نتیجه اقدام:</span>
-                        <span className="text-sm">برگرداندن به شعبه</span>
+                        <span className="font-light text-slate-500 text-sm">ارزیاب:</span>
+                        <span className="text-sm">ارزیابی خسارت بیمه ای ارزیابان ایرانیان پوشش (محمود دادپور)</span>
                     </section>
                 </section>
                 <section className="flex justify-between w-full">
                     <section className="flex gap-1">
-                        <span className="font-light text-slate-500 text-sm">تاریخ ارجاع:</span>
-                        <span className="block text-sm break-words">1404/03/17</span>
+                        <span className="font-light text-slate-500 text-sm">غرامت:</span>
+                        <span className="block text-sm break-words">............</span>
                     </section>
                 </section>
-                <section className="flex justify-between w-full">
-                    <section className="flex gap-1">
-                        <span className="font-light text-slate-500 text-sm">تاریخ خاتمه اقدام:</span>
-                        <span className="block text-sm break-words">1404/03/27</span>
-                    </section>
-                </section>
-                <section className="flex justify-between w-full">
-                    <section className="flex gap-1">
-                        <span className="font-light text-slate-500 text-sm">وضعیت جاری پرونده:</span>
-                        <span className="block text-sm break-words">بررسی اولیه در شعبه	</span>
-                    </section>
-                </section>
+
 
 
             </>}
