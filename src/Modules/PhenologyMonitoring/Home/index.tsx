@@ -18,7 +18,7 @@ export default function Index() {
                 </span>
             </section>
         </Link>
-        <Link to="#" className="w-full">
+        <Link to="/phenology-monitoring/emergency-visit" className="w-full">
             <section className="flex flex-col border-2 border-green-500 active:bg-green-500 shadow-lg items-center p-2 py-2 gap-2  h-auto bg-primary text-white  rounded-2xl">
                 <span className="text-xl">
                     برنامه بازدید اضطراری

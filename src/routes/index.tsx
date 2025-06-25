@@ -19,6 +19,7 @@ import Search from '@/Modules/Damage/Search'
 import PhenologyMonitoring from '@/Modules/PhenologyMonitoring/Home'
 import PhenologyMonitoringCases from '@/Modules/PhenologyMonitoring/Cases'
 import PhenologyMonitoringProgram from '@/Modules/PhenologyMonitoring/Program'
+import PhenologyMonitoringEmergencyVisit from '@/Modules/PhenologyMonitoring/EmergencyVisit'
 import ProtectedRoute from './ProtectedRoute'
 import MAIN_LAYOUT from '../components/layout/MainLayout'
 import DashboardLayout from '../components/layout/DashboardLayout'
@@ -45,6 +46,7 @@ export default function Index() {
         { path: "home", element: <PhenologyMonitoring /> },
         { path: "cases", element: <PhenologyMonitoringCases /> },
         { path: "program", element: <PhenologyMonitoringProgram /> },
+        { path: "emergency-visit", element: <PhenologyMonitoringEmergencyVisit /> },
     ];
 
     const dashboardLayoutRoutes = [
