@@ -16,6 +16,9 @@ import DamageRegistration from '@/Modules/Damage/DamageRegistration'
 import CurrentActions from '@/Modules/Damage/CurrentActions'
 import PreviousActions from '@/Modules/Damage/Search'
 import Search from '@/Modules/Damage/Search'
+import PhenologyMonitoring from '@/Modules/PhenologyMonitoring/Home'
+import PhenologyMonitoringCases from '@/Modules/PhenologyMonitoring/Cases'
+import PhenologyMonitoringProgram from '@/Modules/PhenologyMonitoring/Program'
 import ProtectedRoute from './ProtectedRoute'
 import MAIN_LAYOUT from '../components/layout/MainLayout'
 import DashboardLayout from '../components/layout/DashboardLayout'
@@ -38,6 +41,12 @@ export default function Index() {
         { path: "previous-actions", element: <PreviousActions /> },
         { path: "search", element: <Search /> },
     ];
+    const PhenologyMonitoringRoutes = [
+        { path: "home", element: <PhenologyMonitoring /> },
+        { path: "cases", element: <PhenologyMonitoringCases /> },
+        { path: "program", element: <PhenologyMonitoringProgram /> },
+    ];
+
     const dashboardLayoutRoutes = [
         { path: "/home", element: <Home /> },
         { path: "/technical-attachment", element: <TechnicalAttachment /> },
@@ -73,6 +82,15 @@ export default function Index() {
             ))}
         </Route>
 
+        <Route path="phenology-monitoring" element={<DashboardLayout />}>
+            {PhenologyMonitoringRoutes.map(({ path, element }) => (
+                <Route
+                    key={path}
+                    path={path}
+                    element={<ProtectedRoute>{element}</ProtectedRoute>}
+                />
+            ))}
+        </Route>
 
     </Routes>
 }
