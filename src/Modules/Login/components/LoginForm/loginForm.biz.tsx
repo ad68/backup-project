@@ -37,7 +37,11 @@ const useLoginForm = () => {
             longLived: true,
         }
         setActionLoading(true)
-        useAxios.post("/sabka/sso/auth", params).then((res) => {
+        useAxios.post("https://api.bakapp.ir/bakapp/api/sabka/sso/auth", params, {
+            headers: {
+                "Accept-Language": "fa"
+            }
+        }).then((res) => {
             navigation("/home")
             login(`Bearer ${res.data.token}`)
             setActionLoading(false)
