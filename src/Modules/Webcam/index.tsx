@@ -99,7 +99,8 @@ export default function WebcamWithWatermark() {
                 <Webcam
                     ref={webcamRef}
                     audio={false}
-                    screenshotFormat="image/jpeg"
+                    screenshotFormat="image/png"
+                    videoConstraints={{ facingMode: "environment" }}
                     style={{
                         top: 0,
                         left: 0,
