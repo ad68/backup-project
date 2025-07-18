@@ -1,5 +1,5 @@
 import CustomButton from "@/components/kit/CustomButton";
-import { ApertureIcon, CameraIcon, SwitchCamera, SwitchCameraIcon, Undo2Icon } from "lucide-react";
+import { SwitchCameraIcon, Undo2Icon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
@@ -90,9 +90,7 @@ export default function WebcamWithWatermark() {
             }
         };
     };
-    const changeCamera = () => {
 
-    }
     useEffect(() => {
         console.log("base64", base64Image)
         console.log("base64Format", base64WithFormat)
