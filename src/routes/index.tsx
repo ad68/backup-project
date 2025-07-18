@@ -10,6 +10,8 @@ import InsuranceLocation from '@/Modules/InsuranceLocation'
 import PrivateInfo from '@/Modules/PrivateInfo'
 import LandDivision from '@/Modules/LandDivision'
 import CheckSpecificationsTabs from '@/Modules/TechnicalAttachment/CheckSpecificationsTabs'
+import ScreenShot from '@/Modules/ScreenShot'
+import Webcam from '@/Modules/Webcam'
 import Pagination from '@/Modules/Pagination'
 import Damage from '@/Modules/Damage/Home'
 import DamageRegistration from '@/Modules/Damage/DamageRegistration'
@@ -93,6 +95,8 @@ export default function Index() {
                 />
             ))}
         </Route>
+        <Route path="screen-shot" element={<ScreenShot />} />
+        <Route path="webcam" element={<Webcam />} />
 
     </Routes>
 }

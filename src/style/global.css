@@ -249,3 +249,10 @@
 .leaflet-draw-edit-remove {
   display: none !important;
 }
+input:-webkit-autofill {
+  direction: rtl !important;
+  text-align: right !important;
+  font-family: YekanBakh, sans-serif !important;
+  color: #000 !important;
+  background-color: #fff !important;
+}

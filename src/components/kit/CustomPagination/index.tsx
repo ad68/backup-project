@@ -16,7 +16,7 @@ type PaginationControlsProps = {
     pageSize: number
     totalItems: number
     onPageChange: (page: number) => void
-    siblingCount?: number // تعداد صفحات اطراف صفحه فعلی که نمایش داده میشن
+    siblingCount?: number
 }
 
 export const PaginationControls = ({
@@ -102,7 +102,6 @@ export const PaginationControls = ({
                             </PaginationItem>
                         )
                     )}
-
                     <PaginationItem>
                         <PaginationNext
                             href="#"
