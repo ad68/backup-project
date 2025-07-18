@@ -98,3 +98,13 @@ export const convertToBase64 = (file: File) => {
         };
     });
 };
+
+
+export const getImageFormatFromBase64 = (base64: string): string | null => {
+    const match = base64.match(/^data:image\/([a-zA-Z0-9+]+);base64,/);
+    return match ? match[1] : null;
+};
+export const getPureBase64 = (base64: string): string => {
+    const index = base64.indexOf("base64,");
+    return index !== -1 ? base64.slice(index + 7) : base64;
+};

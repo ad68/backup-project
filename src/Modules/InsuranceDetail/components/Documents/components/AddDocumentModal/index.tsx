@@ -4,7 +4,7 @@ import { Undo2Icon } from "lucide-react";
 import useAddDocumentModal from "./addDocumentModal.biz";
 import { Controller } from 'react-hook-form';
 export default function Index({ setIsAddDocumentModal }: { setIsAddDocumentModal: (value: boolean) => void }) {
-    const { control, handleSubmit, onSubmit, errors } = useAddDocumentModal()
+    const { control, handleSubmit, onSubmit, errors, actionLoading } = useAddDocumentModal(setIsAddDocumentModal)
     return <form onSubmit={handleSubmit(onSubmit)} className="px-3 w-[440px] m-auto max-w-full gap-10 items-center">
         <section className="mt-2">
             <span className="font-light text-slate-700 text-xs">عنوان:</span>
@@ -47,6 +47,7 @@ export default function Index({ setIsAddDocumentModal }: { setIsAddDocumentModal
 
         <section className="flex px-2 bg-white bottom-0 gap-2 mt-4 py-3 justify-end w-full">
             <CustomButton
+                type="button"
                 onClick={() => setIsAddDocumentModal(false)}
                 variant="outlined"
                 className="rounded-full"
@@ -54,7 +55,7 @@ export default function Index({ setIsAddDocumentModal }: { setIsAddDocumentModal
                 <span>بازگشت</span>
                 <Undo2Icon className="w-[20px]" />
             </CustomButton>
-            <CustomButton className="rounded-full">
+            <CustomButton loading={actionLoading} className="rounded-full">
                 <span>تایید</span>
             </CustomButton>
         </section>

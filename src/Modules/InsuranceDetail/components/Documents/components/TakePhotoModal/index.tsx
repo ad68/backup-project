@@ -1,13 +1,21 @@
 import CustomButton from "@/components/kit/CustomButton";
-import { CameraIcon, SwitchCameraIcon } from "lucide-react";
+import { toastSuccess } from "@/components/kit/toast";
+import { useAxiosWithToken } from "@/hooks";
+
+import { CameraIcon, SaveAllIcon, SwitchCameraIcon, Undo2Icon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Webcam from "react-webcam";
 
-export default function WebcamWithWatermark() {
+export default function WebcamWithWatermark({ setTakePhotoModalIsOpen }: any) {
     const webcamRef = useRef<Webcam>(null);
+    const [searchParams] = useSearchParams()
+    const reviewId = searchParams.get("reviewId")
+    const subjectId = searchParams.get("subjectId")
     const [cameraMode, setCameraMode] = useState("environment")
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [saveLoading, setSaveLoading] = useState(false)
     const [base64Image, setBase64Image] = useState<string | null>(null);
     const [base64WithFormat, setBase64WithFormat] = useState<string | null>(null)
     const [imageMimeType, setImageMimeType] = useState<string | null>(null);
@@ -90,7 +98,23 @@ export default function WebcamWithWatermark() {
             }
         };
     };
-
+    const savePciture = () => {
+        setSaveLoading(true)
+        const params = {
+            reviewId: reviewId,
+            subjectId: subjectId,
+            title: "camera-document",
+            name: "camera-document" + "." + imageMimeType,
+            fileContentInBase64: base64Image
+        }
+        useAxiosWithToken.post("/sabka/technical/annex/add/subject-file", params)
+            .then(() => {
+                toastSuccess("سند شما با موفقیت بارگذاری شد")
+                setTakePhotoModalIsOpen(false)
+            }
+            )
+            .finally(() => setSaveLoading(false))
+    }
     useEffect(() => {
         console.log("base64", base64Image)
         console.log("base64Format", base64WithFormat)
@@ -103,6 +127,7 @@ export default function WebcamWithWatermark() {
                 <Webcam
                     ref={webcamRef}
                     audio={false}
+                    mirrored={true}
                     screenshotFormat="image/png"
                     videoConstraints={{ facingMode: cameraMode }}
                     style={{
@@ -134,15 +159,31 @@ export default function WebcamWithWatermark() {
                         </button>
                         <span className="text-[14px] font-bold">تعویض دوربین</span>
                     </div>
+
                 </>}
-                {capturedImage && !isLoading && <CustomButton className="" onClick={() => setCapturedImage(null)}>
+                {capturedImage && !isLoading && <CustomButton className="rounded-full bg-red-500" onClick={() => setCapturedImage(null)}>
                     <span className="text-xs mt-1">عکاسی مجدد</span>
                     <CameraIcon className="w-[20px]" />
                 </CustomButton>}
 
 
             </div>
+            <div className="flex gap-2 justify-end w-full absolute bottom-2 left-2">
+                <CustomButton
+                    type="button"
+                    onClick={() => setTakePhotoModalIsOpen(false)}
+                    variant="outlined"
+                    className="rounded-full"
+                >
+                    <span>بازگشت</span>
+                    <Undo2Icon className="w-[20px]" />
+                </CustomButton>
+                {capturedImage && <CustomButton loading={saveLoading} onClick={savePciture} className="rounded-full w-[170px]">
+                    <span>ذخیره عکس</span>
+                    <SaveAllIcon />
+                </CustomButton>}
 
+            </div>
         </div>
     );
 }

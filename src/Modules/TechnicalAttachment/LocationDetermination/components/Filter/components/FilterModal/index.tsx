@@ -6,7 +6,7 @@ import { SearchIcon, Undo2Icon } from "lucide-react";
 import useFilter from "../../Filter.biz";
 
 export default function Index({ isOpen, setIsOpen, setSearchParams }: FilterModalProp) {
-    const { provinces, setProvinceId, counties, setCountyId, districts, setDistrictId, searchList, places, ruralDistricts, setPlaceId, setRuralDistrictId, placeId, districtId, ruralDistrictId, provinceId, countyId, productId, setProductId, nationalCode, setNationalCode, policyId, setPolicyId, clearForm } = useFilter(setSearchParams)
+    const { provinces, setProvinceId, counties, setCountyId, subSectionId, setSubSectionId, districts, setDistrictId, searchList, places, ruralDistricts, products, setPlaceId, setRuralDistrictId, placeId, districtId, ruralDistrictId, provinceId, countyId, productId, setProductId, nationalCode, setNationalCode, policyId, setPolicyId, clearForm } = useFilter(setSearchParams)
     return <SlidingModal isOpen={isOpen} keepChildren={true}>
         <section className="p-4">
             <section className="w-full flex justify-end">
@@ -50,6 +50,17 @@ export default function Index({ isOpen, setIsOpen, setSearchParams }: FilterModa
             <section className="mt-1">
                 <span className="font-light text-slate-700 text-xs">آبادی یا شهر:</span>
                 <CustomSelect value={placeId} options={places.map((item: any) => ({ label: item.title, value: item.id }))} onChange={(e) => { setPlaceId(e) }} />
+            </section>
+            <section className="mt-5">
+                <span className="text-primary font-bold text-sm">بخش سوم:</span>
+            </section>
+            <section className="mt-1">
+                <span className="font-light text-slate-700 text-xs">زیربخش:</span>
+                <CustomSelect value={subSectionId} options={[{ label: "محصولات زراعی", value: "1" }]} onChange={(e) => setSubSectionId(e)} />
+            </section>
+            <section className="mt-1">
+                <span className="font-light text-slate-700 text-xs"> موضوع:</span>
+                <CustomSelect value={productId} options={products.map((item: any) => ({ label: item.title, value: item.id }))} onChange={(e) => { setProductId(e) }} />
             </section>
             <section className="flex sticky bg-white bottom-0 gap-2 mt-4 border-t py-3 justify-end w-full">
                 <button onClick={() => setIsOpen(false)} className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">

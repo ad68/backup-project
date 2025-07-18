@@ -10,12 +10,15 @@ const useFilter = (setSearchParams: (value: any) => void) => {
     const [districtId, setDistrictId] = useState<any>("")
     const [formReviewId, setFormReviewId] = useState<string>("")
     const [productId, setProductId] = useState<string>("")
+    const [products, setProducts] = useState<any>([])
     const [nationalCode, setNationalCode] = useState<string>("")
     const [policyId, setPolicyId] = useState<string>("")
     const [ruralDistricts, setRuralDistricts] = useState<any>([])
     const [ruralDistrictId, setRuralDistrictId] = useState("")
     const [places, setPlaces] = useState<any>([])
     const [placeId, setPlaceId] = useState("")
+    const [subSectionId, setSubSectionId] = useState("1")
+
     const getProvinceList = () => {
         useAxiosWithToken.post("/sabka/admin-levels/get/provinces").then(res => {
             setProvinces(res.data)
@@ -43,6 +46,12 @@ const useFilter = (setSearchParams: (value: any) => void) => {
         const params = { provinceId: provinceId, countyId: countyId, ruralDistrictId: ruralDistrictId, districtId: districtId }
         useAxiosWithToken.post("/sabka/admin-levels/get/places", params).then(res => {
             setPlaces(res.data)
+        }).catch()
+    }
+    const getProducts = () => {
+        const params = { subSectionId: parseInt(subSectionId), }
+        useAxiosWithToken.post("/sabka/plans/get/products", params).then(res => {
+            setProducts(res.data)
         }).catch()
     }
     const clearForm = () => {
@@ -101,6 +110,10 @@ const useFilter = (setSearchParams: (value: any) => void) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ruralDistrictId])
+    useEffect(() => {
+        getProducts()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [subSectionId])
     const searchList = () => {
         const params = {
             formReviewId: formReviewId,
@@ -138,9 +151,13 @@ const useFilter = (setSearchParams: (value: any) => void) => {
         setFormReviewId,
         nationalCode,
         setNationalCode,
+        products,
         productId,
         setProductId,
-        clearForm
+        clearForm,
+        subSectionId,
+        setSubSectionId,
+
     }
 }
 export default useFilter

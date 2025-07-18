@@ -6,10 +6,11 @@ type CustomButtonProps = {
     className?: string;
     variant?: "default" | "outlined";
     loading?: boolean
+    type?: "submit" | "reset" | "button" | undefined
 };
 
 const CustomButton = forwardRef<HTMLButtonElement, CustomButtonProps>(
-    ({ onClick, children, className, loading, variant = "default" }, ref) => {
+    ({ onClick, children, type, className, loading, variant = "default" }, ref) => {
         const baseStyles =
             "relative overflow-hidden w-auto min-w-[100px] flex justify-center items-center px-[10px] h-10 rounded-[8px] border transition-all";
         const defaultStyles =
@@ -20,6 +21,7 @@ const CustomButton = forwardRef<HTMLButtonElement, CustomButtonProps>(
             <button
                 ref={ref}
                 onClick={onClick}
+                type={type ? type : "submit"}
                 disabled={loading}
                 className={`group  active:scale-[0.98] disabled:opacity-70 ${baseStyles} ${variant === "default" ? defaultStyles : outlinedStyles
                     } ${className}`}
