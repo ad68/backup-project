@@ -26,7 +26,7 @@ const CustomButton = forwardRef<HTMLButtonElement, CustomButtonProps>(
                 dir="rtl"
                 style={{ textAlign: "right" }}
             >
-                {loading ? <section className="btnLoader"></section> : <span className="flex justify-center gap-[3px] items-center z-10">{children}</span>}
+                {loading ? <section className="btnLoader"></section> : <span className="flex justify-center gap-[4px] items-center z-10">{children}</span>}
 
 
             </button>

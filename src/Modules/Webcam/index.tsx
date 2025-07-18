@@ -1,5 +1,5 @@
 import CustomButton from "@/components/kit/CustomButton";
-import { SwitchCameraIcon, Undo2Icon } from "lucide-react";
+import { CameraIcon, SwitchCameraIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
@@ -118,26 +118,31 @@ export default function WebcamWithWatermark() {
                     <img className="w-[95%] m-auto rounded-[20px]" src={capturedImage} alt="Captured with watermark" />
                 </div>
             )}
-            <div className="flex gap-[4px] justify-center items-center mt-[20px]">
+            <div className="flex gap-[4px] relative w-full justify-center items-center mt-[20px]">
                 {!capturedImage && <>
-                    <div className="relative w-[54px] h-[54px]">
-                        <button onClick={capture} className="w-[53px] flex justify-center items-center h-[53px] absolute top-[1px] right-[1px] bg-slate-500 border-[4px] border-slate-200 rounded-full" disabled={isLoading}>
+                    <div className="relative flex w-[100px] h-[100px]">
+                        <button onClick={capture} className="w-[70px] h-[70px] flex justify-center items-center absolute top-[6px] right-[6px] bg-slate-500 border-[4px] border-slate-200 rounded-full" disabled={isLoading}>
                             {/*  <ApertureIcon className="text-white" /> */}
                         </button>
-
                         {isLoading && <div className="absolute right-0 top-0">
                             <span className="cameraLoader"></span>
                         </div>}
+                        <span className="text-xs absolute bottom-0 mr-2">گرفتن عکس</span>
+                    </div>
+                    <div className="flex flex-col items-center gap-2 absolute right-[10px] top-5">
+                        <button onClick={() => setCameraMode(cameraMode === "user" ? "environment" : "user")} className="w-[50px] h-[50px] flex bg-slate-500 border-[4px] border-slate-200 rounded-full justify-center items-center">
+                            <SwitchCameraIcon className="text-white w-[20px]" />
+                        </button>
+                        <span className="text-xs">تعویض دوربین</span>
                     </div>
                 </>}
 
-                {capturedImage && !isLoading && <CustomButton onClick={() => setCapturedImage(null)}>
-                    بازگشت
-                    <Undo2Icon />
+                {capturedImage && !isLoading && <CustomButton className="" onClick={() => setCapturedImage(null)}>
+                    <span className="text-xs mt-1">عکاسی مجدد</span>
+                    <CameraIcon className="w-[20px]" />
                 </CustomButton>}
-                <button onClick={() => setCameraMode(cameraMode === "user" ? "environment" : "user")} className="w-[40px] absolute left-[20px] h-[40px] flex bg-slate-500 border-[4px] border-slate-200 rounded-full justify-center items-center">
-                    <SwitchCameraIcon className="text-white w-[20px]" />
-                </button>
+
+
             </div>
 
         </div>
