@@ -1,15 +1,21 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
 
 export default function WebcamWithWatermark() {
     const webcamRef = useRef<Webcam>(null);
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const capture = () => {
         if (!webcamRef.current) return;
 
+        setIsLoading(true); // شروع لودینگ
+
         const imageSrc = webcamRef.current.getScreenshot();
-        if (!imageSrc) return;
+        if (!imageSrc) {
+            setIsLoading(false);
+            return;
+        }
 
         const img = new Image();
         img.src = imageSrc;
@@ -20,61 +26,70 @@ export default function WebcamWithWatermark() {
             canvas.height = img.height;
 
             const ctx = canvas.getContext("2d");
-            if (!ctx) return;
+            if (!ctx) {
+                setIsLoading(false);
+                return;
+            }
 
             ctx.drawImage(img, 0, 0);
 
-            const watermarkText = "© My Watermark";
-            ctx.font = "30px Arial";
-            ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+            ctx.font = "24px Arial";
             ctx.textAlign = "right";
             ctx.textBaseline = "bottom";
-            ctx.fillText(watermarkText, canvas.width - 20, canvas.height - 60);
 
             const now = new Date();
             const dateStr = now.toLocaleDateString("fa-IR");
             const timeStr = now.toLocaleTimeString("fa-IR");
             const dateTimeText = `${dateStr} ${timeStr}`;
-            ctx.font = "24px Arial";
-            ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
-            ctx.fillText(dateTimeText, canvas.width - 20, canvas.height - 35);
 
-            // حالا سعی می‌کنیم موقعیت جغرافیایی بگیریم
+            const drawTextWithBackground = (text: string, y: number, color: string) => {
+                const padding = 6;
+                const textWidth = ctx.measureText(text).width;
+                const textHeight = 24;
+
+                ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+                ctx.fillRect(canvas.width - textWidth - padding * 2 - 10, y - textHeight - padding / 2, textWidth + padding * 2, textHeight + padding);
+
+                ctx.fillStyle = color;
+                ctx.fillText(text, canvas.width - 20, y);
+            };
+
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         const lat = position.coords.latitude.toFixed(5);
                         const lng = position.coords.longitude.toFixed(5);
-
                         const coordText = `Lat: ${lat}, Lng: ${lng}`;
-                        ctx.font = "20px Arial";
-                        ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
-                        ctx.fillText(coordText, canvas.width - 20, canvas.height - 10);
+
+                        drawTextWithBackground(coordText, canvas.height - 10, "red");
+                        drawTextWithBackground(dateTimeText, canvas.height - 40, "white");
 
                         const finalImage = canvas.toDataURL("image/png");
                         setCapturedImage(finalImage);
+                        setIsLoading(false);
                     },
                     () => {
-                        // اگر اجازه نداد یا خطا بود، عکس بدون مختصات ثبت میشه
+                        drawTextWithBackground(dateTimeText, canvas.height - 10, "white");
+
                         const finalImage = canvas.toDataURL("image/png");
                         setCapturedImage(finalImage);
+                        setIsLoading(false);
                     }
                 );
             } else {
-                // مرورگر پشتیبانی نمی‌کنه
+                drawTextWithBackground(dateTimeText, canvas.height - 10, "white");
                 const finalImage = canvas.toDataURL("image/png");
                 setCapturedImage(finalImage);
+                setIsLoading(false);
             }
         };
     };
-
-
 
     return (
         <div style={{ maxWidth: 600, margin: "auto", padding: 20, textAlign: "center" }}>
             <h2>دوربین با react-webcam و واترمارک</h2>
 
-            {!capturedImage && (
+            {!capturedImage && !isLoading && (
                 <Webcam
                     audio={false}
                     ref={webcamRef}
@@ -85,17 +100,19 @@ export default function WebcamWithWatermark() {
             )}
 
             <div style={{ marginTop: 10 }}>
-                <button onClick={capture} disabled={!!capturedImage} style={{ marginRight: 10 }}>
-                    گرفتن عکس
+                <button onClick={capture} disabled={isLoading}>
+                    {isLoading ? "در حال پردازش..." : "گرفتن عکس"}
                 </button>
-                {capturedImage && (
-                    <button onClick={() => setCapturedImage(null)}>
+                {capturedImage && !isLoading && (
+                    <button onClick={() => setCapturedImage(null)} style={{ marginLeft: 10 }}>
                         گرفتن عکس مجدد
                     </button>
                 )}
             </div>
 
-            {capturedImage && (
+            {isLoading && <p style={{ marginTop: 20 }}>⏳ لطفا صبر کنید...</p>}
+
+            {capturedImage && !isLoading && (
                 <div style={{ marginTop: 20 }}>
                     <h3>عکس گرفته شده با واترمارک:</h3>
                     <img src={capturedImage} alt="Captured with watermark" style={{ width: "100%" }} />
