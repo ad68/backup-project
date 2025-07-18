@@ -1,3 +1,5 @@
+import CustomButton from "@/components/kit/CustomButton";
+import { Undo2Icon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
@@ -94,7 +96,7 @@ export default function WebcamWithWatermark() {
 
     }, [base64Image, base64WithFormat, imageMimeType])
     return (
-        <div className="" style={{ position: "relative", width: "100%", height: "100vh", }}>
+        <div className="relative w-full h-screen flex flex-col justify-center items-center">
             {!capturedImage && (
                 <Webcam
                     ref={webcamRef}
@@ -102,31 +104,33 @@ export default function WebcamWithWatermark() {
                     screenshotFormat="image/png"
                     videoConstraints={{ facingMode: "environment" }}
                     style={{
-                        top: 0,
-                        left: 0,
-                        width: '90%',
-                        margin: 'auto',
+                        width: '95%',
+
                         marginTop: "20px",
                         borderRadius: "20px",
-                        objectFit: "cover",
-                        zIndex: 1,
                     }}
                 />
             )}
             {capturedImage && !isLoading && (
                 <div style={{ marginTop: 20 }}>
-                    <img src={capturedImage} alt="Captured with watermark" style={{ width: "100%" }} />
+                    <img className="w-[95%] m-auto rounded-[20px]" src={capturedImage} alt="Captured with watermark" />
                 </div>
             )}
-            <div className="flex justify-center mt-[20px]">
+            <div className="flex gap-[4px] justify-center items-center mt-[20px]">
                 <div className="relative w-[54px] h-[54px]">
                     <button onClick={capture} className="w-[53px] h-[53px] absolute top-[1px] right-[1px] bg-slate-500 border-[4px] border-slate-200 rounded-full" disabled={isLoading}>
                     </button>
+
                     {isLoading && <div className="absolute right-0 top-0">
                         <span className="cameraLoader"></span>
                     </div>}
                 </div>
+                {capturedImage && !isLoading && <CustomButton onClick={() => setCapturedImage(null)}>
+                    بازگشت
+                    <Undo2Icon />
+                </CustomButton>}
             </div>
+
         </div>
     );
 }
