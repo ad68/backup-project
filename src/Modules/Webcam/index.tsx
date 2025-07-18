@@ -1,10 +1,11 @@
 import CustomButton from "@/components/kit/CustomButton";
-import { Undo2Icon } from "lucide-react";
+import { ApertureIcon, CameraIcon, SwitchCamera, SwitchCameraIcon, Undo2Icon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
 export default function WebcamWithWatermark() {
     const webcamRef = useRef<Webcam>(null);
+    const [cameraMode, setCameraMode] = useState("environment")
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [base64Image, setBase64Image] = useState<string | null>(null);
@@ -89,6 +90,9 @@ export default function WebcamWithWatermark() {
             }
         };
     };
+    const changeCamera = () => {
+
+    }
     useEffect(() => {
         console.log("base64", base64Image)
         console.log("base64Format", base64WithFormat)
@@ -96,13 +100,13 @@ export default function WebcamWithWatermark() {
 
     }, [base64Image, base64WithFormat, imageMimeType])
     return (
-        <div className="relative w-full h-screen flex flex-col justify-center items-center">
+        <div className="relative w-full h-screen flex flex-col  items-center">
             {!capturedImage && (
                 <Webcam
                     ref={webcamRef}
                     audio={false}
                     screenshotFormat="image/png"
-                    videoConstraints={{ facingMode: "environment" }}
+                    videoConstraints={{ facingMode: cameraMode }}
                     style={{
                         width: '95%',
 
@@ -117,18 +121,25 @@ export default function WebcamWithWatermark() {
                 </div>
             )}
             <div className="flex gap-[4px] justify-center items-center mt-[20px]">
-                <div className="relative w-[54px] h-[54px]">
-                    <button onClick={capture} className="w-[53px] h-[53px] absolute top-[1px] right-[1px] bg-slate-500 border-[4px] border-slate-200 rounded-full" disabled={isLoading}>
-                    </button>
+                {!capturedImage && <>
+                    <div className="relative w-[54px] h-[54px]">
+                        <button onClick={capture} className="w-[53px] flex justify-center items-center h-[53px] absolute top-[1px] right-[1px] bg-slate-500 border-[4px] border-slate-200 rounded-full" disabled={isLoading}>
+                            {/*  <ApertureIcon className="text-white" /> */}
+                        </button>
 
-                    {isLoading && <div className="absolute right-0 top-0">
-                        <span className="cameraLoader"></span>
-                    </div>}
-                </div>
+                        {isLoading && <div className="absolute right-0 top-0">
+                            <span className="cameraLoader"></span>
+                        </div>}
+                    </div>
+                </>}
+
                 {capturedImage && !isLoading && <CustomButton onClick={() => setCapturedImage(null)}>
                     بازگشت
                     <Undo2Icon />
                 </CustomButton>}
+                <button onClick={() => setCameraMode(cameraMode === "user" ? "environment" : "user")} className="w-[40px] absolute left-[20px] h-[40px] flex bg-slate-500 border-[4px] border-slate-200 rounded-full justify-center items-center">
+                    <SwitchCameraIcon className="text-white w-[20px]" />
+                </button>
             </div>
 
         </div>
