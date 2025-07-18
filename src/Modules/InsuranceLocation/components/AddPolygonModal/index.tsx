@@ -1,34 +1,31 @@
-
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw";
 import "leaflet-draw/dist/leaflet.draw.css";
 import WKT from "terraformer-wkt-parser";
-
 import { useEffect, useRef, useState } from "react";
-import { CheckIcon, DeleteIcon, Edit2Icon, MapPinHouseIcon } from "lucide-react";
+import { CheckIcon, DeleteIcon, Edit2Icon, MapPinHouseIcon, Undo2 } from "lucide-react";
 import type { AddPolyGonProp } from "./addPolygon.typs";
 import CustomButton from "@/components/kit/CustomButton";
+import { WKTToPolygon } from "@/utils/global";
 
-export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt }: AddPolyGonProp) {
+export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPolygon }: AddPolyGonProp) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapRefInstance = useRef<L.Map | null>(null);
   const drawnItemsRef = useRef<L.FeatureGroup>(new L.FeatureGroup());
   const drawControlRef = useRef<L.Control.Draw | null>(null);
-
   const [polygonsState, setPolygonsState] = useState<L.LatLng[][]>([]);
-  const [hasPolygon, setHasPolygon] = useState(false); // آیا پلی‌گانی وجود دارد؟
-  const [isEditing, setIsEditing] = useState(false); // آیا در حالت ویرایش هستیم؟
+  const [hasPolygon, setHasPolygon] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
+    const def = defaultPolygon
     if (mapRef.current && !mapRefInstance.current) {
       const map = L.map(mapRef.current, {
         zoomControl: false,
         attributionControl: false,
-      }).setView([35.70218, 51.3386], 11);
-
+      }).setView(def ? WKTToPolygon(def)[0] : [35.70218, 51.3386], 16);
       mapRefInstance.current = map;
-
       const baseLayer = L.tileLayer(
         "https://mt{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}",
         {
@@ -60,10 +57,11 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt }: AddPoly
           featureGroup: drawnItemsRef.current,
         },
       });
+
       drawControlRef.current = drawControl;
       map.addControl(drawControl);
 
-      // رویدادها
+      // ✅ رویدادها
       map.on(L.Draw.Event.CREATED, function (event: any) {
         const layer = event.layer;
         drawnItemsRef.current.addLayer(layer);
@@ -77,10 +75,35 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt }: AddPoly
       map.on(L.Draw.Event.DELETED, function () {
         updatePolygonState();
       });
+
+
+      /*    const defaultPolygonCoords: L.LatLngExpression[] = [
+           [35.701, 51.335],
+           [35.703, 51.336],
+           [35.702, 51.339],
+           [35.701, 51.335],
+         ]; */
+
+      if (defaultPolygon) {
+        /* const defaultPolygonCoords2: L.LatLngExpression[] = WKTToPolygon("POLYGON ((51.335 35.701, 51.336 35.703, 51.339 35.702, 51.335 35.701))"); */
+        const myDefaultPolygon = L.polygon(WKTToPolygon(defaultPolygon), {
+          color: "red",
+          weight: 2,
+          fillColor: "orange",
+          fillOpacity: 0.5,
+        });
+        drawnItemsRef.current.addLayer(myDefaultPolygon);
+        updatePolygonState();
+        console.log("defaultPolygon", defaultPolygon)
+        console.log("defaultPolygon", WKTToPolygon(defaultPolygon))
+      }
+
     }
+
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // آپدیت استیت پلی‌گان‌ها
   const updatePolygonState = () => {
     const polygons: L.LatLng[][] = [];
     drawnItemsRef.current.eachLayer((layer: any) => {
@@ -93,20 +116,19 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt }: AddPoly
     });
 
     setPolygonsState(polygons);
-    setHasPolygon(polygons.length > 0); // ✅ بروزرسانی وضعیت وجود پلی‌گان
-    logPolygonsAsWkt()
+    setHasPolygon(polygons.length > 0);
+    logPolygonsAsWkt();
   };
+
   const logPolygonsAsWkt = () => {
     if (!drawnItemsRef.current) return;
-
     const geojson = drawnItemsRef.current.toGeoJSON();
-
     if ("features" in geojson) {
       geojson.features.forEach((feature: any) => {
         if (feature.geometry.type === "Polygon") {
           const wkt = WKT.convert(feature.geometry);
           console.log("✅ Polygon as WKT:", wkt);
-          setGeoInWkt(wkt)
+          setGeoInWkt(wkt);
         }
       });
     }
@@ -121,87 +143,90 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt }: AddPoly
   const deleteAll = () => {
     drawnItemsRef.current.clearLayers();
     updatePolygonState();
-    setIsEditing(false); // اگر در حال ویرایش بودیم، تمام کن
+    setGeoInWkt("")
+    setIsEditing(false);
   };
 
   const enableEdit = () => {
     if (!drawControlRef.current) return;
     (drawControlRef.current as any)._toolbars.edit._modes.edit.handler.enable();
-    setIsEditing(true); // ✅ شروع ویرایش
+    setIsEditing(true);
   };
 
   const disableEditAndLog = () => {
     if (!drawControlRef.current) return;
     (drawControlRef.current as any)._toolbars.edit._modes.edit.handler.disable();
     updatePolygonState();
-    setIsEditing(false); // ✅ پایان ویرایش
+    setIsEditing(false);
   };
+
   useEffect(() => {
-
-    if (polygonsState.length > 0) {
-      generateAndUploadKml()
-    }
+    /* if (polygonsState.length > 0) {
+      generateAndUploadKml();
+    } */
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [polygonsState])
-  const generateAndUploadKml = () => {
-    if (!drawnItemsRef.current) return;
+  }, [polygonsState]);
 
-    const geojson = drawnItemsRef.current.toGeoJSON();
+  /*  const generateAndUploadKml = () => {
+     if (!drawnItemsRef.current) return;
+ 
+     const geojson = drawnItemsRef.current.toGeoJSON();
+ 
+     let kml = `<?xml version="1.0" encoding="UTF-8"?>
+       <kml xmlns="http://www.opengis.net/kml/2.2">
+         <Document>
+     `;
+ 
+     if ("features" in geojson) {
+       geojson.features.forEach((feature: any) => {
+         if (feature.geometry.type === "Polygon") {
+           const coordinates = feature.geometry.coordinates[0]
+             .map(([lng, lat]: [number, number]) => `${lng},${lat},0`)
+             .join(" ");
+ 
+           kml += `
+             <Placemark>
+               <Polygon>
+                 <outerBoundaryIs>
+                   <LinearRing>
+                     <coordinates>${coordinates}</coordinates>
+                   </LinearRing>
+                 </outerBoundaryIs>
+               </Polygon>
+             </Placemark>
+           `;
+         }
+       });
+     }
+ 
+     kml += `
+       </Document>
+     </kml>`;
+ 
+     uploadKmlToApi(kml);
+   }; */
 
-    let kml = `<?xml version="1.0" encoding="UTF-8"?>
-      <kml xmlns="http://www.opengis.net/kml/2.2">
-        <Document>
-    `;
-
-    if ("features" in geojson) {
-      geojson.features.forEach((feature: any) => {
-        if (feature.geometry.type === "Polygon") {
-          const coordinates = feature.geometry.coordinates[0]
-            .map(([lng, lat]: [number, number]) => `${lng},${lat},0`)
-            .join(" ");
-
-          kml += `
-            <Placemark>
-              <Polygon>
-                <outerBoundaryIs>
-                  <LinearRing>
-                    <coordinates>${coordinates}</coordinates>
-                  </LinearRing>
-                </outerBoundaryIs>
-              </Polygon>
-            </Placemark>
-          `;
-        }
-      });
-    }
-
-    kml += `
-      </Document>
-    </kml>`;
-
-    uploadKmlToApi(kml);
-  };
-  const uploadKmlToApi = async (kmlText: string) => {
-    const blob = new Blob([kmlText], {
-      type: "application/vnd.google-earth.kml+xml",
-    });
-
-    const formData = new FormData();
-    formData.append("file", blob, "polygons.kml");
-
-    try {
-      const res = await fetch("/api/upload-kml", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) throw new Error("Upload failed");
-      const data = await res.json();
-      console.log("✅ Upload success:", data);
-    } catch (err) {
-      console.error("❌ Upload error:", err);
-    }
-  };
+  /*  const uploadKmlToApi = async (kmlText: string) => {
+     const blob = new Blob([kmlText], {
+       type: "application/vnd.google-earth.kml+xml",
+     });
+ 
+     const formData = new FormData();
+     formData.append("file", blob, "polygons.kml");
+ 
+     try {
+       const res = await fetch("/api/upload-kml", {
+         method: "POST",
+         body: formData,
+       });
+ 
+       if (!res.ok) throw new Error("Upload failed");
+       const data = await res.json();
+       console.log("✅ Upload success:", data);
+     } catch (err) {
+       console.error("❌ Upload error:", err);
+     }
+   }; */
 
   return (
     <section style={{ height: "95%", width: "100%", position: "relative" }}>
@@ -216,7 +241,6 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt }: AddPoly
               <span className="text-xs">شروع</span>
             </button>
           )}
-
 
           {hasPolygon && (
             <>
@@ -247,21 +271,23 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt }: AddPoly
                   <span className="text-xs">پایان ویرایش</span>
                 </button>
               )}
-
             </>
           )}
-
         </section>
       </section>
-      <section ref={mapRef} className="h-[87%] w-full" />
-      <section className="mt-2 h-[8%] flex justify-end pl-2">
+
+      <section ref={mapRef} className="h-[87%] w-full gap-1" />
+
+      <section className="mt-2 h-[8%] gap-1 flex justify-end pl-2">
+        <CustomButton variant="outlined" className="rounded-full" onClick={() => { setIsAddPolygonModalOpen(false); deleteAll() }}>
+          <Undo2 className="w-[20px]" />
+          <span className="text-xs">بازگشت</span>
+        </CustomButton>
         <CustomButton className="rounded-full" onClick={() => setIsAddPolygonModalOpen(false)}>
           <CheckIcon className="w-[20px]" />
           <span className="text-xs">تایید</span>
         </CustomButton>
       </section>
-
-
     </section>
   );
 }

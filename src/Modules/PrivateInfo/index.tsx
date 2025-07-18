@@ -2,13 +2,14 @@ import CustomSelect from "@/components/kit/CustomSelect";
 import CustomTextBox from "@/components/kit/CustomTextBox";
 import { InfoIcon, SearchIcon, Undo2Icon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import usePrivateInfo from "./privateInfo.biz";
 
 
 
 
 export default function Index() {
     const navigate = useNavigate()
-
+    const { keshtOptions } = usePrivateInfo()
     return <section className="m-auto p-4 w-[440px]  max-w-full relative">
         <section className="mt-5 text-center">
             <span className="text-primary font-bold text-lg">اطلاعات اختصاصی:</span>
@@ -65,7 +66,7 @@ export default function Index() {
         </section>
         <section className="mt-1">
             <span className="font-light text-slate-700 text-xs">نوع مالکیت:</span>
-            <CustomSelect options={[{ label: "test 1", value: "1" }]} onChange={() => { }} />
+            <CustomSelect options={keshtOptions} onChange={() => { }} />
         </section>
         <section className="mt-5">
             <span className="text-primary font-bold text-sm">آبیاری:</span>

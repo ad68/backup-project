@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'prompt',
-      includeAssets: ['favicon.svg'],
+      includeAssets: ['favicon.ico'],
       manifest: {
         name: 'بکاپ-صندوق کشاورزی',
         short_name: 'بکاپ',

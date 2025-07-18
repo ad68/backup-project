@@ -12,7 +12,8 @@ export default function Index({ item }: { item: PolicyItem }) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
     const [searchParams] = useSearchParams();
     const reviewId = searchParams.get("reviewId")
-
+    const subjectId = searchParams.get("subjectId")
+    const policyId = searchParams.get("policyId")
     return <section className="w-[440px] max-w-full p-2">
         <section className={`border relative flex flex-col gap-4 bg-white border-slate-100  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[160px]`} shadow-lg`}>
             <section className="flex justify-between w-full">
@@ -70,14 +71,15 @@ export default function Index({ item }: { item: PolicyItem }) {
                             </section>
                         </PopoverContent>
                     </Popover>
-                    <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${item.subjectItemId}&featureId=${item.featureId}&policyId=${item.policyItemId}`}>
+                    {!item.featureId && <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}`}>
                         <button className="border w-[90px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
                             <span className="font-light text-sm">تعیین مکان</span>
                         </button>
-                    </Link>
-                    {item.featureId && <button className="border w-[90px] bg-red-500 border-red-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
-                        <span className="font-light text-sm">حذف مکان</span>
-                    </button>}
+                    </Link>}
+
+                    {item.featureId && <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}`}> <button className="border w-[110px] bg-orange-500 border-orange-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
+                        <span className="font-light text-sm">ویرایش مکان</span>
+                    </button></Link>}
 
                 </section>
                 <button onClick={() => setIsOpenDtl(!isOpenDtl)} className="bg-yellow-400 shadow-md w-[36px] h-[30px] flex justify-center items-center rounded-full">

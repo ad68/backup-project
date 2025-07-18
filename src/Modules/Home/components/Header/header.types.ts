@@ -1,4 +1,4 @@
 export type ActionsCountProp = {
     title: string,
-    count: number
+    count: number | string
 }

@@ -1,7 +1,9 @@
+import { toastSuccess } from "@/components/kit/toast";
 import { useAxiosWithToken } from "@/hooks";
 import { useEffect, useState } from "react"
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 const useInsuranceLocation = () => {
+    const navigate = useNavigate();
     const [isOpenDtl, setIsOpenDtl] = useState<boolean>(false)
     const [isOpenDtl1, setIsOpenDtl1] = useState<boolean>(false)
     const [fetchLoading, setFetchLoading] = useState<boolean>(false)
@@ -13,7 +15,7 @@ const useInsuranceLocation = () => {
     const reviewId = searchParams.get("reviewId")
     const policyId = searchParams.get("policyId")
     const subjectId = searchParams.get("subjectId")
-
+    const subjectItemId = searchParams.get("subjectItemId")
     const featureId = searchParams.get("featureId")
     const [isAddPolygonModalOpen, setIsAddPolygonModalOpen] = useState<boolean>(false)
     const getFeatureInfo = () => {
@@ -24,7 +26,7 @@ const useInsuranceLocation = () => {
             featureId: featureId === "null" ? null : featureId
         }
         useAxiosWithToken.post("/sabka/technical/annex/get/feature", params).then(res => {
-            setFeatureData(res.data)
+            setFeatureData(res.data.wkt)
         }).finally(() => setFetchLoading(false))
     }
     const locateSubjectItem = () => {
@@ -38,12 +40,29 @@ const useInsuranceLocation = () => {
         }
         useAxiosWithToken.post("/sabka/technical/annex/add/locate-subject-item", params).finally(() => { setActionLoading(false) })
     }
+    const saveMapPolygon = () => {
+        const params = {
+            reviewId: reviewId,
+            policyId: policyId,
+            subjectItemId: subjectItemId,
+            subjectNotExist: subjectNotExist,
+            geoInWkt: geoInWkt
+        }
+        setActionLoading(true)
+        useAxiosWithToken.post("/sabka/technical/annex/add/locate-subject-item", params).then(() => {
+            navigate(-1)
+            toastSuccess("عملیات با موفقیت اانجام شد")
+        }).catch().finally(() => setActionLoading(false))
+    }
     useEffect(() => {
-        getFeatureInfo()
+        if (featureId && featureId !== "null") {
+            getFeatureInfo()
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return {
-        isOpenDtl, setGeoInWkt, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isAddPolygonModalOpen, setIsAddPolygonModalOpen, setSubjectNotExist, reviewId, subjectId, featureId, fetchLoading, featureData, locateSubjectItem, actionLoading
+        isOpenDtl, setGeoInWkt, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isAddPolygonModalOpen, setIsAddPolygonModalOpen, setSubjectNotExist, reviewId, subjectId, featureId, fetchLoading, featureData, locateSubjectItem, actionLoading, saveMapPolygon
     }
 }
 export default useInsuranceLocation

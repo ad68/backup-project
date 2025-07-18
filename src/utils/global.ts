@@ -108,3 +108,22 @@ export const getPureBase64 = (base64: string): string => {
     const index = base64.indexOf("base64,");
     return index !== -1 ? base64.slice(index + 7) : base64;
 };
+
+
+
+export const WKTToPolygon = (wkt: string): [number, number][] => {
+    if (!wkt.startsWith("POLYGON ((") || !wkt.endsWith("))")) {
+        throw new Error("Invalid WKT POLYGON format");
+    }
+    const coordinatesPart = wkt
+        .replace("POLYGON ((", "")
+        .replace("))", "")
+        .trim();
+
+    const points = coordinatesPart.split(",").map((point) => {
+        const [lng, lat] = point.trim().split(" ").map(Number);
+        return [lat, lng] as [number, number];
+    });
+
+    return points;
+};

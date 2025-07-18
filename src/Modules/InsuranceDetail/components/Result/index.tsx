@@ -4,7 +4,7 @@ import { InfoIcon, Undo2Icon } from "lucide-react"
 import CustomSelect from "@/components/kit/CustomSelect"
 import CustomTextArea from "@/components/kit/CustomTextArea"
 export default function Index() {
-    const { isInfoModalOpen, setIsInfoModalOpen } = useResult()
+    const { isInfoModalOpen, setIsInfoModalOpen, resultOptions } = useResult()
     return <section className="p-2">
         <section className="border border-slate-200  rounded-lg p-2">
             <span className='block text-center'>نتیجه</span>
@@ -17,7 +17,7 @@ export default function Index() {
 
             <section className="mt-1">
                 <span className="font-light text-slate-700 text-xs">نتیجه:</span>
-                <CustomSelect options={[{ label: "test 1", value: "1" }]} onChange={() => { }} />
+                <CustomSelect options={resultOptions} onChange={() => { }} />
             </section>
             <section className="mt-1">
                 <span className="font-light text-slate-700 text-xs">ملاحظات:</span>

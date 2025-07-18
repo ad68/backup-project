@@ -98,7 +98,7 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen }: any) {
             }
         };
     };
-    const savePciture = () => {
+    const savePicture = () => {
         setSaveLoading(true)
         const params = {
             reviewId: reviewId,
@@ -168,7 +168,7 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen }: any) {
 
 
             </div>
-            <div className="flex gap-2 justify-end w-full absolute bottom-2 left-2">
+            <div className="flex gap-2 px-4 mt-10 justify-center w-full ">
                 <CustomButton
                     type="button"
                     onClick={() => setTakePhotoModalIsOpen(false)}
@@ -178,7 +178,7 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen }: any) {
                     <span>بازگشت</span>
                     <Undo2Icon className="w-[20px]" />
                 </CustomButton>
-                {capturedImage && <CustomButton loading={saveLoading} onClick={savePciture} className="rounded-full w-[170px]">
+                {capturedImage && <CustomButton loading={saveLoading} onClick={savePicture} className="rounded-full w-[170px]">
                     <span>ذخیره عکس</span>
                     <SaveAllIcon />
                 </CustomButton>}
