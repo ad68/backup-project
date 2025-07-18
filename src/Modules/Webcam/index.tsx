@@ -94,51 +94,48 @@ export default function WebcamWithWatermark() {
 
     }, [base64Image, base64WithFormat, imageMimeType])
     return (
-        <div style={{ position: "relative", width: "100%", height: "100vh", }}>
-            {!capturedImage && !isLoading && (
+        <div className="" style={{ position: "relative", width: "100%", height: "100vh", }}>
+            {!capturedImage && (
                 <Webcam
                     ref={webcamRef}
                     audio={false}
                     screenshotFormat="image/jpeg"
-                    videoConstraints={{ facingMode: "environment" }}
                     style={{
                         top: 0,
                         left: 0,
-                        width: '100%',
+                        width: '90%',
+                        margin: 'auto',
+                        marginTop: "20px",
+                        borderRadius: "20px",
                         objectFit: "cover",
                         zIndex: 1,
                     }}
                 />
             )}
-
-            <div style={{ marginTop: 10, position: "absolute", bottom: 0 }}>
-                <button onClick={capture} disabled={isLoading}>
-                    {isLoading ? "در حال پردازش..." : "گرفتن عکس"}
-                </button>
-                {capturedImage && !isLoading && (
-                    <button onClick={() => setCapturedImage(null)} style={{ marginLeft: 10 }}>
-                        گرفتن عکس مجدد
-                    </button>
-                )}
-            </div>
-
-            {isLoading && <p style={{ marginTop: 20 }}>⏳ لطفا صبر کنید...</p>}
-
             {capturedImage && !isLoading && (
                 <div style={{ marginTop: 20 }}>
-                    <h3>عکس گرفته شده با واترمارک:</h3>
                     <img src={capturedImage} alt="Captured with watermark" style={{ width: "100%" }} />
-                    {/*  <a href={capturedImage} download="photo-with-watermark.png" style={{ display: "block", marginTop: 10 }}>
-                        دانلود عکس
-                    </a> */}
-                    {/*  <div style={{ marginTop: 10 }}>
-                        <p><strong>فرمت:</strong> {imageMimeType?.split('/')[1]}</p>
-                        <p><strong>Base64:</strong></p>
-                        <textarea value={capturedImage ?? ""} rows={4} style={{ width: "100%" }} readOnly />
-
-                    </div> */}
                 </div>
             )}
+            <div className="flex justify-center mt-[20px]">
+                <div className="relative w-[54px] h-[54px]">
+                    <button onClick={capture} className="w-[53px] h-[53px] absolute top-[1px] right-[1px] bg-slate-500 border-[4px] border-slate-200 rounded-full" disabled={isLoading}>
+                    </button>
+                    {isLoading && <div className="absolute right-0 top-0">
+                        <span className="cameraLoader"></span>
+                    </div>}
+                </div>
+            </div>
         </div>
     );
 }
+
+
+{/*  {capturedImage && !isLoading && (
+                    <button onClick={() => setCapturedImage(null)} style={{ marginLeft: 10 }}>
+                        گرفتن عکس مجدد
+                    </button>
+                )} */}
+{/*  <a href={capturedImage} download="photo-with-watermark.png" style={{ display: "block", marginTop: 10 }}>
+                        دانلود عکس
+                    </a> */}
