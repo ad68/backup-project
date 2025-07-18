@@ -28,11 +28,8 @@ export async function initDB() {
             }
         },
     });
-
     return db;
 }
-
-
 export async function searchByIndex<T>(
     databaseName: string,
     storeName: string,
@@ -40,18 +37,14 @@ export async function searchByIndex<T>(
     key: IDBValidKey | IDBValidKey[]
 ): Promise<T[]> {
     const db = await openDB(databaseName, 1);
-
     if (!db.objectStoreNames.contains(storeName)) {
         throw new Error(`Object store "${storeName}" not found`);
     }
-
     const tx = db.transaction(storeName, 'readonly');
     const store = tx.objectStore(storeName);
-
     if (!store.indexNames.contains(indexName)) {
         throw new Error(`Index "${indexName}" not found in store "${storeName}"`);
     }
-
     const index = store.index(indexName);
     const results = await index.getAll(key);
     await tx.done;
@@ -67,7 +60,6 @@ export async function bulkSaveToIDB(items: any[]): Promise<void> {
     const tx = db.transaction('locateReviews', 'readwrite');
     const store = tx.objectStore('locateReviews');
     for (const item of items) {
-
         if (!item.policyId) {
             console.warn('Skipping item without policyId:', item);
             continue;
