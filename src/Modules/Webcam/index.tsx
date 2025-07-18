@@ -6,10 +6,15 @@ export default function WebcamWithWatermark() {
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
+    // ✅ دو استیت جدید
+    const [base64Image, setBase64Image] = useState<string | null>(null);
+    const [imageMimeType, setImageMimeType] = useState<string | null>(null);
+    const [fullBase64Image, setFullBase64Image] = useState<string | null>(null);
+
     const capture = () => {
         if (!webcamRef.current) return;
 
-        setIsLoading(true); // شروع لودینگ
+        setIsLoading(true);
 
         const imageSrc = webcamRef.current.getScreenshot();
         if (!imageSrc) {
@@ -48,10 +53,30 @@ export default function WebcamWithWatermark() {
                 const textHeight = 24;
 
                 ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-                ctx.fillRect(canvas.width - textWidth - padding * 2 - 10, y - textHeight - padding / 2, textWidth + padding * 2, textHeight + padding);
+                ctx.fillRect(
+                    canvas.width - textWidth - padding * 2 - 10,
+                    y - textHeight - padding / 2,
+                    textWidth + padding * 2,
+                    textHeight + padding
+                );
 
                 ctx.fillStyle = color;
                 ctx.fillText(text, canvas.width - 20, y);
+            };
+
+            const finalizeImage = () => {
+                const finalImage = canvas.toDataURL("image/png");
+                setCapturedImage(finalImage);
+                console.log(finalImage);
+
+                // ✅ استخراج base64 و فرمت
+                const [header, base64Data] = finalImage.split(",");
+                const mimeType = header.split(":")[1].split(";")[0];
+                setBase64Image(base64Data)
+                console.log(base64Data); // فقط بخش base64
+                setImageMimeType(mimeType); // مثلا: image/png
+
+                setIsLoading(false);
             };
 
             if ("geolocation" in navigator) {
@@ -64,38 +89,29 @@ export default function WebcamWithWatermark() {
                         drawTextWithBackground(coordText, canvas.height - 10, "red");
                         drawTextWithBackground(dateTimeText, canvas.height - 40, "white");
 
-                        const finalImage = canvas.toDataURL("image/png");
-                        setCapturedImage(finalImage);
-                        setIsLoading(false);
+                        finalizeImage();
                     },
                     () => {
                         drawTextWithBackground(dateTimeText, canvas.height - 10, "white");
-
-                        const finalImage = canvas.toDataURL("image/png");
-                        setCapturedImage(finalImage);
-                        setIsLoading(false);
+                        finalizeImage();
                     }
                 );
             } else {
                 drawTextWithBackground(dateTimeText, canvas.height - 10, "white");
-                const finalImage = canvas.toDataURL("image/png");
-                setCapturedImage(finalImage);
-                setIsLoading(false);
+                finalizeImage();
             }
         };
     };
 
     return (
         <div style={{ maxWidth: 600, margin: "auto", padding: 20, textAlign: "center" }}>
-            <h2>دوربین با react-webcam و واترمارک</h2>
-
             {!capturedImage && !isLoading && (
                 <Webcam
                     audio={false}
                     ref={webcamRef}
                     screenshotFormat="image/png"
                     videoConstraints={{ facingMode: "user" }}
-                    style={{ width: "100%", borderRadius: 10 }}
+                    style={{ width: "100%", height: "100%", borderRadius: 10 }}
                 />
             )}
 
@@ -119,6 +135,12 @@ export default function WebcamWithWatermark() {
                     <a href={capturedImage} download="photo-with-watermark.png" style={{ display: "block", marginTop: 10 }}>
                         دانلود عکس
                     </a>
+                    <div style={{ marginTop: 10 }}>
+                        <p><strong>فرمت:</strong> {imageMimeType?.split('/')[1]}</p>
+                        <p><strong>Base64:</strong></p>
+                        <textarea value={capturedImage ?? ""} rows={4} style={{ width: "100%" }} readOnly />
+
+                    </div>
                 </div>
             )}
         </div>
