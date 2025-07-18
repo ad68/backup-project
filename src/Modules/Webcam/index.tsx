@@ -1,27 +1,21 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
 export default function WebcamWithWatermark() {
     const webcamRef = useRef<Webcam>(null);
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-
-    // ✅ دو استیت جدید
     const [base64Image, setBase64Image] = useState<string | null>(null);
+    const [base64WithFormat, setBase64WithFormat] = useState<string | null>(null)
     const [imageMimeType, setImageMimeType] = useState<string | null>(null);
-    const [fullBase64Image, setFullBase64Image] = useState<string | null>(null);
-
     const capture = () => {
         if (!webcamRef.current) return;
-
         setIsLoading(true);
-
         const imageSrc = webcamRef.current.getScreenshot();
         if (!imageSrc) {
             setIsLoading(false);
             return;
         }
-
         const img = new Image();
         img.src = imageSrc;
 
@@ -29,29 +23,23 @@ export default function WebcamWithWatermark() {
             const canvas = document.createElement("canvas");
             canvas.width = img.width;
             canvas.height = img.height;
-
             const ctx = canvas.getContext("2d");
             if (!ctx) {
                 setIsLoading(false);
                 return;
             }
-
             ctx.drawImage(img, 0, 0);
-
             ctx.font = "24px Arial";
             ctx.textAlign = "right";
             ctx.textBaseline = "bottom";
-
             const now = new Date();
             const dateStr = now.toLocaleDateString("fa-IR");
             const timeStr = now.toLocaleTimeString("fa-IR");
             const dateTimeText = `${dateStr} ${timeStr}`;
-
             const drawTextWithBackground = (text: string, y: number, color: string) => {
                 const padding = 6;
                 const textWidth = ctx.measureText(text).width;
                 const textHeight = 24;
-
                 ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
                 ctx.fillRect(
                     canvas.width - textWidth - padding * 2 - 10,
@@ -67,15 +55,12 @@ export default function WebcamWithWatermark() {
             const finalizeImage = () => {
                 const finalImage = canvas.toDataURL("image/png");
                 setCapturedImage(finalImage);
-                console.log(finalImage);
 
-                // ✅ استخراج base64 و فرمت
                 const [header, base64Data] = finalImage.split(",");
                 const mimeType = header.split(":")[1].split(";")[0];
                 setBase64Image(base64Data)
-                console.log(base64Data); // فقط بخش base64
-                setImageMimeType(mimeType); // مثلا: image/png
-
+                setBase64WithFormat(finalImage)
+                setImageMimeType(mimeType.split('/')[1]);
                 setIsLoading(false);
             };
 
@@ -102,20 +87,31 @@ export default function WebcamWithWatermark() {
             }
         };
     };
+    useEffect(() => {
+        console.log("base64", base64Image)
+        console.log("base64Format", base64WithFormat)
+        console.log("imageMimeType", imageMimeType)
 
+    }, [base64Image, base64WithFormat, imageMimeType])
     return (
-        <div style={{ maxWidth: 600, margin: "auto", padding: 20, textAlign: "center" }}>
+        <div style={{ position: "relative", width: "100%", height: "100vh", }}>
             {!capturedImage && !isLoading && (
                 <Webcam
-                    audio={false}
                     ref={webcamRef}
-                    screenshotFormat="image/png"
-                    videoConstraints={{ facingMode: "user" }}
-                    style={{ width: "100%", height: "100%", borderRadius: 10 }}
+                    audio={false}
+                    screenshotFormat="image/jpeg"
+                    videoConstraints={{ facingMode: "environment" }}
+                    style={{
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        objectFit: "cover",
+                        zIndex: 1,
+                    }}
                 />
             )}
 
-            <div style={{ marginTop: 10 }}>
+            <div style={{ marginTop: 10, position: "absolute", bottom: 0 }}>
                 <button onClick={capture} disabled={isLoading}>
                     {isLoading ? "در حال پردازش..." : "گرفتن عکس"}
                 </button>
@@ -132,15 +128,15 @@ export default function WebcamWithWatermark() {
                 <div style={{ marginTop: 20 }}>
                     <h3>عکس گرفته شده با واترمارک:</h3>
                     <img src={capturedImage} alt="Captured with watermark" style={{ width: "100%" }} />
-                    <a href={capturedImage} download="photo-with-watermark.png" style={{ display: "block", marginTop: 10 }}>
+                    {/*  <a href={capturedImage} download="photo-with-watermark.png" style={{ display: "block", marginTop: 10 }}>
                         دانلود عکس
-                    </a>
-                    <div style={{ marginTop: 10 }}>
+                    </a> */}
+                    {/*  <div style={{ marginTop: 10 }}>
                         <p><strong>فرمت:</strong> {imageMimeType?.split('/')[1]}</p>
                         <p><strong>Base64:</strong></p>
                         <textarea value={capturedImage ?? ""} rows={4} style={{ width: "100%" }} readOnly />
 
-                    </div>
+                    </div> */}
                 </div>
             )}
         </div>
