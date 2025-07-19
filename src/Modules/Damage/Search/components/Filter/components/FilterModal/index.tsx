@@ -5,12 +5,12 @@ import type { FilterModalProp } from "@/Modules/TechnicalAttachment/LocationDete
 import { SearchIcon, Undo2Icon } from "lucide-react";
 import useFilter from "../../Filter.biz";
 import { Switch } from "@/components/ui/switch";
-import CustomDatepicker from "@/components/kit/CustomDatepicker";
-import { useState } from "react";
+/* import CustomDatepicker from "@/components/kit/CustomDatepicker";
+import { useState } from "react"; */
 
 export default function Index({ isOpen, setIsOpen, setSearchParams }: FilterModalProp) {
     const { provinces, setProvinceId, counties, setCountyId, districts, setDistrictId, searchList, places, ruralDistricts, setPlaceId, setRuralDistrictId, placeId, districtId, ruralDistrictId, provinceId, countyId, setNationalCode, setPolicyId, clearForm } = useFilter(setSearchParams)
-    const [filterFromDate, setFilterFromDate] = useState("")
+    /*  const [filterFromDate, setFilterFromDate] = useState("") */
     return <SlidingModal isOpen={isOpen} keepChildren={true}>
         <section className="p-4">
             <section className="w-full flex justify-end">
@@ -107,37 +107,37 @@ export default function Index({ isOpen, setIsOpen, setSearchParams }: FilterModa
             <section className="mt-1">
                 <span className="font-light text-slate-700 text-xs">تاریخ شروع :</span>
                 <section className="grid grid-cols-1 gap-2">
-                    <CustomDatepicker
+                    {/*   <CustomDatepicker
                         value={filterFromDate}
                         onChange={(e) => {
                             setFilterFromDate(`${e?.year}/${e?.month}/${e?.day}`)
                         }}
-                    />
+                    /> */}
                     <span className="font-light text-slate-700 text-xs">تا</span>
-                    <CustomDatepicker
+                    {/*  <CustomDatepicker
                         value={filterFromDate}
                         onChange={(e) => {
                             setFilterFromDate(`${e?.year}/${e?.month}/${e?.day}`)
                         }}
-                    />
+                    /> */}
                 </section>
             </section>
             <section className="mt-1">
                 <span className="font-light text-slate-700 text-xs">تاریخ پایان:</span>
                 <section className="grid grid-cols-1 gap-2">
-                    <CustomDatepicker
+                    {/*  <CustomDatepicker
                         value={filterFromDate}
                         onChange={(e) => {
                             setFilterFromDate(`${e?.year}/${e?.month}/${e?.day}`)
                         }}
-                    />
+                    /> */}
                     <span className="font-light text-slate-700 text-xs">تا</span>
-                    <CustomDatepicker
+                    {/* <CustomDatepicker
                         value={filterFromDate}
                         onChange={(e) => {
                             setFilterFromDate(`${e?.year}/${e?.month}/${e?.day}`)
                         }}
-                    />
+                    /> */}
                 </section>
             </section>
             <section className="flex sticky bg-white bottom-0 gap-2 mt-4 border-t py-3 justify-end w-full">

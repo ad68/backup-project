@@ -10,7 +10,7 @@ export default defineConfig({
       registerType: 'prompt',
       includeAssets: ['favicon.ico'],
       manifest: {
-        name: 'بکاپ-صندوق کشاورزی',
+        name: 'بکاپ-بیمه کشاورزی ایرانیان پوشش',
         short_name: 'بکاپ',
         description: 'My Vite PWA',
         theme_color: '#2ebf70',
