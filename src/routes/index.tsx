@@ -22,9 +22,11 @@ import PhenologyMonitoring from '@/Modules/PhenologyMonitoring/Home'
 import PhenologyMonitoringCases from '@/Modules/PhenologyMonitoring/Cases'
 import PhenologyMonitoringProgram from '@/Modules/PhenologyMonitoring/Program'
 import PhenologyMonitoringEmergencyVisit from '@/Modules/PhenologyMonitoring/EmergencyVisit'
+import Profile from '@/Modules/Profile'
 import ProtectedRoute from './ProtectedRoute'
 import MAIN_LAYOUT from '../components/layout/MainLayout'
 import DashboardLayout from '../components/layout/DashboardLayout'
+import Rules from '@/Modules/rules'
 export default function Index() {
     const mainLayoutRoutes = [
         { path: "/check-specifications", element: <CheckSpecifications /> },
@@ -36,6 +38,8 @@ export default function Index() {
         { path: "/land-division", element: <LandDivision /> },
         { path: "/pagination", element: <Pagination /> },
         { path: "/check-specifications-tabs", element: <CheckSpecificationsTabs /> },
+        { path: "/profile", element: <Profile /> },
+        { path: "/Rules", element: <Rules /> },
     ];
     const DamageRoutes = [
         { path: "home", element: <Damage /> },

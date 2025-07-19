@@ -161,26 +161,27 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen }: any) {
                     </div>
 
                 </>}
-                {capturedImage && !isLoading && <CustomButton className="rounded-full bg-red-500" onClick={() => setCapturedImage(null)}>
-                    <span className="text-xs mt-1">عکاسی مجدد</span>
-                    <CameraIcon className="w-[20px]" />
-                </CustomButton>}
+
 
 
             </div>
             <div className="flex gap-2 px-4 mt-10 justify-center w-full ">
+                {capturedImage && !isLoading && <CustomButton className="rounded-full bg-red-500" onClick={() => setCapturedImage(null)}>
+                    <span className="text-xs mt-1">عکاسی مجدد</span>
+                    <CameraIcon className="w-[20px]" />
+                </CustomButton>}
                 <CustomButton
                     type="button"
                     onClick={() => setTakePhotoModalIsOpen(false)}
                     variant="outlined"
                     className="rounded-full"
                 >
-                    <span>بازگشت</span>
+                    <span className="text-xs">بازگشت</span>
                     <Undo2Icon className="w-[20px]" />
                 </CustomButton>
                 {capturedImage && <CustomButton loading={saveLoading} onClick={savePicture} className="rounded-full w-[170px]">
-                    <span>ذخیره عکس</span>
-                    <SaveAllIcon />
+                    <span className="text-xs">ذخیره</span>
+                    <SaveAllIcon className="w-[20px]" />
                 </CustomButton>}
 
             </div>

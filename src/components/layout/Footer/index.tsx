@@ -14,10 +14,10 @@ export default function Index() {
     const { logout, isLogoutModalOpen, setIsLogoutModalOpen } = useFooter()
     return <section className="fixed m-auto w-full left-0 bottom-0 flex justify-center z-50">
         <section className=" shadow-[1px_4px_13px_-1px_rgba(156,156,156,0.75)] rounded-t-full flex w-[440px] justify-around max-w-full h-[60px] pt-1 pb-3 bg-white">
-            <section className="flex flex-col items-center justify-center">
+            <Link to="/profile" className="flex flex-col items-center justify-center">
                 <ProfileIcon className="text-slate-400 w-[30px]" />
                 <span className="text-xs text-slate-500 mt-[1px]">پروفایل</span>
-            </section>
+            </Link>
             {location.pathname === "/home" ? <section>
                 <OnlineStatusBtn />
             </section> : <Link to="/home" className="flex flex-col w-[70px] mt-[-3px] items-center justify-center">

@@ -1,4 +1,4 @@
-
+/* 
 import { useState, useEffect } from 'react'
 
 import { DateObject, type DatePickerProps } from 'react-multi-date-picker'
@@ -47,4 +47,43 @@ const CustomDatepicker = (props: MyDatePickerProps) => {
   )
 }
 
-export default CustomDatepicker
+export default CustomDatepicker */
+
+
+
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import './style.css'
+import 'react-multi-date-picker/styles/colors/purple.css'
+import 'react-multi-date-picker/styles/layouts/mobile.css'
+type CustomDatepickerProps = {
+  value: Date | null | undefined;
+  onChange: (date: Date | null) => void;
+  className?: string;
+};
+
+export default function CustomDatepicker({ value, onChange, className, ...rest }: CustomDatepickerProps) {
+
+  const dateObject = value ? new DateObject(value) : null;
+
+  return (
+    <DatePicker
+      {...rest}
+      className={className}
+      value={dateObject}
+      onChange={(date: DateObject | null) => {
+        if (date) {
+          onChange(date.toDate());
+        } else {
+          onChange(null);
+        }
+      }}
+      calendar={persian}
+      locale={persian_fa}
+      format="YYYY/MM/DD"
+      calendarPosition="bottom-right"
+      inputClass={`myRmdp-input ui-datepicker`}
+    />
+  );
+}

@@ -13,4 +13,5 @@ export type PolicyItem = {
     extraInfo: string,
     insured: number,
     note: string,
+    rawExtraInfo: string
 }

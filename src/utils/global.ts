@@ -33,7 +33,15 @@ export const persianToEnglishNumber = (input: string) => {
         })
         .join('')
 }
+export const convertPersianNumbersToEnglish = (input: string): string => {
+    const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+    const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
+    return input.replace(/[۰-۹]/g, (char) => {
+        const index = persianNumbers.indexOf(char);
+        return index !== -1 ? englishNumbers[index] : char;
+    });
+}
 export const gregorianToJalali = (value: string | undefined) => {
     if (value) {
         const persianDate = moment(value).format('jYYYY/jMM/jDD')
@@ -45,7 +53,7 @@ export const gregorianToJalali = (value: string | undefined) => {
 export const jalaliToGregorian = (value: string) => {
     if (value) {
         const greDate = moment(
-            persianToEnglishNumber(value),
+            convertPersianNumbersToEnglish(value),
             'jYYYY/jMM/jDD',
         ).format('YYYY-MM-DD')
         return greDate
@@ -126,4 +134,46 @@ export const WKTToPolygon = (wkt: string): [number, number][] => {
     });
 
     return points;
+};
+export const convertToJSONStringWithEscapes = (input: Record<string, any>): string => {
+    const jsonString = JSON.stringify(input);
+    return jsonString
+    /* return JSON.stringify(jsonString); */
+}
+export const parseEscapedJson = (input: string): Record<string, unknown> => {
+    try {
+        const cleaned = input.replace(/\\"/g, '"'); // حذف اسلش‌ها
+        return JSON.parse(cleaned);
+    } catch (error) {
+        console.error("Invalid JSON string:", error);
+        return {};
+    }
+}
+
+
+export const toPersianDate = (date: Date): string => {
+    // باید جلالی رو فعال کنیم
+    moment.loadPersian({ dialect: "persian-modern", usePersianDigits: false });
+
+    return moment(date).format("jYYYY/jMM/jDD"); // jYYYY,jMM,jDD برای سال، ماه، روز شمسی
+}
+
+
+export const shamsiToMiladi = (value: any) => {
+    if (value) {
+        return jalaliToGregorian(toPersianDate(value))
+    }
+    else {
+        return value
+    }
+}
+
+
+export const JSONStringToObject = <T = Record<string, any>>(str: string): T | null => {
+    try {
+        return JSON.parse(str);
+    } catch (error) {
+        console.error("Invalid JSON string:", error);
+        return null;
+    }
 };

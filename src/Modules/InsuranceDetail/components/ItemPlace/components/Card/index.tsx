@@ -65,7 +65,7 @@ export default function Index({ item }: { item: PolicyItem }) {
                                 <Link to="/land-division">
                                     <button className="text-[10px] bg-white p-2 rounded-lg border border-blue-500 font-light text-blue-500">تکمیل قلم بیمه شده</button>
                                 </Link>
-                                <Link to="/private-info">
+                                <Link to={`/private-info?reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&rawExtraInfo=${item?.rawExtraInfo}`}>
                                     <button className="text-[10px] bg-white p-2 rounded-lg border border-red-500 font-light text-red-500">تکمیل اطلاعات اختصاصی</button>
                                 </Link>
                             </section>
