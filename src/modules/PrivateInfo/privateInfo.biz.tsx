@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { z } from "zod";
 const schema = z.object({
-    F125: z.string({ required_error: validationMessages.required }).min(1, validationMessages.minLength(1)), /* شماره قطعه */
+    F125: z.coerce.number({ required_error: validationMessages.required, invalid_type_error: "این فیلد باید عدد باشد" }).min(1, validationMessages.minLength(1)), /* شماره قطعه */
     F149: z.string().max(100, validationMessages.maxLength(100)).optional(), /* نام محلی */
     F3115: z.string().max(500, validationMessages.maxLength(500)).optional(), /* ملاحظات*/
     F126: z.string({ required_error: validationMessages.required }).max(50, validationMessages.maxLength(50)), /* شمالا*/
@@ -29,7 +29,6 @@ const usePrivateInfo = () => {
         handleSubmit,
         reset,
         formState: { errors },
-        watch
     } = useForm<FormData>({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -73,14 +72,6 @@ const usePrivateInfo = () => {
         { label: "نواری", value: "1689" }
     ]
 
-    const [F150] = watch(["F150"])
-
-
-
-
-    useEffect(() => {
-        console.log("F150", F150)
-    }, [F150])
     useEffect(() => {
         if (rawExtraInfo) {
             const formValue = JSONStringToObject(rawExtraInfo)
@@ -95,9 +86,9 @@ const usePrivateInfo = () => {
                     F129: formValue?.F129,
                     F131: formValue?.F131,
                     F132: new Date(formValue?.F132),
-                    F150: "1017",
-                    F134: "1015",
-                    F2941: "1689",
+                    F150: ownerShipsOptions.find(el => el.value === formValue?.F150)?.value,
+                    F134: waterResourceOptions.find(el => el.value === formValue?.F134)?.value,
+                    F2941: irrigationSystemOptions.find(el => el.value === formValue?.F2941)?.value,
                     F2942: formValue?.F2942,
                 })
             }, 100);
@@ -114,9 +105,10 @@ const usePrivateInfo = () => {
             reviewId: reviewId,
             policyId: policyId,
             subjectItemId: subjectItemId,
+            isTest: true,
             extraInfo: `${JSON.stringify(data)}`
         }
-        useAxiosWithToken.post("/sabka/technical/annex/add/fix-extra-info1111", params).then().catch()
+        useAxiosWithToken.post("/sabka/technical/annex/add/fix-extra-info", params).then().catch()
     };
 
     return {

@@ -1,7 +1,9 @@
-import { useAxiosWithToken } from '@/hooks'
+import { useAxiosWithToken, useAxiosWithTokenFormUrlEncoded } from '@/hooks'
+import { useAuthStore } from '@/store/authStore'
 import { useEffect, useState } from 'react'
 
 const useFilter = (setSearchParams: (value: any) => void) => {
+    const { token } = useAuthStore()
     const [provinces, setProvinces] = useState([])
     const [provinceId, setProvinceId] = useState<any>("")
     const [counties, setCounties] = useState([])
@@ -18,9 +20,11 @@ const useFilter = (setSearchParams: (value: any) => void) => {
     const [places, setPlaces] = useState<any>([])
     const [placeId, setPlaceId] = useState("")
     const [subSectionId, setSubSectionId] = useState("1")
-
     const getProvinceList = () => {
-        useAxiosWithToken.post("/sabka/admin-levels/get/provinces").then(res => {
+
+        const form = new URLSearchParams();
+        if (token) form.append('token', token);
+        useAxiosWithTokenFormUrlEncoded.post("/sabka/admin-levels/get/provinces").then(res => {
             setProvinces(res.data)
         }).catch()
     }

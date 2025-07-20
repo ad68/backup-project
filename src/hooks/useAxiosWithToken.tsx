@@ -12,9 +12,24 @@ const useAxiosWithToken = axios.create({
 useAxiosWithToken.interceptors.request.use(
   (config) => {
     const token = useAuthStore.getState().token;
-    config.headers["Authorization"] = token;
+    const methodsWithBody = ['post', 'put', 'patch', 'delete'];
+
+    if (methodsWithBody.includes(config.method || '')) {
+      if (config.data instanceof FormData) {
+        if (token) {
+          config.data.append('token', token);
+        }
+      } else {
+        config.data = {
+          ...(config.data || {}),
+          token: token,
+        };
+      }
+    }
+
     return config;
   });
+
 useAxiosWithToken.interceptors.response.use(
   function (response) {
     return response;

@@ -9,7 +9,7 @@ import ListLoader from "@/components/kit/ListLoader"
 import CustomButton from "@/components/kit/CustomButton"
 
 export default function Index() {
-    const { isAddPolygonModalOpen, setGeoInWkt, setIsAddPolygonModalOpen, fetchLoading, featureData, actionLoading, setSubjectNotExist, saveMapPolygon } = useInsuranceLocation()
+    const { isAddPolygonModalOpen, setGeoInWkt, setIsAddPolygonModalOpen, fetchLoading, featureData, actionLoading, setSubjectNotExist, saveMapPolygon, farmLat, farmLng } = useInsuranceLocation()
     const navigate = useNavigate();
     return <section className='m-auto w-[440px] max-w-full'>
         {/*       <section className='p-2'>
@@ -235,7 +235,7 @@ export default function Index() {
             </CustomButton>
         </section>
         <SlidingModal isOpen={isAddPolygonModalOpen} setIsOpen={setIsAddPolygonModalOpen}>
-            <AddPolygonModal defaultPolygon={featureData} setIsAddPolygonModalOpen={setIsAddPolygonModalOpen} setGeoInWkt={setGeoInWkt} />
+            <AddPolygonModal farmLat={farmLat} farmLng={farmLng} defaultPolygon={featureData} setIsAddPolygonModalOpen={setIsAddPolygonModalOpen} setGeoInWkt={setGeoInWkt} />
         </SlidingModal>
     </section>
 }

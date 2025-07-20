@@ -9,7 +9,7 @@ import type { AddPolyGonProp } from "./addPolygon.typs";
 import CustomButton from "@/components/kit/CustomButton";
 import { WKTToPolygon } from "@/utils/global";
 
-export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPolygon }: AddPolyGonProp) {
+export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPolygon, farmLat, farmLng }: AddPolyGonProp) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapRefInstance = useRef<L.Map | null>(null);
   const drawnItemsRef = useRef<L.FeatureGroup>(new L.FeatureGroup());
@@ -17,14 +17,16 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
   const [polygonsState, setPolygonsState] = useState<L.LatLng[][]>([]);
   const [hasPolygon, setHasPolygon] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-
   useEffect(() => {
-    const def = defaultPolygon
+
+  }, [])
+  useEffect(() => {
+    /*  const def = defaultPolygon */
     if (mapRef.current && !mapRefInstance.current) {
       const map = L.map(mapRef.current, {
         zoomControl: false,
         attributionControl: false,
-      }).setView(def ? WKTToPolygon(def)[0] : [35.70218, 51.3386], 16);
+      }).setView(farmLat && farmLng ? [Number(farmLat), Number(farmLng)] : [35.70218, 51.3386], 16);
       mapRefInstance.current = map;
       const baseLayer = L.tileLayer(
         "https://mt{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}",

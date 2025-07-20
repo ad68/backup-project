@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom"
 import ToasterProvider from './provider/ToasterProvider'
 import './style/global.css'
 import App from './App.tsx'
+import ReactQueryProvider from './provider/ReactQueryProvider/index.tsx'
 const updateSW = registerSW({
   onNeedRefresh() {
     const confirmed = window.confirm('نسخه جدید در دسترس است. آیا می‌خواهید بروزرسانی کنید؟')
@@ -17,10 +18,11 @@ const updateSW = registerSW({
 })
 
 createRoot(document.getElementById('root')!).render(
-
   <BrowserRouter>
-    <ToasterProvider />
-    <App />
+    <ReactQueryProvider>
+      <ToasterProvider />
+      <App />
+    </ReactQueryProvider>
   </BrowserRouter>
 
 )

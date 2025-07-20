@@ -224,7 +224,7 @@ export default function Index() {
                 <Undo2Icon className="w-[20px]" />
             </button>
             <button className="bg-primary w-[120px] text-white flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
-                <span>جستجو</span>
+                <span>تایید</span>
                 <SearchIcon className="w-[20px]" />
             </button>
         </section>

@@ -44,7 +44,7 @@ const toastIcon: Record<ToastType, ReactNode> = {
 export const showToast = (type: ToastType, message: string) => {
     toast.custom((t: Toast) => (
         <section
-            className={`px-4 py-3 bg-white flex min-h-[60px] justify-start items-center gap-3 rounded-xl border shadow-2xl max-w-sm w-full relative overflow-hidden ${toastColors[type]
+            className={`px-4 py-3 bg-white flex min-h-[60px] justify-start items-center gap-3 rounded-xl border shadow-2xl max-w-sm w-full relative  ${toastColors[type]
                 } ${t.visible ? 'animate-enter' : 'animate-leave'}`}
         >
             <span className={`block w-[5px] rounded-full h-[100%] ${toastPipeColors[type]}`}></span>
@@ -53,6 +53,12 @@ export const showToast = (type: ToastType, message: string) => {
                 {toastIcon[type]}
                 {/*  <button onClick={() => toast.dismiss(t.id)} className="text-sm bg-white rounded-full opacity-50"><XIcon className='w-[30px] h-[30px] text-red-500 left-0 top-[-10px]' /></button> */}
             </div>
+            <section className='flex w-full justify-center absolute  left-0 bottom-[-15px]'>
+                <button className='w-[30px] h-[30px] rounded-full bg-white  flex justify-center items-center shadow-2xl p-1 text-white' onClick={() => toast.dismiss(t.id)}>
+                    <XIcon className='text-slate-400 w-[20px]' />
+                </button>
+            </section>
+
         </section>
     ));
 };

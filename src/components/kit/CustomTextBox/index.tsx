@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 import { Input } from "@/components/ui/input";
 
 type CustomTextBoxProps = {
-    value?: string;
+    value?: any;
     onChange: (value: string) => void;
     placeholder?: string;
     className?: string;
