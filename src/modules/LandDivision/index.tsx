@@ -1,6 +1,6 @@
 import { Undo2Icon, } from "lucide-react"
 import useLandDivision from "./landDivision.biz"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import CustomTextBox from "@/components/kit/CustomTextBox";
 import { InfoIcon } from "@/assets/icons/InfoIcon";
 import { Controller } from "react-hook-form";
@@ -10,10 +10,15 @@ import FormField from "@/components/kit/FormField";
 import CustomTextArea from "@/components/kit/CustomTextArea";
 import CustomDatepicker from "@/components/kit/CustomDatepicker";
 import CustomSelect from "@/components/kit/CustomSelect";
+import PageTitle from "@/components/kit/PageTitle";
 export default function Index() {
     const { isInfoModalOpen, setIsInfoModalOpen, ownerShipsOptions, irrigationSystemOptions, waterResourceOptions, control, errors, handleSubmit, onSubmit } = useLandDivision()
     const navigate = useNavigate();
+    const [setSearchParams] = useSearchParams()
+    const farmerName = setSearchParams.get("farmerName")
+    const policyId = setSearchParams.get("policyId")
     return <>
+        <PageTitle size='small' miniDescription={`بیمه نامه: ${policyId}`} title={`${farmerName}`} />
         <section className='m-auto w-full max-w-5xl p-2'>
             {/*  <section className='p-2'>
             <section className={`border ${isOpenDtl ? `h-auto` : `h-[160px]`} pb-12 relative overflow-hidden bg-slate-50 border-slate-200 p-2 rounded-lg mt-5`}>
@@ -201,7 +206,7 @@ export default function Index() {
 
 
             <form onSubmit={handleSubmit(onSubmit)} className="m-auto p-4 max-5xl relative">
-                <section className="mt-5 text-center">
+                <section className=" text-center">
                     <span className="text-primary font-bold text-lg">تقسیم قلم بیمه‌شده:</span>
                 </section>
                 <button type="button" onClick={() => setIsInfoModalOpen(true)} className="border w-[90px]  bg-white border-blue-500 text-blue-500 shadow-md h-[30px] flex justify-center mt-3 items-center gap-2 rounded-full">

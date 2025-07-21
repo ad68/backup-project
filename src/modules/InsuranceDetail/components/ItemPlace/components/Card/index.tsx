@@ -14,6 +14,7 @@ export default function Index({ item }: { item: PolicyItem }) {
     const reviewId = searchParams.get("reviewId")
     const subjectId = searchParams.get("subjectId")
     const policyId = searchParams.get("policyId")
+    const farmerName = searchParams.get("farmerName")
     return <section className="p-2">
         <section className={`border relative flex flex-col gap-4 bg-white border-slate-100  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[160px]`} shadow-lg`}>
             <section className="flex justify-between w-full">
@@ -60,25 +61,23 @@ export default function Index({ item }: { item: PolicyItem }) {
                         </PopoverTrigger>
                         <PopoverContent>
                             <section className="flex gap-2">
-                                <Link to={`/land-division??reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&rawExtraInfo=${item?.rawExtraInfo}`}>
+                                <Link to={`/land-division??reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&rawExtraInfo=${item?.rawExtraInfo}`}>
                                     <button className="text-[10px] bg-white p-2 rounded-lg border border-blue-500 font-light text-blue-500">تقسیم قلم بیمه شده</button>
                                 </Link>
-                                <Link to={`/private-info?reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&rawExtraInfo=${item?.rawExtraInfo}`}>
+                                <Link to={`/private-info?reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&rawExtraInfo=${item?.rawExtraInfo}`}>
                                     <button className="text-[10px] bg-white p-2 rounded-lg border border-red-500 font-light text-red-500">تکمیل اطلاعات اختصاصی</button>
                                 </Link>
                             </section>
                         </PopoverContent>
                     </Popover>
-                    {!item.featureId && <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}`}>
+                    {!item.featureId && <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}`}>
                         <button className="border w-[90px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
                             <span className="font-light text-sm">تعیین مکان</span>
                         </button>
                     </Link>}
-
                     {item.featureId && <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}`}> <button className="border w-[110px] bg-orange-500 border-orange-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
                         <span className="font-light text-sm">ویرایش مکان</span>
                     </button></Link>}
-
                 </section>
                 <button onClick={() => setIsOpenDtl(!isOpenDtl)} className="bg-yellow-400 shadow-md w-[36px] h-[30px] flex justify-center items-center rounded-full">
                     {isOpenDtl ? <ChevronUp color="white" className="w-[20px]" /> : <ChevronDown color="white" className="w-[20px]" />}

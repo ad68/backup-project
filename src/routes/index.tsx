@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Home from '@/modules/Home'
 import Login from '@/modules/Login'
 import TechnicalAttachment from '@/modules/TechnicalAttachment'
@@ -27,7 +27,12 @@ import ProtectedRoute from './ProtectedRoute'
 import MAIN_LAYOUT from '../components/layout/MainLayout'
 import DashboardLayout from '../components/layout/DashboardLayout'
 import Rules from '@/modules/rules'
+import { useEffect } from "react";
 export default function Index() {
+    const { pathname } = useLocation();
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }, [pathname]);
     const mainLayoutRoutes = [
         { path: "/check-specifications", element: <CheckSpecifications /> },
         { path: "/location-determination", element: <LocationDetermination /> },

@@ -11,7 +11,7 @@ export default function Index() {
     const { data, loading, setCurrentPage, totalPage, currentPage, setSearchParams } = useTechnicalAttachment()
     return <>
         <PageTitle title='تعیین مکان' />
-        <section className='pb-10'>
+        <section className='pb-10 px-2 max-w-5xl m-auto'>
             <section className=''>
                 <Filter setSearchParams={setSearchParams} />
             </section>
@@ -35,7 +35,7 @@ export default function Index() {
             </section>}
 
             {loading && <section className='flex justify-center mt-8'><ListLoader /></section>}
-            {!loading && <section className='m-auto relative mt-2 w-[440px]  max-w-full'>
+            {!loading && <section className='m-auto relative mt-2  max-w-5x'>
                 {data?.map((item: any, index: any) => (<Card item={item} key={index} />))}
             </section>}
 

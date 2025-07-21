@@ -9,8 +9,9 @@ export default function Index() {
     const { activeTab, setActiveTab } = useInsuranceDetail()
     const [setSearchParams] = useSearchParams()
     const farmerName = setSearchParams.get("farmerName")
+    const policyId = setSearchParams.get("policyId")
     return <section className='m-auto max-w-5xl'>
-        <PageTitle size='small' title={`بیمه نامه ${farmerName}`} />
+        <PageTitle size='small' miniDescription={`بیمه نامه: ${policyId}`} title={`${farmerName}`} />
         <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
         {activeTab === 1 && <ItemPlace />}
         {activeTab === 2 && <Documents />}

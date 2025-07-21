@@ -8,7 +8,7 @@ import { TeachIcon } from '@/assets/icons/TeachIcon';
 export default function Index() {
     return <section>
         <section className="pt-[40px] px-5">
-            <section className="grid grid-cols-2 gap-5">
+            <section className="grid grid-cols-2 md:grid-cols-3 gap-5">
                 <Tile link="/technical-attachment" iconBgColor='bg-[#effff2]' borderColorClass={'border-primary'} title="پیوست فنی" image={<AttachIcon className="text-primary stroke-primary w-[25px]" />} />
                 <Tile soon link="/phenology-monitoring/home" iconBgColor='bg-[#f4f9ff]' borderColorClass={'border-blue-400'} title="پایش فنولوژی" image={<MonitoringIcon className="text-blue-400 w-[25px]" />} />
                 <Tile soon link="/damage/home" iconBgColor='bg-[#fffaf4]' borderColorClass={'border-orange-300'} title="خسارت" image={<FireIcon className="text-orange-300 w-[25px]" />} />

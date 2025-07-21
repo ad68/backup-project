@@ -4,15 +4,21 @@ import useInsuranceLocation from "./insuranceLocation.biz"
 import { Switch } from "@/components/ui/switch"
 import SlidingModal from "@/components/kit/SlidingModal"
 import AddPolygonModal from './components/AddPolygonModal'
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import ListLoader from "@/components/kit/ListLoader"
 import CustomButton from "@/components/kit/CustomButton"
+import PageTitle from "@/components/kit/PageTitle"
 
 export default function Index() {
     const { isAddPolygonModalOpen, setGeoInWkt, setIsAddPolygonModalOpen, fetchLoading, featureData, actionLoading, setSubjectNotExist, saveMapPolygon, farmLat, farmLng } = useInsuranceLocation()
     const navigate = useNavigate();
-    return <section className='m-auto w-[440px] max-w-full'>
-        {/*       <section className='p-2'>
+    const [setSearchParams] = useSearchParams()
+    const farmerName = setSearchParams.get("farmerName")
+    const policyId = setSearchParams.get("policyId")
+    return <>
+        <PageTitle size='small' miniDescription={`بیمه نامه: ${policyId}`} title={`${farmerName}`} />
+        <section className='m-auto max-w-5xl'>
+            {/*       <section className='p-2'>
             <section className={`border ${isOpenDtl ? `h-auto` : `h-[160px]`} pb-12 relative overflow-hidden bg-slate-50 border-slate-200 p-2 rounded-lg mt-5`}>
                 <span className='block text-center'>مشخصات بیمه نامه</span>
                 <hr className='border-slate-300 my-1' />
@@ -190,52 +196,53 @@ export default function Index() {
                 </button>
             </section>
         </section> */}
-        <section className="p-2">
-            <section className="border border-slate-200 rounded-lg p-2">
-                <span className='block text-center'>تعیین مکان</span>
-                <hr className='border-slate-300 my-1' />
-                <section dir="ltr" className="flex gap-1 mt-2 justify-end">
-                    <Switch onCheckedChange={(e) => setSubjectNotExist(e)} />
-                    <span className="text-sm">مورد وجود ندارد</span>
-                </section>
-                <section className="text-xs mt-1 font-light ">
-                    در صورت عدم مطابقت موضوع، حدود اربعه، و یا کلاً عدم وجود محل
+            <section className="p-2">
+                <section className="border border-slate-200 rounded-lg p-2">
+                    <span className='block text-center'>تعیین مکان</span>
+                    <hr className='border-slate-300 my-1' />
+                    <section dir="ltr" className="flex gap-1 mt-2 justify-end">
+                        <Switch onCheckedChange={(e) => setSubjectNotExist(e)} />
+                        <span className="text-sm">مورد وجود ندارد</span>
+                    </section>
+                    <section className="text-xs mt-1 font-light ">
+                        در صورت عدم مطابقت موضوع، حدود اربعه، و یا کلاً عدم وجود محل
+                    </section>
                 </section>
             </section>
-        </section>
-        <section className="p-2">
-            <section className="border border-slate-200  rounded-lg p-2">
-                <span className='block text-center'>مکان</span>
-                <hr className='border-slate-300 my-1' />
-                <section className="flex justify-between gap-2 py-2">
-                    <button onClick={() => setIsAddPolygonModalOpen(true)} className="border w-[190px] bg-blue-500  border-blue-500 text-white  shadow-md h-[30px] flex justify-center items-center gap-2 rounded-full">
-                        <MapPinIcon className="w-[18px]" />
-                        <span className="font-light text-sm">تعیین مکان از روی نقشه</span>
-                    </button>
-                    {/*   <button className="border w-[130px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
+            <section className="p-2">
+                <section className="border border-slate-200  rounded-lg p-2">
+                    <span className='block text-center'>مکان</span>
+                    <hr className='border-slate-300 my-1' />
+                    <section className="flex justify-between gap-2 py-2">
+                        <button onClick={() => setIsAddPolygonModalOpen(true)} className="border w-[190px] bg-blue-500  border-blue-500 text-white  shadow-md h-[30px] flex justify-center items-center gap-2 rounded-full">
+                            <MapPinIcon className="w-[18px]" />
+                            <span className="font-light text-sm">تعیین مکان از روی نقشه</span>
+                        </button>
+                        {/*   <button className="border w-[130px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
                         <span className="font-light text-sm">ارسال فایل</span>
                         <UploadCloudIcon className="w-[18px]" />
                     </button> */}
-                </section>
-                <section className="flex flex-col gap-1">
-                    {fetchLoading && <section className="flex justify-center"><ListLoader /></section>}
-                    {/*{featureData?.map((item: any, index: number) => (<Card item={item} key={index} />))} */}
-                    {/* <Card />
+                    </section>
+                    <section className="flex flex-col gap-1">
+                        {fetchLoading && <section className="flex justify-center"><ListLoader /></section>}
+                        {/*{featureData?.map((item: any, index: number) => (<Card item={item} key={index} />))} */}
+                        {/* <Card />
                     <Card /> */}
+                    </section>
                 </section>
             </section>
+            <section className="flex px-2 bg-white bottom-0 gap-2 mt-4 py-3 justify-end w-full">
+                <CustomButton variant="outlined" onClick={() => navigate(-1)} className="rounded-full">
+                    <span>بازگشت</span>
+                    <Undo2Icon className="w-[20px]" />
+                </CustomButton>
+                <CustomButton loading={actionLoading} onClick={saveMapPolygon} className="rounded-full">
+                    <span>تایید</span>
+                </CustomButton>
+            </section>
+            <SlidingModal isOpen={isAddPolygonModalOpen} setIsOpen={setIsAddPolygonModalOpen}>
+                <AddPolygonModal farmLat={farmLat} farmLng={farmLng} defaultPolygon={featureData} setIsAddPolygonModalOpen={setIsAddPolygonModalOpen} setGeoInWkt={setGeoInWkt} />
+            </SlidingModal>
         </section>
-        <section className="flex px-2 bg-white bottom-0 gap-2 mt-4 py-3 justify-end w-full">
-            <CustomButton variant="outlined" onClick={() => navigate(-1)} className="rounded-full">
-                <span>بازگشت</span>
-                <Undo2Icon className="w-[20px]" />
-            </CustomButton>
-            <CustomButton loading={actionLoading} onClick={saveMapPolygon} className="rounded-full">
-                <span>تایید</span>
-            </CustomButton>
-        </section>
-        <SlidingModal isOpen={isAddPolygonModalOpen} setIsOpen={setIsAddPolygonModalOpen}>
-            <AddPolygonModal farmLat={farmLat} farmLng={farmLng} defaultPolygon={featureData} setIsAddPolygonModalOpen={setIsAddPolygonModalOpen} setGeoInWkt={setGeoInWkt} />
-        </SlidingModal>
-    </section>
+    </>
 }
