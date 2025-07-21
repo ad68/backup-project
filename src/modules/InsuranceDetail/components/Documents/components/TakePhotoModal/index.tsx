@@ -129,15 +129,11 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen }: any) {
                     audio={false}
                     mirrored={true}
                     screenshotFormat="image/png"
-                    videoConstraints={{
-                        facingMode: "environment", // یا user
-                        width: { ideal: window.innerWidth },
-                        height: { ideal: window.innerHeight },
-                    }}
+                    videoConstraints={{ facingMode: cameraMode }}
                     style={{
-                        width: "100vw",
-                        height: "100vh",
-                        objectFit: "cover", // کل صفحه رو پر کنه بدون کشیدگی
+                        width: '95%',
+                        marginTop: "20px",
+                        borderRadius: "20px",
                     }}
 
                 />
@@ -147,7 +143,7 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen }: any) {
                     <img className="w-[95%] m-auto rounded-[20px]" src={capturedImage} alt="Captured with watermark" />
                 </div>
             )}
-            <div className="flex gap-[4px] fixed z-50 w-full justify-center items-center mt-[20px]">
+            <div className="flex gap-[4px] relative w-full justify-center items-center mt-[20px]">
                 {!capturedImage && <>
                     <div className="relative flex w-[100px] h-[100px]">
                         <button onClick={capture} className="w-[70px] h-[70px] flex justify-center items-center absolute top-[6px] right-[6px] bg-slate-500 border-[4px] border-slate-200 rounded-full" disabled={isLoading}>
