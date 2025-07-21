@@ -46,11 +46,14 @@ const useCheckSpecifications = () => {
             await clearStore()
             await saveToDataBase(aaa);
             setHasFetched(true)
+            setTimeout(() => {
+                setLoading(false)
+            }, 100);
+
             loadList(1)
         } catch (error: any) {
+            setLoading(false)
             toastError(error.response.data.message)
-        } finally {
-            setLoading(false);
         }
     };
     async function loadList(pageNumber: number) {
