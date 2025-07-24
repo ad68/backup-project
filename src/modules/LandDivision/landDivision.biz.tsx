@@ -1,5 +1,6 @@
 
 import { validationMessages } from "@/constants/validationMessages";
+import { useAxiosWithToken } from "@/hooks";
 /* import { useAxiosWithToken } from "@/hooks"; */
 import { JSONStringToObject, shamsiToMiladi } from "@/utils/global";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,7 +12,7 @@ const schema = z.object({
     F125: z.coerce.number({ required_error: validationMessages.required, invalid_type_error: "این فیلد باید عدد باشد" }).min(1, validationMessages.minLength(1)), /* شماره قطعه */
     F149: z.string().max(100, validationMessages.maxLength(100)).optional(), /* نام محلی */
     F3115: z.string().max(500, validationMessages.maxLength(500)).optional(), /* ملاحظات*/
-    newInsured: z.string().max(500, validationMessages.maxLength(500)).optional(), /* مساحت قلم جدید*/
+    newInsured: z.coerce.number().max(500, validationMessages.maxLength(500)), /* مساحت قلم جدید*/
     reason: z.string().max(500, validationMessages.maxLength(500)).optional(), /* علت*/
     F126: z.string({ required_error: validationMessages.required }).max(50, validationMessages.maxLength(50)), /* شمالا*/
     F128: z.string({ required_error: validationMessages.required }).max(50, validationMessages.maxLength(50)), /* جنوبا*/
@@ -54,6 +55,8 @@ const useLandDivision = () => {
     const [searchParams] = useSearchParams();
 
     const rawExtraInfo = searchParams.get("rawExtraInfo")
+    const subjectItemId = searchParams.get("subjectItemId")
+
     const [actionLoading, setActionLoading] = useState(false)
     const ownerShipsOptions = [
         { label: "استیجاری", value: "1016" },
@@ -105,14 +108,15 @@ const useLandDivision = () => {
         }
         setActionLoading(true)
         const params = {
+            subjectItemId: subjectItemId,
             newInsured: data.newInsured,
             reason: data.reason,
             isTest: true,
             newExtraInfo: `${JSON.stringify(data)}`
         }
-        console.log(params)
-/*         useAxiosWithToken.post("/sabka/technical/annex/add/split-subject-item111111", params).then().catch()
- */    };
+
+        useAxiosWithToken.post("/sabka/technical/annex/add/split-subject-item", params).then().finally(() => setActionLoading(false))
+    };
     return {
         isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isInfoModalOpen, setIsInfoModalOpen, ownerShipsOptions,
         waterResourceOptions,

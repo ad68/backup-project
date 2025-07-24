@@ -52,6 +52,8 @@ const usePrivateInfo = () => {
     const subjectItemId = searchParams.get("subjectItemId")
     const policyId = searchParams.get("policyId")
     const rawExtraInfo = searchParams.get("rawExtraInfo")
+    const subjectId = searchParams.get("subjectId")
+
     const [actionLoading, setActionLoading] = useState(false)
     const ownerShipsOptions = [
         { label: "استیجاری", value: "1016" },
@@ -105,6 +107,7 @@ const usePrivateInfo = () => {
             reviewId: reviewId,
             policyId: policyId,
             subjectItemId: subjectItemId,
+            subjectId: subjectId,
             isTest: true,
             extraInfo: `${JSON.stringify(data)}`
         }

@@ -1,12 +1,14 @@
 import { CameraIcon, Link2Icon } from "lucide-react";
 /* import Card from './components/Card' */
-/* import FileItem from './components/FileItem' */
+import FileItem from './components/FileItem'
 import SlidingModal from "@/components/kit/SlidingModal";
 import useDocument from "./document.biz";
 import AddDocumentModal from './components/AddDocumentModal'
 import TakePhotoModal from './components/TakePhotoModal'
+import ListLoader from "@/components/kit/ListLoader";
+
 export default function Index() {
-    const { isAddDocumentModal, setIsAddDocumentModal, takePhotoModalIsOpen, setTakePhotoModalIsOpen } = useDocument()
+    const { isAddDocumentModal, setIsAddDocumentModal, takePhotoModalIsOpen, setTakePhotoModalIsOpen, actionLoading, data, downloadFile, deleteFile } = useDocument()
     return <>
         <section className="p-2">
             <section className="border border-slate-200  rounded-lg p-2">
@@ -22,14 +24,14 @@ export default function Index() {
                         <span className="font-light text-sm">گرفتن عکس</span>
                     </button>
                 </section>
-                {/*     <section className="flex gap-2">
-                    <FileItem />
-                    <FileItem />
-                </section> */}
-                {/* <section className="flex flex-col gap-1 mt-4">
-                    <Card />
-                    <Card />
-                </section> */}
+                <div className="flex justify-center">
+                    {actionLoading && <ListLoader />}
+                </div>
+                {!actionLoading && <section className="grid grid-cols-2 gap-2">
+                    {data.map((item: any, index: number) => (<FileItem downloadFile={downloadFile} deleteFile={deleteFile} key={index} item={item} />))}
+                </section>}
+
+
             </section>
         </section>
         <SlidingModal isOpen={isAddDocumentModal}>

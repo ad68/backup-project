@@ -1,20 +1,32 @@
+import { toastSuccess } from "@/components/kit/toast"
+import { useAxiosWithToken } from "@/hooks"
 import { useState } from "react"
+import { useSearchParams } from "react-router-dom"
 
 const useResult = () => {
+    const [searchParams] = useSearchParams()
+    const reviewId = searchParams.get("reviewId")
+    const subjectId = searchParams.get("subjectId")
+    const [selectedResult, setSelectedResult] = useState("1")
+    const [actionLoading, setActionLoading] = useState(false)
     const resultOptions = [
         { label: "تعیین مکان انجام شد", value: "1" },
-        { label: "آدرس اشتباه است", value: "2" },
-        { label: "بیمه نامه باید ابطال و انفساخ شود", value: "3" },
-        { label: "بیمه نامه تکراری است", value: "4" },
-        { label: "ارجاع به ارزیاب همکار", value: "5" },
-        { label: "ارائه به کمک ارزیاب", value: "6" },
-        { label: "عدم همکاری بیمه گذار یا ذینفع", value: "7" },
-        { label: "توقف عملیات", value: "8" }
-    ]
-    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
 
+    ]
+    const locateResult = () => {
+        const params = {
+            reviewId,
+            subjectId,
+            isTest: true
+        }
+        useAxiosWithToken.post("/sabka/technical/annex/add/locate-result", params).then(() => {
+            toastSuccess("عملیات با موفقیت انجام شد")
+        }).finally(() => setActionLoading(false))
+    }
+
+    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
     return {
-        isInfoModalOpen, setIsInfoModalOpen, resultOptions
+        isInfoModalOpen, setIsInfoModalOpen, resultOptions, selectedResult, setSelectedResult, actionLoading, locateResult
     }
 }
 export default useResult

@@ -64,7 +64,7 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat: strin
                                 <Link to={`/land-division??reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&rawExtraInfo=${item?.rawExtraInfo}`}>
                                     <button className="text-[10px] bg-white p-2 rounded-lg border border-blue-500 font-light text-blue-500">تقسیم قلم بیمه شده</button>
                                 </Link>
-                                <Link to={`/private-info?reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&rawExtraInfo=${item?.rawExtraInfo}`}>
+                                <Link to={`/private-info?reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&rawExtraInfo=${item?.rawExtraInfo}&subjectId=${subjectId}`}>
                                     <button className="text-[10px] bg-white p-2 rounded-lg border border-red-500 font-light text-red-500">تکمیل اطلاعات اختصاصی</button>
                                 </Link>
                             </section>
