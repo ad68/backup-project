@@ -8,8 +8,7 @@ const useInsuranceLocation = () => {
     const [isOpenDtl1, setIsOpenDtl1] = useState<boolean>(false)
     const [fetchLoading, setFetchLoading] = useState<boolean>(false)
     const [actionLoading, setActionLoading] = useState<boolean>(false)
-    const [farmLat, setFarmLat] = useState()
-    const [farmLng, setFarmLng] = useState()
+
     const [featureData, setFeatureData] = useState<any>()
     const [subjectNotExist, setSubjectNotExist] = useState<boolean>(false)
     const [geoInWkt, setGeoInWkt] = useState("")
@@ -19,6 +18,8 @@ const useInsuranceLocation = () => {
     const subjectId = searchParams.get("subjectId")
     const subjectItemId = searchParams.get("subjectItemId")
     const featureId = searchParams.get("featureId")
+    const farmLat = searchParams.get("lat")
+    const farmLng = searchParams.get("lng")
     const [isAddPolygonModalOpen, setIsAddPolygonModalOpen] = useState<boolean>(false)
     const getFeatureInfo = () => {
         setFetchLoading(true)
@@ -56,28 +57,11 @@ const useInsuranceLocation = () => {
             toastSuccess("عملیات با موفقیت اانجام شد")
         }).catch().finally(() => setActionLoading(false))
     }
-    const getFarmLocation = () => {
-        const params = {
-            reviewId: reviewId,
-            policyId: policyId
-        }
-        useAxiosWithToken.post("/sabka/technical/annex/get/policy", params).then(
-            (res) => {
-                setFarmLat(res.data[0].placeModel.latitude)
-                setFarmLng(res.data[0].placeModel.longitude)
 
-            }
-        ).catch().finally(() => setActionLoading(false))
-    }
-    useEffect(() => {
-        getFarmLocation()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
     useEffect(() => {
         if (featureId && featureId !== "null") {
             getFeatureInfo()
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return {

@@ -1,11 +1,18 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-
+type UserInfo = {
+    username: string
+    fullName: string
+    displayName: string
+    profilePictureFileId: number
+    profilePictureFileCode: string
+    picture: string
+}
 type AuthState = {
     isAuthenticated: boolean;
     token: string | null;
-
-    login: (token: string) => void;
+    userInfo: UserInfo | undefined;
+    login: (token: string, userInfo: any) => void;
     logout: () => void;
 };
 
@@ -15,19 +22,9 @@ export const useAuthStore = create<AuthState>()(
             (set) => ({
                 isAuthenticated: false,
                 token: null,
-                login: (token) =>
-                    set(
-                        { isAuthenticated: true, token: token },
-                        false,
-                        'auth/login'
-                    ),
-
-                logout: () =>
-                    set(
-                        { isAuthenticated: false, token: null },
-                        false,
-                        'auth/logout'
-                    ),
+                userInfo: undefined,
+                login: (token, userInfo) => set({ isAuthenticated: true, token: token, userInfo: userInfo }, false, 'auth/login'),
+                logout: () => set({ isAuthenticated: false, token: null }, false, 'auth/logout'),
             }),
             {
                 name: 'auth-storage',

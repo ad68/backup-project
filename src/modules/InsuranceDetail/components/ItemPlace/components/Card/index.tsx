@@ -8,7 +8,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-export default function Index({ item }: { item: PolicyItem }) {
+export default function Index({ item, lat, lng }: { item: PolicyItem, lat: string, lng: string }) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
     const [searchParams] = useSearchParams();
     const reviewId = searchParams.get("reviewId")
@@ -70,7 +70,7 @@ export default function Index({ item }: { item: PolicyItem }) {
                             </section>
                         </PopoverContent>
                     </Popover>
-                    {!item.featureId && <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}`}>
+                    {!item.featureId && <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}`}>
                         <button className="border w-[90px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
                             <span className="font-light text-sm">تعیین مکان</span>
                         </button>

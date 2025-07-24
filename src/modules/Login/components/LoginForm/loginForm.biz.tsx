@@ -6,6 +6,7 @@ import { useAxios } from '@/hooks';
 import { toastError } from '@/components/kit/toast';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
+import BASE_URL from '@/config/api';
 
 const loginSchema = z.object({
     username: z.string().min(1, "نام کاربری الزامی است"),
@@ -36,13 +37,13 @@ const useLoginForm = () => {
             longLived: true,
         }
         setActionLoading(true)
-        useAxios.post("https://api.bakapp.ir/bakapp/api/sabka/sso/auth", params, {
+        useAxios.post(BASE_URL + "/sabka/sso/auth", params, {
             headers: {
                 "Accept-Language": "fa"
             }
         }).then((res) => {
             navigation("/home")
-            login(`Bearer ${res.data.token}`)
+            login(`Bearer ${res.data.token}`, res.data.sabkaActor)
             setActionLoading(false)
         }).catch(err => {
             setActionLoading(false)

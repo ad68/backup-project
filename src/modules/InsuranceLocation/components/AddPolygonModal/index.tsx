@@ -17,9 +17,7 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
   const [polygonsState, setPolygonsState] = useState<L.LatLng[][]>([]);
   const [hasPolygon, setHasPolygon] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  useEffect(() => {
 
-  }, [])
   useEffect(() => {
     /*  const def = defaultPolygon */
     if (mapRef.current && !mapRefInstance.current) {

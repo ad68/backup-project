@@ -2,7 +2,7 @@ export type ModalProp = {
     isOpen: boolean,
     setIsOpen: (value: boolean) => void,
 }
-export type PolicyItem = {
+/* export type PolicyItem = {
     policyItemId: number,
     subjectItemId: number,
     featureId: number,
@@ -14,4 +14,5 @@ export type PolicyItem = {
     insured: number,
     note: string,
     rawExtraInfo: string
-}
+} */
+export type PolicyItem = any

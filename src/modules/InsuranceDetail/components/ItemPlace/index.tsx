@@ -13,7 +13,7 @@ export default function Index() {
         <section className='flex justify-center'>
             {loading && <ListLoader />}
         </section>
-        {data.map((item, Index) => (<Card key={Index} item={item} />))}
+        {data[0]?.policyItemList.map((item: any, Index: number) => (<Card key={Index} item={item} lat={data[0].placeModel?.latitude} lng={data[0].placeModel?.longitude} />))}
 
     </>
 }
