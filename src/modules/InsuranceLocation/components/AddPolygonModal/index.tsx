@@ -164,66 +164,7 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
 
   }, [polygonsState]);
 
-  /*  const generateAndUploadKml = () => {
-     if (!drawnItemsRef.current) return;
- 
-     const geojson = drawnItemsRef.current.toGeoJSON();
- 
-     let kml = `<?xml version="1.0" encoding="UTF-8"?>
-       <kml xmlns="http://www.opengis.net/kml/2.2">
-         <Document>
-     `;
- 
-     if ("features" in geojson) {
-       geojson.features.forEach((feature: any) => {
-         if (feature.geometry.type === "Polygon") {
-           const coordinates = feature.geometry.coordinates[0]
-             .map(([lng, lat]: [number, number]) => `${lng},${lat},0`)
-             .join(" ");
- 
-           kml += `
-             <Placemark>
-               <Polygon>
-                 <outerBoundaryIs>
-                   <LinearRing>
-                     <coordinates>${coordinates}</coordinates>
-                   </LinearRing>
-                 </outerBoundaryIs>
-               </Polygon>
-             </Placemark>
-           `;
-         }
-       });
-     }
- 
-     kml += `
-       </Document>
-     </kml>`;
- 
-     uploadKmlToApi(kml);
-   }; */
 
-  /*  const uploadKmlToApi = async (kmlText: string) => {
-     const blob = new Blob([kmlText], {
-       type: "application/vnd.google-earth.kml+xml",
-     });
- 
-     const formData = new FormData();
-     formData.append("file", blob, "polygons.kml");
- 
-     try {
-       const res = await fetch("/api/upload-kml", {
-         method: "POST",
-         body: formData,
-       });
- 
-       if (!res.ok) throw new Error("Upload failed");
-       const data = await res.json();
-       console.log("✅ Upload success:", data);
-     } catch (err) {
-       console.error("❌ Upload error:", err);
-     }
-   }; */
 
   return (
     <section style={{ height: "95%", width: "100%", position: "relative" }}>

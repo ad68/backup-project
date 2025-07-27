@@ -16,7 +16,7 @@ import Pagination from '@/modules/Pagination'
 import Damage from '@/modules/Damage/Home'
 import DamageRegistration from '@/modules/Damage/DamageRegistration'
 import CurrentActions from '@/modules/Damage/CurrentActions'
-import MapCash from '@/modules/MapCash'
+
 import PreviousActions from '@/modules/Damage/Search'
 import Search from '@/modules/Damage/Search'
 import PhenologyMonitoring from '@/modules/PhenologyMonitoring/Home'
@@ -28,6 +28,7 @@ import ProtectedRoute from './ProtectedRoute'
 import MAIN_LAYOUT from '../components/layout/MainLayout'
 import DashboardLayout from '../components/layout/DashboardLayout'
 import Rules from '@/modules/rules'
+import GoogleMap from '@/modules/GoogleMap'
 import { useEffect } from "react";
 export default function Index() {
     const { pathname } = useLocation();
@@ -107,7 +108,6 @@ export default function Index() {
         </Route>
         <Route path="screen-shot" element={<ScreenShot />} />
         <Route path="webcam" element={<Webcam />} />
-        <Route path="map-cash" element={<MapCash />} />
-
+        <Route path="google-map" element={<GoogleMap />} />
     </Routes>
 }
