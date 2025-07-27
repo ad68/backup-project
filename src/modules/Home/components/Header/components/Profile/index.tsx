@@ -5,5 +5,5 @@ export default function Index() {
         <span className="text-white font text-[15px]">
             سلام! ارزیاب عزیز خوش آمدید
         </span>
-    </section>;
+    </section>
 }

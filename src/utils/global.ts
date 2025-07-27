@@ -177,3 +177,11 @@ export const JSONStringToObject = <T = Record<string, any>>(str: string): T | nu
         return null;
     }
 };
+export const plus1000 = (value: any) => {
+    if (Number(value) > 1000) {
+        return "1000+"
+    }
+    else {
+        return value
+    }
+}

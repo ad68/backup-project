@@ -9,12 +9,13 @@ import CustomDatepicker from "@/components/kit/CustomDatepicker";
 import FormTitle from "@/components/kit/FormTitle";
 import FormField from "@/components/kit/FormField";
 import PageTitle from "@/components/kit/PageTitle";
+import CustomButton from "@/components/kit/CustomButton";
 export default function Index() {
     const navigate = useNavigate()
     const [setSearchParams] = useSearchParams()
     const farmerName = setSearchParams.get("farmerName")
     const policyId = setSearchParams.get("policyId")
-    const { ownerShipsOptions, irrigationSystemOptions, waterResourceOptions, control, errors, handleSubmit, onSubmit } = usePrivateInfo()
+    const { ownerShipsOptions, irrigationSystemOptions, waterResourceOptions, control, errors, handleSubmit, onSubmit, actionLoading } = usePrivateInfo()
     return <>
         <PageTitle size='small' miniDescription={`بیمه نامه: ${policyId}`} title={`${farmerName}`} />
         <form onSubmit={handleSubmit(onSubmit)} className="m-auto p-4 max-5xl relative">
@@ -195,13 +196,13 @@ export default function Index() {
                 </FormField>
             </div>
             <section className="flex sticky bg-white bottom-0 gap-2 mt-4 border-t py-3 justify-end w-full">
-                <button type="button" onClick={() => navigate(-1)} className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
+                <CustomButton variant="outlined" type="button" onClick={() => navigate(-1)} className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
                     <span>بازگشت</span>
                     <Undo2Icon className="w-[20px]" />
-                </button>
-                <button className="bg-primary w-[120px] text-white flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
+                </CustomButton>
+                <CustomButton loading={actionLoading} className="bg-primary w-[120px] text-white flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
                     <span>تایید</span>
-                </button>
+                </CustomButton>
             </section>
         </form>
     </>

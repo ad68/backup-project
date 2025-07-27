@@ -11,6 +11,7 @@ import CustomTextArea from "@/components/kit/CustomTextArea";
 import CustomDatepicker from "@/components/kit/CustomDatepicker";
 import CustomSelect from "@/components/kit/CustomSelect";
 import PageTitle from "@/components/kit/PageTitle";
+import CustomButton from "@/components/kit/CustomButton";
 export default function Index() {
     const { isInfoModalOpen, setIsInfoModalOpen, ownerShipsOptions, irrigationSystemOptions, waterResourceOptions, control, errors, handleSubmit, onSubmit } = useLandDivision()
     const navigate = useNavigate();
@@ -200,11 +201,6 @@ export default function Index() {
             </section>
         </section> */}
             {/*   <PrivateInfo /> */}
-
-
-
-
-
             <form onSubmit={handleSubmit(onSubmit)} className="m-auto p-4 max-5xl relative">
                 <section className=" text-center">
                     <span className="text-primary font-bold text-lg">تقسیم قلم بیمه‌شده:</span>
@@ -232,7 +228,7 @@ export default function Index() {
                     />
                 </FormField>
                 <section className="mt-5 text-center">
-                    <span className="text-primary font-bold text-lg"> اختصاصی قلم بیمه‌شده:</span>
+                    <span className="text-primary font-bold text-lg">اختصاصی قلم بیمه‌شده:</span>
                 </section>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -402,13 +398,13 @@ export default function Index() {
                     </FormField>
                 </div>
                 <section className="flex sticky bg-white bottom-0 gap-2 mt-4 border-t py-3 justify-end w-full">
-                    <button type="button" onClick={() => navigate(-1)} className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
+                    <CustomButton variant="outlined" type="button" onClick={() => navigate(-1)} className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
                         <span>بازگشت</span>
                         <Undo2Icon className="w-[20px]" />
-                    </button>
-                    <button className="bg-primary w-[120px] text-white flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
+                    </CustomButton>
+                    <CustomButton className="bg-primary w-[120px] text-white flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
                         <span>تایید</span>
-                    </button>
+                    </CustomButton>
                 </section>
             </form>
 

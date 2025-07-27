@@ -1,10 +1,9 @@
 import { UserIcon } from "@/assets/icons/UserIcon"
-import { MapPin } from "lucide-react"
+import { ChevronLeft, MapPin } from "lucide-react"
 import useUserProfile from "./useUserProfile"
 export default function Index() {
     const { userInfo } = useUserProfile()
-    return <main className='m-auto w-[440px]  max-w-full'>
-
+    return <main className='m-auto w-[440px] max-w-full'>
         <div className="h-[250px] rounded-b-[82px] flex flex-col gap-4 justify-center items-center bg-gradient-to-b from-primary to-[#247f4d] overflow-hidden relative z-0">
             <div className="w-[100px] h-[100px] bg-slate-200 rounded-full overflow-hidden mt-[-80px]">
                 <img src={`data:image/jpg;base64,${userInfo?.picture}`} className="w-[100px]" alt="" />
@@ -29,12 +28,21 @@ export default function Index() {
                 </div>
             </div>
         </div>
-        <div className="px-6 mt-5 flex flex-col gap-4">
-            <button className="w-full bg-primary text-white p-2 rounded-full">کیف پول</button>
-            <button className="w-full bg-blue-500 text-white p-2 rounded-full">تیکت</button>
-            <button className="w-full bg-red-500 text-white p-2 rounded-full">بیمه درمان تکمیلی</button>
-            <button className="w-full bg-yellow-500 text-white p-2 rounded-full">دانلود گواهینامه آموزشی</button>
-            <button className="w-full bg-orange-500 text-white p-2 rounded-full">دانلود کارت شناسایی</button>
+        <div className="px-6 mt-10 flex flex-col gap-2">
+            {/*  <button className="w-full bg-primary text-white p-2 rounded-full">کیف پول</button>
+            <button className="w-full bg-blue-500 text-white p-2 rounded-full">تیکت</button> */}
+            <button className="w-full flex items-center text-sm text-right  text-primary p-2 rounded-full">
+                <ChevronLeft />
+                بیمه درمان تکمیلی
+            </button>
+            <button className="w-full flex items-center text-sm text-right  text-primary p-2 rounded-full">
+                <ChevronLeft />
+                دانلود گواهینامه آموزشی
+            </button>
+            <button className="w-full flex items-center text-sm text-right  text-primary p-2 rounded-full">
+                <ChevronLeft />
+                دانلود کارت شناسایی
+            </button>
         </div>
     </main>
 }

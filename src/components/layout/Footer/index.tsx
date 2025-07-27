@@ -1,16 +1,16 @@
 /* import { DashboardIcon } from "@/assets/icons/DashboardIcon"; */
 import { LogoutIcon } from "@/assets/icons/LogoutIcon";
 import { ProfileIcon } from "@/assets/icons/ProfileIcon";
-import OnlineStatusBtn from "./components/OnlineStatusBtn";
+/* import OnlineStatusBtn from "./components/OnlineStatusBtn"; */
 import { DashboardIcon } from "@/assets/icons/DashboardIcon";
-import { Link, useLocation } from "react-router-dom";
+import { Link, /* useLocation */ } from "react-router-dom";
 import useFooter from "./footer.biz";
 import SlidingModal from "@/components/kit/SlidingModal";
 import CustomButton from "@/components/kit/CustomButton";
 
 
 export default function Index() {
-    const location = useLocation();
+    /*     const location = useLocation(); */
     const { logout, isLogoutModalOpen, setIsLogoutModalOpen } = useFooter()
     return <section className="fixed m-auto w-full left-0 bottom-0 flex justify-center z-50">
         <section className=" shadow-[1px_4px_13px_-1px_rgba(156,156,156,0.75)] rounded-t-full flex w-full max-w-5xl justify-around  h-[60px] pt-1 pb-3 bg-white">
@@ -18,12 +18,16 @@ export default function Index() {
                 <ProfileIcon className="text-slate-400 w-[30px]" />
                 <span className="text-xs text-slate-500 mt-[1px]">پروفایل</span>
             </Link>
-            {location.pathname === "/home" ? <section>
+            <Link to="/home" className="flex flex-col w-[70px] mt-[-3px] items-center justify-center">
+                <DashboardIcon className="text-slate-400 w-[38px]" />
+                <span className="text-xs text-slate-500 ">داشبورد</span>
+            </Link>
+            {/* {location.pathname === "/home" ? <section>
                 <OnlineStatusBtn />
             </section> : <Link to="/home" className="flex flex-col w-[70px] mt-[-3px] items-center justify-center">
                 <DashboardIcon className="text-slate-400 w-[38px]" />
                 <span className="text-xs text-slate-500 ">داشبورد</span>
-            </Link>}
+            </Link>} */}
             <section onClick={() => setIsLogoutModalOpen(true)} className="flex flex-col items-center justify-center">
                 <LogoutIcon className="text-slate-400 w-[28px] shadow-2xl" />
                 <span className="text-xs text-slate-500">خروج</span>

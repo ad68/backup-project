@@ -99,7 +99,7 @@ const usePrivateInfo = () => {
     }, [rawExtraInfo])
     const onSubmit = async (data: FormData) => {
         if (data.F132) {
-            data.F132 = shamsiToMiladi(data.F132)
+            data.F132 = shamsiToMiladi(data.F132) + "T00:00:00"
         }
         console.log(convertToJSONStringWithEscapes(data))
         setActionLoading(true)
@@ -111,7 +111,7 @@ const usePrivateInfo = () => {
             isTest: true,
             extraInfo: `${JSON.stringify(data)}`
         }
-        useAxiosWithToken.post("/sabka/technical/annex/add/fix-extra-info", params).then().catch()
+        useAxiosWithToken.post("/sabka/technical/annex/add/fix-extra-info", params).then().finally(() => { setActionLoading(false) })
     };
 
     return {

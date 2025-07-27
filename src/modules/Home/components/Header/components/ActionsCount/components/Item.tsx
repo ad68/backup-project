@@ -1,7 +1,5 @@
+import { plus1000 } from "@/utils/global";
 import type { ActionsCountProp } from "../../../header.types";
-
-
-
 export default function Index({ title, count }: ActionsCountProp) {
 
     return <section className="flex md:w-full flex-col items-center bg-white rounded-lg overflow-hidden">
@@ -9,9 +7,8 @@ export default function Index({ title, count }: ActionsCountProp) {
             <span className=" text-[12px] text-slate-600 text-center">
                 {title}
             </span>
-            <span className=" text-[12px] text-slate-600 text-center"> انجام شده</span>
+            <span className="text-[12px] text-slate-600 text-center">انجام نشده</span>
         </section>
-
-        <section className="bg-[#007b38]  w-full flex-center pt-[2px] text-white">{count === "soon" ? "به زودی" : count}</section>
+        <section className="bg-[#007b38]  w-full flex-center pt-[2px] text-white">{count === "soon" ? "به زودی" : plus1000(count)}</section>
     </section>
 }
