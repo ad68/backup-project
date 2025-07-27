@@ -49,7 +49,8 @@ const useInsuranceLocation = () => {
             policyId: policyId,
             subjectItemId: subjectItemId,
             subjectNotExist: subjectNotExist,
-            geoInWkt: geoInWkt
+            geoInWkt: geoInWkt,
+
         }
         setActionLoading(true)
         useAxiosWithToken.post("/sabka/technical/annex/add/locate-subject-item", params).then(() => {

@@ -221,10 +221,11 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
           <Undo2 className="w-[20px]" />
           <span className="text-xs">بازگشت</span>
         </CustomButton>
-        <CustomButton className="rounded-full" onClick={() => setIsAddPolygonModalOpen(false)}>
+        {(hasPolygon && !isEditing) && <CustomButton className="rounded-full" onClick={() => setIsAddPolygonModalOpen(false)}>
           <CheckIcon className="w-[20px]" />
           <span className="text-xs">تایید</span>
-        </CustomButton>
+        </CustomButton>}
+
       </section>
     </section>
   );
