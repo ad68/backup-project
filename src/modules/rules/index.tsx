@@ -4,9 +4,9 @@ export default function Index() {
     const base = "https://cc.bakapp.ir/constant-content/bakapp-info"
     const arr = [
         { id: 1, title: "بخشنامه شماره 5 بیمه فراگیر", url: base + "/1.pdf" },
-        { id: 2, title: "تسریع در ارجاع بسته های پیوست فنی محصولات زراعی", url: base + "/2.docx" },
-        { id: 3, title: "تعرفه بازنگری شده سال 1404-1403 میگوی پرورشی", url: base + "/3.docx" },
-        { id: 4, title: "بخشنامه چهارم طرح بیمه فراگیر اجباری", url: base + "/4.docx" },
+        { id: 2, title: "تسریع در ارجاع بسته های پیوست فنی محصولات زراعی", url: base + "/2.pdf" },
+        { id: 3, title: "تعرفه بازنگری شده سال 1404-1403 میگوی پرورشی", url: base + "/3.pdf" },
+        { id: 4, title: "بخشنامه چهارم طرح بیمه فراگیر اجباری", url: base + "/4.pdf" },
         { id: 5, title: "شیوه‌نامه انجام عملیات پیوست فنی- دستورالعمل پیوست فنی", url: base + "/5.pdf" },
         { id: 6, title: "شیوه‌نامه انجام عملیات پیوست فنی- اصلاحیه شیوه نامه پیوست فنی", url: base + "/6.pdf" },
         { id: 7, title: "بخشنامه دوم طرح بیمه فراگیر اجباری", url: base + "/7.jpg" },

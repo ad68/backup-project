@@ -7,7 +7,7 @@ export default function Index({ title, count }: ActionsCountProp) {
             <span className=" text-[12px] text-slate-600 text-center">
                 {title}
             </span>
-            <span className="text-[12px] text-slate-600 text-center">انجام نشده</span>
+            <span className="text-[12px] text-slate-600 text-center">انجام شده</span>
         </section>
         <section className="bg-[#007b38]  w-full flex-center pt-[2px] text-white">{count === "soon" ? "به زودی" : plus1000(count)}</section>
     </section>
