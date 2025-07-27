@@ -16,6 +16,7 @@ import Pagination from '@/modules/Pagination'
 import Damage from '@/modules/Damage/Home'
 import DamageRegistration from '@/modules/Damage/DamageRegistration'
 import CurrentActions from '@/modules/Damage/CurrentActions'
+import MapCash from '@/modules/MapCash'
 import PreviousActions from '@/modules/Damage/Search'
 import Search from '@/modules/Damage/Search'
 import PhenologyMonitoring from '@/modules/PhenologyMonitoring/Home'
@@ -106,6 +107,7 @@ export default function Index() {
         </Route>
         <Route path="screen-shot" element={<ScreenShot />} />
         <Route path="webcam" element={<Webcam />} />
+        <Route path="map-cash" element={<MapCash />} />
 
     </Routes>
 }
