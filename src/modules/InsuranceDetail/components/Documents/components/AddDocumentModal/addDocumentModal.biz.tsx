@@ -14,7 +14,7 @@ const schema = z.object({
         .refine((files) => files && files.length > 0, 'انتخاب فایل الزامی است'),
 });
 type FormData = z.infer<typeof schema>;
-const useAddDocumentModal = (setIsAddDocumentModal: (value: boolean) => void) => {
+const useAddDocumentModal = (setIsAddDocumentModal: (value: boolean) => void, getFileList: () => void) => {
     const {
         control,
         handleSubmit,
@@ -47,6 +47,7 @@ const useAddDocumentModal = (setIsAddDocumentModal: (value: boolean) => void) =>
         useAxiosWithToken.post("/sabka/technical/annex/add/subject-file", params)
             .then(() => {
                 toastSuccess("سند شما با موفقیت بارگذاری شد")
+                getFileList()
                 setIsAddDocumentModal(false)
             }
             )

@@ -3,8 +3,8 @@ import CustomTextBox from "@/components/kit/CustomTextBox";
 import { Undo2Icon } from "lucide-react";
 import useAddDocumentModal from "./addDocumentModal.biz";
 import { Controller } from 'react-hook-form';
-export default function Index({ setIsAddDocumentModal }: { setIsAddDocumentModal: (value: boolean) => void }) {
-    const { control, handleSubmit, onSubmit, errors, actionLoading } = useAddDocumentModal(setIsAddDocumentModal)
+export default function Index({ setIsAddDocumentModal, getFileList }: { setIsAddDocumentModal: (value: boolean) => void, getFileList: () => void }) {
+    const { control, handleSubmit, onSubmit, errors, actionLoading } = useAddDocumentModal(setIsAddDocumentModal, getFileList)
     return <form onSubmit={handleSubmit(onSubmit)} className="px-3 w-[440px] m-auto max-w-full gap-10 items-center">
         <section className="mt-2">
             <span className="font-light text-slate-700 text-xs">عنوان:</span>

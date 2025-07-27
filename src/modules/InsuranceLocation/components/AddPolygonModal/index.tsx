@@ -8,7 +8,6 @@ import { CheckIcon, DeleteIcon, Edit2Icon, MapPinHouseIcon, Undo2 } from "lucide
 import type { AddPolyGonProp } from "./addPolygon.typs";
 import CustomButton from "@/components/kit/CustomButton";
 import { WKTToPolygon } from "@/utils/global";
-
 export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPolygon, farmLat, farmLng }: AddPolyGonProp) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapRefInstance = useRef<L.Map | null>(null);
@@ -24,7 +23,7 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
       const map = L.map(mapRef.current, {
         zoomControl: false,
         attributionControl: false,
-      }).setView(farmLat && farmLng ? [Number(farmLat), Number(farmLng)] : [35.70218, 51.3386], 16);
+      }).setView(farmLat && farmLng ? [Number(farmLat), Number(farmLng)] : [35.70218, 51.3386], 14);
       mapRefInstance.current = map;
       const baseLayer = L.tileLayer(
         "https://mt{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}",
@@ -34,9 +33,7 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
         }
       );
       baseLayer.addTo(map);
-
       map.addLayer(drawnItemsRef.current);
-
       const drawControl = new L.Control.Draw({
         draw: {
           polygon: {
@@ -164,7 +161,7 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
     /* if (polygonsState.length > 0) {
       generateAndUploadKml();
     } */
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [polygonsState]);
 
   /*  const generateAndUploadKml = () => {

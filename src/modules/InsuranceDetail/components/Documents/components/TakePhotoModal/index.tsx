@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Webcam from "react-webcam";
 
-export default function WebcamWithWatermark({ setTakePhotoModalIsOpen }: any) {
+export default function WebcamWithWatermark({ setTakePhotoModalIsOpen, getFileList }: any) {
     const webcamRef = useRef<Webcam>(null);
     const [searchParams] = useSearchParams()
     const reviewId = searchParams.get("reviewId")
@@ -111,6 +111,7 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen }: any) {
             .then(() => {
                 toastSuccess("سند شما با موفقیت بارگذاری شد")
                 setTakePhotoModalIsOpen(false)
+                getFileList()
             }
             )
             .finally(() => setSaveLoading(false))

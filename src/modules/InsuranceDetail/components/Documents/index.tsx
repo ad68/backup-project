@@ -8,7 +8,7 @@ import TakePhotoModal from './components/TakePhotoModal'
 import ListLoader from "@/components/kit/ListLoader";
 
 export default function Index() {
-    const { isAddDocumentModal, setIsAddDocumentModal, takePhotoModalIsOpen, setTakePhotoModalIsOpen, actionLoading, data, downloadFile, deleteFile } = useDocument()
+    const { isAddDocumentModal, setIsAddDocumentModal, takePhotoModalIsOpen, setTakePhotoModalIsOpen, actionLoading, data, downloadFile, deleteFile, getFileList } = useDocument()
     return <>
         <section className="p-2">
             <section className="border border-slate-200  rounded-lg p-2">
@@ -30,15 +30,13 @@ export default function Index() {
                 {!actionLoading && <section className="grid grid-cols-2 gap-2">
                     {data.map((item: any, index: number) => (<FileItem downloadFile={downloadFile} deleteFile={deleteFile} key={index} item={item} />))}
                 </section>}
-
-
             </section>
         </section>
         <SlidingModal isOpen={isAddDocumentModal}>
-            <AddDocumentModal setIsAddDocumentModal={setIsAddDocumentModal} />
+            <AddDocumentModal getFileList={getFileList} setIsAddDocumentModal={setIsAddDocumentModal} />
         </SlidingModal>
         <SlidingModal isOpen={takePhotoModalIsOpen}>
-            <TakePhotoModal setTakePhotoModalIsOpen={setTakePhotoModalIsOpen} />
+            <TakePhotoModal getFileList={getFileList} setTakePhotoModalIsOpen={setTakePhotoModalIsOpen} />
         </SlidingModal>
     </>
 }

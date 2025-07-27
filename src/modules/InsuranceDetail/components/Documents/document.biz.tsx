@@ -69,7 +69,8 @@ const useDocument = () => {
         data,
         actionLoading,
         downloadFile,
-        deleteFile
+        deleteFile,
+        getFileList
     }
 }
 export default useDocument
