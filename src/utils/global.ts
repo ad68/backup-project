@@ -106,8 +106,6 @@ export const convertToBase64 = (file: File) => {
         };
     });
 };
-
-
 export const getImageFormatFromBase64 = (base64: string): string | null => {
     const match = base64.match(/^data:image\/([a-zA-Z0-9+]+);base64,/);
     return match ? match[1] : null;
@@ -116,9 +114,6 @@ export const getPureBase64 = (base64: string): string => {
     const index = base64.indexOf("base64,");
     return index !== -1 ? base64.slice(index + 7) : base64;
 };
-
-
-
 export const WKTToPolygon = (wkt: string): [number, number][] => {
     if (!wkt.startsWith("POLYGON ((") || !wkt.endsWith("))")) {
         throw new Error("Invalid WKT POLYGON format");
@@ -149,16 +144,12 @@ export const parseEscapedJson = (input: string): Record<string, unknown> => {
         return {};
     }
 }
-
-
 export const toPersianDate = (date: Date): string => {
     // باید جلالی رو فعال کنیم
     moment.loadPersian({ dialect: "persian-modern", usePersianDigits: false });
 
     return moment(date).format("jYYYY/jMM/jDD"); // jYYYY,jMM,jDD برای سال، ماه، روز شمسی
 }
-
-
 export const shamsiToMiladi = (value: any) => {
     if (value) {
         return jalaliToGregorian(toPersianDate(value))
@@ -167,8 +158,6 @@ export const shamsiToMiladi = (value: any) => {
         return value
     }
 }
-
-
 export const JSONStringToObject = <T = Record<string, any>>(str: string): T | null => {
     try {
         return JSON.parse(str);
