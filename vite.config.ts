@@ -8,11 +8,11 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'prompt',
-      includeAssets: ['favicon.ico'],
+      includeAssets: ['favicon.ico', "icon-192x192", "icon-512x512"],
       manifest: {
         name: 'بکاپ-بیمه کشاورزی ایرانیان پوشش',
         short_name: 'بکاپ',
-        description: 'My Vite PWA',
+        description: 'بکاپ-بیمه کشاورزی ایرانیان پوشش',
         theme_color: '#2ebf70',
         background_color: '#2ebf70',
         display: 'standalone',
@@ -29,7 +29,27 @@ export default defineConfig({
             type: 'image/png'
           }
         ]
-      }
+      },
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/your-api\.domain\//,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'api-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 86400, // 1 روز
+              },
+            },
+          },
+        ],
+        globPatterns: [
+          '**/*.{js,css,html,ico,png,svg,json}',
+          'fonts/yekanBakh/woff/*.woff',
+          'fonts/yekanBakh/woff2/*.woff2',
+        ],
+      },
     })
 
   ],
