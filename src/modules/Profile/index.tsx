@@ -6,7 +6,7 @@ export default function Index() {
     return <main className='m-auto w-[440px] max-w-full'>
         <div className="h-[250px] rounded-b-[82px] flex flex-col gap-4 justify-center items-center bg-gradient-to-b from-primary to-[#247f4d] overflow-hidden relative z-0">
             <div className="w-[100px] h-[100px] bg-slate-200 rounded-full overflow-hidden mt-[-80px]">
-                <img src={`data:image/jpg;base64,${userInfo?.picture}`} className="w-[100px]" alt="" />
+                <img src={userInfo?.picture ? `data:image/jpg;base64,${userInfo?.picture}` : "/images/profile/no-avatar.svg"} className="w-[100px]" alt="" />
             </div>
             <p className="text-2xl font-bold text-white">ارزیاب عزیز خوش آمدید</p>
         </div>
