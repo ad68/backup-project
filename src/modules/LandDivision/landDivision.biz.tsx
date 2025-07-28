@@ -1,7 +1,7 @@
 
 import { validationMessages } from "@/constants/validationMessages";
 import { useAxiosWithToken } from "@/hooks";
-import { JSONStringToObject, shamsiToMiladi } from "@/utils/global";
+import { JSONStringToObject, shamsiToMiladi } from '@ad68/utils'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";

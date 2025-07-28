@@ -3,7 +3,8 @@ import { ChevronDown, ChevronUp, EyeIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import type { CardProp } from "../../technicalAttachment.type";
-import { gregorianToJalali } from "@/utils/global";
+import { gregorianToJalali } from "@ad68/utils";
+
 export default function Index({ item }: CardProp) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
 

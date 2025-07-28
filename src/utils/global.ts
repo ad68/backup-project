@@ -1,4 +1,4 @@
-import moment from "moment-jalaali"
+/* import moment from "moment-jalaali"
 export const persianToEnglishNumber = (input: string) => {
     const persianDigits: string[] = [
         '۰',
@@ -85,10 +85,10 @@ export const gregorianToJalaliDateTime = (value: string) => {
 export const getPersianDate = (): string => {
     moment.loadPersian({ usePersianDigits: false });
     const now = moment();
-    const weekday = now.format('dddd'); // مثلا "سه‌شنبه"
-    const day = now.format('jD');       // مثلا "13"
-    const month = now.format('jMMMM');  // مثلا "خرداد"
-    const year = now.format('jYYYY');   // مثلا "1404"
+    const weekday = now.format('dddd');
+    const day = now.format('jD');
+    const month = now.format('jMMMM');
+    const year = now.format('jYYYY');
     return `${weekday} ${day} ${month} ${year}`;
 };
 export const convertToBase64 = (file: File) => {
@@ -133,11 +133,11 @@ export const WKTToPolygon = (wkt: string): [number, number][] => {
 export const convertToJSONStringWithEscapes = (input: Record<string, any>): string => {
     const jsonString = JSON.stringify(input);
     return jsonString
-    /* return JSON.stringify(jsonString); */
+
 }
 export const parseEscapedJson = (input: string): Record<string, unknown> => {
     try {
-        const cleaned = input.replace(/\\"/g, '"'); // حذف اسلش‌ها
+        const cleaned = input.replace(/\\"/g, '"');
         return JSON.parse(cleaned);
     } catch (error) {
         console.error("Invalid JSON string:", error);
@@ -145,10 +145,10 @@ export const parseEscapedJson = (input: string): Record<string, unknown> => {
     }
 }
 export const toPersianDate = (date: Date): string => {
-    // باید جلالی رو فعال کنیم
+
     moment.loadPersian({ dialect: "persian-modern", usePersianDigits: false });
 
-    return moment(date).format("jYYYY/jMM/jDD"); // jYYYY,jMM,jDD برای سال، ماه، روز شمسی
+    return moment(date).format("jYYYY/jMM/jDD");
 }
 export const shamsiToMiladi = (value: any) => {
     if (value) {
@@ -173,4 +173,4 @@ export const plus1000 = (value: any) => {
     else {
         return value
     }
-}
+} */

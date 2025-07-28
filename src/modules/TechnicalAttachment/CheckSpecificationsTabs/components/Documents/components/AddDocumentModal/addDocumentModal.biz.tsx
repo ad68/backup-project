@@ -1,10 +1,11 @@
 import { useAxiosWithToken } from "@/hooks"
-import { convertToBase64 } from "@/utils/global"
+
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { convertToBase64 } from "@ad68/utils";
 const schema = z.object({
     title: z.string().min(1, 'عنوان الزامی است'),
     name: z.string().min(1, 'نام الزامی است'),

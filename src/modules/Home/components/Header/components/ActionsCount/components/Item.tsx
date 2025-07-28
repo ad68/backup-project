@@ -1,4 +1,5 @@
-import { plus1000 } from "@/utils/global";
+
+import { plus1000 } from "@ad68/utils";
 import type { ActionsCountProp } from "../../../header.types";
 export default function Index({ title, count }: ActionsCountProp) {
 

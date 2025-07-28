@@ -1,8 +1,9 @@
 import { CloudIcon } from '@/assets/icons/CloudIcon';
 import useWeatherWidget from './weatherWidget.biz';
 import { RefreshCcw } from 'lucide-react';
-import { getPersianDate } from '@/utils/global';
+
 import ListLoader from '@/components/kit/ListLoader';
+import { getPersianDate } from '@ad68/utils';
 
 
 

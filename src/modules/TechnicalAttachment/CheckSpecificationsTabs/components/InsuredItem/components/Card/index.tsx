@@ -1,9 +1,10 @@
 
+import { gregorianToJalali } from "@ad68/utils";
 import { ChevronDown, ChevronUp, EyeIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { gregorianToJalali } from "@/utils/global";
+
 export default function Index({ item }: any) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
 

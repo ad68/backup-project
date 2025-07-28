@@ -7,7 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import { CheckIcon, DeleteIcon, Edit2Icon, MapPinHouseIcon, Undo2 } from "lucide-react";
 import type { AddPolyGonProp } from "./addPolygon.typs";
 import CustomButton from "@/components/kit/CustomButton";
-import { WKTToPolygon } from "@/utils/global";
+import { WKTToPolygon } from "@ad68/utils";
+
 export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPolygon, farmLat, farmLng }: AddPolyGonProp) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapRefInstance = useRef<L.Map | null>(null);

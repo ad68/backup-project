@@ -1,7 +1,8 @@
 
 import { validationMessages } from "@/constants/validationMessages";
 import { useAxiosWithToken } from "@/hooks";
-import { convertToJSONStringWithEscapes, JSONStringToObject, shamsiToMiladi } from "@/utils/global";
+import { convertToJSONStringWithEscapes, JSONStringToObject, shamsiToMiladi } from "@ad68/utils";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
