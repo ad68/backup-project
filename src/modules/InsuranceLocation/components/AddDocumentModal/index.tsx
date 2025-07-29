@@ -7,11 +7,17 @@ import { useRef, useState } from "react";
 export default function Index({ setIsAddDocumentModal, setSelectedFile }: { setSelectedFile: ((value: any) => void), setIsAddDocumentModal: (value: boolean) => void }) {
     const [selectedFileInModal, setSelectedFileInModal] = useState<any>()
     const inputFile = useRef<HTMLInputElement | null>(null)
-    const fileHandleChange = (file: any) => {
-        const formData = new FormData()
-        formData.append('file', file)
-        setSelectedFileInModal(formData)
-    }
+    const fileHandleChange = (file: File) => {
+        const allowedExtensions = ['gpx', 'kml'];
+        const fileExtension = file.name.split('.').pop()?.toLowerCase();
+        if (!fileExtension || !allowedExtensions.includes(fileExtension)) {
+            toastError("فقط فایل‌های با فرمت .gpx یا .kml مجاز هستند");
+            return;
+        }
+        const formData = new FormData();
+        formData.append('file', file);
+        setSelectedFileInModal(formData);
+    };
     const acceptFile = () => {
         if (selectedFileInModal) {
             setSelectedFile(selectedFileInModal)

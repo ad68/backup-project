@@ -64,7 +64,6 @@ const useInsuranceLocation = () => {
         }).catch().finally(() => setActionLoading(false))
     }
     const saveGpxFile = () => {
-
         const params = {
             reviewId: reviewId,
             policyId: policyId,

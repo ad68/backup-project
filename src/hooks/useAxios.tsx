@@ -19,7 +19,7 @@ useAxios.interceptors.response.use(
       /*  notify.Error(error.response?.data?.messageFa) */
     }
     else {
-      /* notify.Error(NotifyMessage.GLOBAL_ERROR) */
+      toastError(error.response.data.message)
     }
 
     return Promise.reject(error);
