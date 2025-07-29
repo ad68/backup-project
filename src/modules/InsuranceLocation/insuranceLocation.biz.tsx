@@ -1,17 +1,22 @@
 import { toastSuccess } from "@/components/kit/toast";
-import { useAxiosWithToken } from "@/hooks";
+import { useAxios, useAxiosWithToken } from "@/hooks";
+import { useAuthStore } from "@/store/authStore";
+import { objectToQueryString } from "@/utils/global";
+
 import { useEffect, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom";
 const useInsuranceLocation = () => {
+    const { token } = useAuthStore()
     const navigate = useNavigate();
     const [isOpenDtl, setIsOpenDtl] = useState<boolean>(false)
     const [isOpenDtl1, setIsOpenDtl1] = useState<boolean>(false)
+    const [isAddDocumentModalOpen, setIsAddDocumentModalOpen] = useState(false)
     const [fetchLoading, setFetchLoading] = useState<boolean>(false)
     const [actionLoading, setActionLoading] = useState<boolean>(false)
-
     const [featureData, setFeatureData] = useState<any>()
     const [subjectNotExist, setSubjectNotExist] = useState<boolean>(false)
     const [geoInWkt, setGeoInWkt] = useState("")
+    const [selectedFile, setSelectedFile] = useState<any | undefined>()
     const [searchParams] = useSearchParams();
     const reviewId = searchParams.get("reviewId")
     const policyId = searchParams.get("policyId")
@@ -58,6 +63,44 @@ const useInsuranceLocation = () => {
             toastSuccess("عملیات با موفقیت اانجام شد")
         }).catch().finally(() => setActionLoading(false))
     }
+    const saveGpxFile = () => {
+
+        const params = {
+            reviewId: reviewId,
+            policyId: policyId,
+            subjectItemId: subjectItemId,
+            subjectNotExist: subjectNotExist,
+
+        }
+        setActionLoading(true)
+        useAxios.post("/sabka/technical/annex/add/locate-subject-item-file?" + objectToQueryString(params) + "&token=" + token, selectedFile).then(() => {
+            navigate(-1)
+            toastSuccess("عملیات با موفقیت اانجام شد")
+        }).catch().finally(() => setActionLoading(false))
+    }
+
+
+
+    const saveLocationData = () => {
+        if (geoInWkt && !selectedFile) {
+            saveMapPolygon()
+        }
+        else if (geoInWkt === "" && selectedFile) {
+            saveGpxFile()
+        }
+    }
+
+    useEffect(() => {
+        if (selectedFile) {
+            setGeoInWkt("")
+        }
+    }, [selectedFile])
+    useEffect(() => {
+        if (geoInWkt) {
+            setSelectedFile(undefined)
+        }
+    }, [geoInWkt])
+
 
     useEffect(() => {
         if (featureId && featureId !== "null") {
@@ -66,7 +109,7 @@ const useInsuranceLocation = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return {
-        isOpenDtl, setGeoInWkt, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isAddPolygonModalOpen, setIsAddPolygonModalOpen, setSubjectNotExist, reviewId, subjectId, featureId, fetchLoading, featureData, locateSubjectItem, actionLoading, saveMapPolygon, farmLat, farmLng
+        isOpenDtl, selectedFile, setSelectedFile, isAddDocumentModalOpen, setIsAddDocumentModalOpen, geoInWkt, setGeoInWkt, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isAddPolygonModalOpen, setIsAddPolygonModalOpen, setSubjectNotExist, reviewId, subjectId, featureId, fetchLoading, featureData, locateSubjectItem, actionLoading, saveLocationData, farmLat, farmLng
     }
 }
 export default useInsuranceLocation

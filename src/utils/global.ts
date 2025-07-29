@@ -173,3 +173,17 @@ export const plus1000 = (value: any) => {
         return value
     }
 }
+
+export const objectToQueryString = (obj: Record<string, any>): string => {
+    const filteredObj = Object.fromEntries(
+        Object.entries(obj).filter(
+            ([_, value]) =>
+                value !== null &&
+                value !== undefined &&
+                value !== '' &&
+                (!Array.isArray(value) || value.length > 0),
+        ),
+    )
+    const params = new URLSearchParams(filteredObj)
+    return params.toString()
+}

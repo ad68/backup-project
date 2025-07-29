@@ -34,8 +34,7 @@ const useAddDocumentModal = (setIsAddDocumentModal: (value: boolean) => void, ge
     const onSubmit = async (data: FormData) => {
         const file = data.document[0];
         const base64 = await convertToBase64(file);
-        console.log("pure base 64", getPureBase64(String(base64)))
-        console.log("format", getImageFormatFromBase64(String(base64)))
+
         setActionLoading(true)
         const params = {
             reviewId: reviewId,
