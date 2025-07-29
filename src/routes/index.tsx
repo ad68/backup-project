@@ -10,8 +10,8 @@ import InsuranceLocation from '@/modules/InsuranceLocation'
 import PrivateInfo from '@/modules/PrivateInfo'
 import LandDivision from '@/modules/LandDivision'
 import CheckSpecificationsTabs from '@/modules/TechnicalAttachment/CheckSpecificationsTabs'
-import ScreenShot from '@/modules/ScreenShot'
-import Webcam from '@/modules/Webcam'
+/* import ScreenShot from '@/modules/ScreenShot'
+import Webcam from '@/modules/Webcam' */
 import Pagination from '@/modules/Pagination'
 import Damage from '@/modules/Damage/Home'
 import DamageRegistration from '@/modules/Damage/DamageRegistration'
@@ -28,7 +28,7 @@ import ProtectedRoute from './ProtectedRoute'
 import MAIN_LAYOUT from '../components/layout/MainLayout'
 import DashboardLayout from '../components/layout/DashboardLayout'
 import Rules from '@/modules/rules'
-import GoogleMap from '@/modules/GoogleMap'
+/* import GoogleMap from '@/modules/GoogleMap' */
 import { useEffect } from "react";
 export default function Index() {
     const { pathname } = useLocation();
@@ -106,8 +106,8 @@ export default function Index() {
                 />
             ))}
         </Route>
-        <Route path="screen-shot" element={<ScreenShot />} />
+        {/*  <Route path="screen-shot" element={<ScreenShot />} />
         <Route path="webcam" element={<Webcam />} />
-        <Route path="google-map" element={<GoogleMap />} />
+        <Route path="google-map" element={<GoogleMap />} /> */}
     </Routes>
 }

@@ -5,6 +5,7 @@ import { UserIcon } from "@/assets/icons/UserIcon";
 import useLoginForm from "./loginForm.biz";
 import { Controller } from "react-hook-form";
 import CustomButton from "@/components/kit/CustomButton";
+import { persianToEnglishNumber } from "@/utils/global";
 
 export default function Index() {
     const { showPassword, setShowPassword, handleLogin, control, actionLoading, errors, handleSubmit } = useLoginForm()
@@ -18,7 +19,7 @@ export default function Index() {
                         control={control}
                         render={({ field }) => (
                             <input
-                                {...field}
+                                onChange={(e) => field.onChange(persianToEnglishNumber(e.target.value))}
                                 maxLength={20}
                                 placeholder="نام کاربری را وارد کنید"
                                 className="w-full h-full font-light text-[13px] p-3 border-none outline-none"
@@ -39,7 +40,7 @@ export default function Index() {
                         control={control}
                         render={({ field }) => (
                             <input
-                                {...field}
+                                onChange={(e) => field.onChange(persianToEnglishNumber(e.target.value))}
                                 maxLength={20}
                                 type={showPassword ? "text" : "password"}
                                 placeholder="کلمه عبور را وارد کنید"

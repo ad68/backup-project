@@ -77,7 +77,6 @@ export const dateToTime = (value: string | undefined) => {
 }
 export const gregorianToJalaliDateTime = (value: string) => {
     if (value) {
-
         return `${gregorianToJalali(value)} ${moment(value).format("HH:mm")}`
     }
     return ''

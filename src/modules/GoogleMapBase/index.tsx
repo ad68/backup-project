@@ -20,21 +20,9 @@ export default function Index() {
             baseLayer.addTo(map);
         }
     }, []);
-
-
-
-
-
-
-
-
     return (
         <section style={{ height: "95%", width: "100%", position: "relative" }}>
-
-
             <section ref={mapRef} className="h-[87%] w-full gap-1" />
-
-
         </section>
     );
 }
