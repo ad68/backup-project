@@ -8,7 +8,7 @@ export default function Index({ item }: CardProp) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
 
     return <section className="p-2">
-        <section className={`border relative flex flex-col gap-4 bg-white border-slate-100  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[122px]`} shadow-lg`}>
+        <section className={`border relative flex flex-col gap-4 bg-white border-slate-100  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[152px]`} shadow-lg`}>
             <section className="flex justify-between w-full">
                 <section className="flex gap-1">
                     <span className="font-light text-slate-500 text-sm">بیمه نامه:</span>
@@ -29,10 +29,22 @@ export default function Index({ item }: CardProp) {
                     <span className="font-light text-slate-500 text-sm">سال زراعی</span>
                     <span className="text-sm">{item.agriYear}</span>
                 </section>
+
                 {/*  <section className="flex gap-1">
                     <span className="font-light text-slate-500 text-sm">کارمزد:</span>
                     <span className="text-sm">1,800,000</span>
                 </section> */}
+
+            </section>
+            <section className="flex justify-between w-full">
+                <section className="flex gap-1">
+                    <span className="font-light text-slate-500 text-sm">کد ملی:</span>
+                    <span className="text-sm">{item.beneficiary.nationalCode}</span>
+                </section>
+                <section className="flex gap-1">
+                    <span className="font-light text-slate-500 text-sm">موبایل:</span>
+                    <span className="text-sm">{item.beneficiary.mobile}</span>
+                </section>
 
             </section>
             {isOpenDtl && <> <span className="w-full block bg-slate-200 h-[1px]"></span>
@@ -44,17 +56,7 @@ export default function Index({ item }: CardProp) {
                     </section> */}
 
                 </section>
-                <section className="flex justify-between w-full">
-                    <section className="flex gap-1">
-                        <span className="font-light text-slate-500 text-sm">کد ملی:</span>
-                        <span className="text-sm">{item.beneficiary.nationalCode}</span>
-                    </section>
-                    <section className="flex gap-1">
-                        <span className="font-light text-slate-500 text-sm">موبایل:</span>
-                        <span className="text-sm">{item.beneficiary.mobile}</span>
-                    </section>
 
-                </section>
                 <section className="flex justify-between w-full">
                     <section className="flex gap-1">
                         <span className="font-light text-slate-500 text-sm">موضوع:</span>
