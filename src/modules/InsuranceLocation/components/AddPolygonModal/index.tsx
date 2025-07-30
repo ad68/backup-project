@@ -4,7 +4,7 @@ import "leaflet-draw";
 import "leaflet-draw/dist/leaflet.draw.css";
 import WKT from "terraformer-wkt-parser";
 import { useEffect, useRef, useState } from "react";
-import { CheckIcon, DeleteIcon, Edit2Icon, MapPinHouseIcon, Undo2 } from "lucide-react";
+import { CheckIcon, DeleteIcon, Edit2Icon, MapIcon, MapPin, MapPinCheckInside, MapPinHouseIcon, MapPinX, Undo2 } from "lucide-react";
 import type { AddPolyGonProp } from "./addPolygon.typs";
 import CustomButton from "@/components/kit/CustomButton";
 import { WKTToPolygon } from "@/utils/global";
@@ -94,7 +94,7 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
         console.log("defaultPolygon", defaultPolygon)
         console.log("defaultPolygon", WKTToPolygon(defaultPolygon))
       }
-      showUserLocation()
+
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -177,7 +177,7 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
             .openPopup();
 
           // حرکت دادن مرکز نقشه
-          /* mapRefInstance.current.setView(userLatLng, 15); */
+          mapRefInstance.current.setView(userLatLng, 15);
         }
       },
       (error) => {
@@ -245,15 +245,23 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
 
       <section ref={mapRef} className="h-[87%] w-full gap-1" />
 
-      <section className="mt-2 h-[8%] gap-1 flex justify-end pl-2">
-        <CustomButton variant="outlined" className="rounded-full" onClick={() => { setIsAddPolygonModalOpen(false); deleteAll() }}>
-          <Undo2 className="w-[20px]" />
-          <span className="text-xs">بازگشت</span>
-        </CustomButton>
-        {(hasPolygon && !isEditing) && <CustomButton className="rounded-full" onClick={() => setIsAddPolygonModalOpen(false)}>
-          <CheckIcon className="w-[20px]" />
-          <span className="text-xs">تایید</span>
-        </CustomButton>}
+      <section className="mt-2 h-[8%] gap-1 pr-1 flex justify-between pl-2">
+        <div>
+          <CustomButton className="rounded-full bg-red-500" onClick={() => { showUserLocation() }}>
+            <MapPin className="w-[20px]" />
+            <span className="text-xs">موقعیت شما</span>
+          </CustomButton>
+        </div>
+        <div className="flex gap-1">
+          <CustomButton variant="outlined" className="rounded-full" onClick={() => { setIsAddPolygonModalOpen(false); deleteAll() }}>
+            <Undo2 className="w-[20px]" />
+            <span className="text-xs">بازگشت</span>
+          </CustomButton>
+          {(hasPolygon && !isEditing) && <CustomButton className="rounded-full" onClick={() => setIsAddPolygonModalOpen(false)}>
+            <CheckIcon className="w-[20px]" />
+            <span className="text-xs">تایید</span>
+          </CustomButton>}
+        </div>
 
       </section>
     </section>
