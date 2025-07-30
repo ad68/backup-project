@@ -159,7 +159,11 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
       alert("موقعیت مکانی در مرورگر شما پشتیبانی نمی‌شود.");
       return;
     }
-
+    const blueDotIcon = L.icon({
+      iconUrl: "/images/map/location-marker.svg",
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+    });
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
@@ -167,13 +171,13 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
 
         if (mapRefInstance.current) {
           // اضافه کردن مارکر روی نقشه
-          L.marker(userLatLng)
+          L.marker(userLatLng, { icon: blueDotIcon })
             .addTo(mapRefInstance.current)
             .bindPopup("موقعیت شما")
             .openPopup();
 
           // حرکت دادن مرکز نقشه
-          mapRefInstance.current.setView(userLatLng, 15);
+          /* mapRefInstance.current.setView(userLatLng, 15); */
         }
       },
       (error) => {
