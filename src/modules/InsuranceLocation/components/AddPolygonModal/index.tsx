@@ -247,7 +247,7 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
 
       <section className="mt-2 h-[8%] gap-1 pr-1 flex justify-between pl-2">
         <div>
-          <CustomButton className="rounded-full bg-red-500" onClick={() => { showUserLocation() }}>
+          <CustomButton className="rounded-full bg-purple-600" onClick={() => { showUserLocation() }}>
             <MapPin className="w-[20px]" />
             <span className="text-xs">موقعیت شما</span>
           </CustomButton>
