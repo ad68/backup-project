@@ -6,6 +6,7 @@ import { Controller } from 'react-hook-form';
 export default function Index({ setIsAddDocumentModal, getFileList }: { setIsAddDocumentModal: (value: boolean) => void, getFileList: () => void }) {
     const { control, handleSubmit, onSubmit, errors, actionLoading } = useAddDocumentModal(setIsAddDocumentModal, getFileList)
     return <form onSubmit={handleSubmit(onSubmit)} className="px-3 w-[440px] m-auto max-w-full gap-10 items-center">
+        <h1 className="p-3 font-bold text-center border-b-2">الصاق سند جدید</h1>
         <section className="mt-2">
             <span className="font-light text-slate-700 text-xs">عنوان:</span>
             <Controller

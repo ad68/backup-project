@@ -19,7 +19,7 @@ const CustomTextArea = forwardRef<HTMLTextAreaElement, CustomTextAreaProps>(
                 placeholder={placeholder || "متن خود را وارد کنید"}
                 dir="rtl"
                 rows={rows}
-                className={`w-full bg-white text-black text-xs font-light rounded-[10px] border border-[#EBEBEB] ${className}`}
+                className={`w-full bg-white text-black text-xs font-medium rounded-[10px] border border-[#EBEBEB] ${className}`}
             />
         );
     }

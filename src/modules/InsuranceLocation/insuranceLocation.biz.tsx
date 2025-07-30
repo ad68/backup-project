@@ -2,7 +2,6 @@ import { toastSuccess } from "@/components/kit/toast";
 import { useAxios, useAxiosWithToken } from "@/hooks";
 import { useAuthStore } from "@/store/authStore";
 import { objectToQueryString } from "@/utils/global";
-
 import { useEffect, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom";
 const useInsuranceLocation = () => {

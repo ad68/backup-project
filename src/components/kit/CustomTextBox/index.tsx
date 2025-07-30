@@ -17,7 +17,7 @@ const CustomTextBox = forwardRef<HTMLInputElement, CustomTextBoxProps>(
                 onChange={(e) => onChange(persianToEnglishNumber(e.target.value))}
                 placeholder={placeholder || "متن خود را وارد کنید"}
                 dir="rtl"
-                className={`w-full h-12 bg-white text-black text-xs font-light rounded-[10px] border border-[#EBEBEB] ${className}`}
+                className={`w-full h-12 bg-white text-black text-xs font-medium rounded-[10px] border border-[#EBEBEB] ${className}`}
             />
         );
     }

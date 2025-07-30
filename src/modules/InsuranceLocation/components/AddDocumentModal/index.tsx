@@ -27,10 +27,12 @@ export default function Index({ setIsAddDocumentModal, setSelectedFile }: { setS
             toastError("فایلی انتخاب نشده")
         }
     }
-    return <section className="px-3 pt-8 w-[440px] m-auto max-w-full gap-10 items-center">
+    return <section className="px-3  w-[440px] m-auto max-w-full gap-10 items-center">
+        <h1 className="p-3 mt-2 font-bold text-center border-b-2">ارسال فایل (GPX یا KML)</h1>
         <input
             type="file"
             ref={inputFile}
+            className="mt-4"
             onChange={(e) => {
                 const file = e.target.files?.[0]
                 if (file) {
