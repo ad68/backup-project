@@ -44,17 +44,17 @@ export default function Index({ item }: CardProp) {
                     </section> */}
 
                 </section>
-                {/*  <section className="flex justify-between w-full">
+                <section className="flex justify-between w-full">
                     <section className="flex gap-1">
-                        <span className="font-light text-slate-500 text-sm">دسته طرح:</span>
-                        <span className="text-sm">فراگیر اجباری</span>
+                        <span className="font-light text-slate-500 text-sm">کد ملی:</span>
+                        <span className="text-sm">{item.beneficiary.nationalCode}</span>
                     </section>
                     <section className="flex gap-1">
-                        <span className="font-light text-slate-500 text-sm">کارمزد:</span>
-                        <span className="text-sm">1,800,000</span>
+                        <span className="font-light text-slate-500 text-sm">موبایل:</span>
+                        <span className="text-sm">{item.beneficiary.mobile}</span>
                     </section>
 
-                </section> */}
+                </section>
                 <section className="flex justify-between w-full">
                     <section className="flex gap-1">
                         <span className="font-light text-slate-500 text-sm">موضوع:</span>

@@ -19,7 +19,6 @@ export default function Index() {
     return <>
         <PageTitle size='small' miniDescription={`بیمه نامه: ${policyId}`} title={`${farmerName}`} />
         <section className='m-auto max-w-5xl'>
-
             <section className="p-2">
                 <section className="border border-slate-200 rounded-lg p-2">
                     <span className='block text-center'>تعیین مکان</span>

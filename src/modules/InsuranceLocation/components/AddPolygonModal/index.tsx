@@ -94,10 +94,8 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
         console.log("defaultPolygon", defaultPolygon)
         console.log("defaultPolygon", WKTToPolygon(defaultPolygon))
       }
-
+      showUserLocation()
     }
-
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -156,7 +154,34 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
     updatePolygonState();
     setIsEditing(false);
   };
+  const showUserLocation = () => {
+    if (!navigator.geolocation) {
+      alert("موقعیت مکانی در مرورگر شما پشتیبانی نمی‌شود.");
+      return;
+    }
 
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        const userLatLng: L.LatLngExpression = [latitude, longitude];
+
+        if (mapRefInstance.current) {
+          // اضافه کردن مارکر روی نقشه
+          L.marker(userLatLng)
+            .addTo(mapRefInstance.current)
+            .bindPopup("موقعیت شما")
+            .openPopup();
+
+          // حرکت دادن مرکز نقشه
+          mapRefInstance.current.setView(userLatLng, 15);
+        }
+      },
+      (error) => {
+        alert("دسترسی به موقعیت مکانی امکان‌پذیر نیست.");
+        console.error("Geo error:", error);
+      }
+    );
+  };
   useEffect(() => {
     /* if (polygonsState.length > 0) {
       generateAndUploadKml();
