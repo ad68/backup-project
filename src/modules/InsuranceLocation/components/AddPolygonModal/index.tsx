@@ -161,8 +161,8 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
     }
     const blueDotIcon = L.icon({
       iconUrl: "/images/map/location-marker.svg",
-      iconSize: [32, 32],
-      iconAnchor: [16, 32],
+      iconSize: [48, 48],
+      iconAnchor: [24, 24],
     });
     navigator.geolocation.getCurrentPosition(
       (position) => {
