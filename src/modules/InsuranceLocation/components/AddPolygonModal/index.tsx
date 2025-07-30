@@ -4,7 +4,7 @@ import "leaflet-draw";
 import "leaflet-draw/dist/leaflet.draw.css";
 import WKT from "terraformer-wkt-parser";
 import { useEffect, useRef, useState } from "react";
-import { CheckIcon, DeleteIcon, Edit2Icon, MapIcon, MapPin, MapPinCheckInside, MapPinHouseIcon, MapPinX, Undo2 } from "lucide-react";
+import { CheckIcon, DeleteIcon, Edit2Icon, MapPin, MapPinHouseIcon, Undo2 } from "lucide-react";
 import type { AddPolyGonProp } from "./addPolygon.typs";
 import CustomButton from "@/components/kit/CustomButton";
 import { WKTToPolygon } from "@/utils/global";
