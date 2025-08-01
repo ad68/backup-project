@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import type { CardProp } from "../../technicalAttachment.type";
 import { gregorianToJalali } from "@/utils/global";
-export default function Index({ item }: CardProp) {
+export default function Index({ item, showSmsModal }: CardProp) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
 
     return <section className="p-2">
@@ -44,13 +44,7 @@ export default function Index({ item }: CardProp) {
 
             {isOpenDtl && <> <span className="w-full block bg-slate-200 h-[1px]"></span>
                 <section className="flex justify-between w-full">
-
-
-
-
-
                 </section>
-
                 <section className="flex justify-between w-full">
                     <section className="flex gap-1">
                         <span className="font-light text-slate-500 text-sm">موضوع:</span>
@@ -88,6 +82,9 @@ export default function Index({ item }: CardProp) {
                         <EyeIcon color="#2ebf70" className="w-[20px] stroke-white" />
                     </button>
                 </Link>
+                <button onClick={() => showSmsModal(item)} className="border w-[140px] bg-blue-500 border-blue-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
+                    <span className="font-light text-sm">پیام اطلاع رسانی</span>
+                </button>
                 <button onClick={() => setIsOpenDtl(!isOpenDtl)} className="bg-yellow-400 shadow-md w-[36px] h-[30px] flex justify-center items-center rounded-full">
                     {isOpenDtl ? <ChevronUp color="white" className="w-[20px]" /> : <ChevronDown color="white" className="w-[20px]" />}
                 </button>

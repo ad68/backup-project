@@ -6,9 +6,10 @@ import useTechnicalAttachment from './technicalAttachment.biz'
 import ListLoader from '@/components/kit/ListLoader'
 import NoRecord from '@/components/kit/NoRecord'
 import PageTitle from '@/components/kit/PageTitle'
-
+import SlidingModal from '@/components/kit/SlidingModal'
+import SendSms from './components/SendSms'
 export default function Index() {
-    const { data, loading, setCurrentPage, totalPage, currentPage, setSearchParams } = useTechnicalAttachment()
+    const { data, loading, setCurrentPage, totalPage, currentPage, setSearchParams, closeSmsModal, selectedItem, showSmsModal, smsModalIsOpen } = useTechnicalAttachment()
     return <>
         <PageTitle title='تعیین مکان' />
         <section className='pb-10 px-2 max-w-5xl m-auto'>
@@ -36,7 +37,7 @@ export default function Index() {
 
             {loading && <section className='flex justify-center mt-8'><ListLoader /></section>}
             {!loading && <section className='m-auto relative mt-2  max-w-5x'>
-                {data?.map((item: any, index: any) => (<Card item={item} key={index} />))}
+                {data?.map((item: any, index: any) => (<Card showSmsModal={showSmsModal} item={item} key={index} />))}
             </section>}
 
 
@@ -60,5 +61,8 @@ export default function Index() {
             </section>}
             {!loading && data.length === 0 && <NoRecord />}
         </section>
+        <SlidingModal isOpen={smsModalIsOpen}>
+            <SendSms closeSmsModal={closeSmsModal} rowData={selectedItem} />
+        </SlidingModal>
     </>
 }

@@ -50,22 +50,37 @@ const CustomDatepicker = (props: MyDatePickerProps) => {
 export default CustomDatepicker */
 
 
-
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import './style.css'
-import 'react-multi-date-picker/styles/colors/purple.css'
-import 'react-multi-date-picker/styles/layouts/mobile.css'
+import "./style.css";
+import "react-multi-date-picker/styles/colors/purple.css";
+import "react-multi-date-picker/styles/layouts/mobile.css";
+
 type CustomDatepickerProps = {
   value: Date | null | undefined;
   onChange: (date: Date | null) => void;
   className?: string;
+  disablePast?: boolean;
 };
 
-export default function CustomDatepicker({ value, onChange, className, ...rest }: CustomDatepickerProps) {
-
+export default function CustomDatepicker({
+  value,
+  onChange,
+  className,
+  disablePast = false,
+  ...rest
+}: CustomDatepickerProps) {
   const dateObject = value ? new DateObject(value) : null;
+
+  const minDate = disablePast
+    ? new DateObject({ calendar: persian, locale: persian_fa }).set({
+      hour: 0,
+      minute: 0,
+      second: 0,
+      millisecond: 0,
+    })
+    : undefined;
 
   return (
     <DatePicker
@@ -83,7 +98,8 @@ export default function CustomDatepicker({ value, onChange, className, ...rest }
       locale={persian_fa}
       format="YYYY/MM/DD"
       calendarPosition="bottom-right"
-      inputClass={`myRmdp-input ui-datepicker`}
+      inputClass="myRmdp-input ui-datepicker"
+      minDate={minDate}
     />
   );
 }

@@ -10,6 +10,8 @@ const useCheckSpecifications = () => {
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [totalPage, setTotalPage] = useState<number>(1)
     const [searchParams, setSearchParams] = useState<any>()
+    const [smsModalIsOpen, setSmsModalIsOpen] = useState(false)
+    const [selectedItem, setSelectedItem] = useState()
     const saveToDataBase = async (data: any) => {
         await bulkSaveToIDB(data);
     };
@@ -27,6 +29,14 @@ const useCheckSpecifications = () => {
             getSearch()
         }, 6000);
     }, [])
+    const showSmsModal = (value: any) => {
+        setSelectedItem(value)
+        setSmsModalIsOpen(true)
+    }
+    const closeSmsModal = () => {
+        setSelectedItem(undefined)
+        setSmsModalIsOpen(false)
+    }
     const getList = async () => {
         setLoading(true);
         const params = searchParams ? searchParams : {
@@ -83,7 +93,7 @@ const useCheckSpecifications = () => {
         loading,
         currentPage,
         setCurrentPage,
-        totalPage, setSearchParams
+        totalPage, setSearchParams, showSmsModal, closeSmsModal, smsModalIsOpen, selectedItem
     }
 }
 export default useCheckSpecifications

@@ -200,7 +200,10 @@ export default function Index({
             subjectNotExist: false,
             geoInWkt: geoInWkt,
         }
-        useAxiosWithToken.post("/sabka/technical/annex/add/locate-subject-item", params).then(() => toastSuccess("با موفقیت ذخیره شد")).finally(() => { setActionLoading(false) })
+        useAxiosWithToken.post("/sabka/technical/annex/add/locate-subject-item", params).then(() => {
+            toastSuccess("با موفقیت ذخیره شد")
+            navigate(-1)
+        }).finally(() => { setActionLoading(false) })
     }
     const deleteAll = () => {
         drawnItemsRef.current.clearLayers();

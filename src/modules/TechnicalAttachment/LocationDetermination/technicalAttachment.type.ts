@@ -19,4 +19,5 @@ export type CardProp = {
         },
         insured: number
     }
+    showSmsModal: (value: any) => void
 }
