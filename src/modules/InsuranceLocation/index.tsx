@@ -12,7 +12,6 @@ import PageTitle from "@/components/kit/PageTitle"
 
 export default function Index() {
     const { isAddPolygonModalOpen, isAddDocumentModalOpen, selectedFile, setSelectedFile, setIsAddDocumentModalOpen, geoInWkt, setGeoInWkt, setIsAddPolygonModalOpen, fetchLoading, featureData, actionLoading, setSubjectNotExist, saveLocationData, farmLat, farmLng } = useInsuranceLocation()
-
     const [setSearchParams] = useSearchParams()
     const farmerName = setSearchParams.get("farmerName")
     const policyId = setSearchParams.get("policyId")
@@ -48,7 +47,6 @@ export default function Index() {
                     </section>
                     <section className="flex flex-col gap-1">
                         {fetchLoading && <section className="flex justify-center"><ListLoader /></section>}
-
                     </section>
                 </section>
             </section>
@@ -58,7 +56,6 @@ export default function Index() {
                     {(geoInWkt || selectedFile) ? <span className="text-primary">تعیین شده</span> : <span className="text-red-500">تعیین نشده</span>}
                 </section>
             </div>
-
             <section className="flex px-2 bg-white bottom-0 gap-2 mt-4 py-3 justify-end w-full">
                 <CustomButton loading={actionLoading} onClick={saveLocationData} className="rounded-full w-full">
                     <span>ثبت نهایی</span>

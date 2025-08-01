@@ -33,15 +33,15 @@ export default function Index() {
             <button className="w-full bg-blue-500 text-white p-2 rounded-full">تیکت</button> */}
             <button className="w-full flex items-center border border-slate-200 text-sm text-right  text-grey p-2 rounded-full">
                 <ChevronLeft className="text-primary w-[18px]" />
-                بیمه درمان تکمیلی
+                بیمه درمان تکمیلی  (به زودی)
             </button>
             <button className="w-full flex items-center border border-slate-200 text-sm text-right  text-grey p-2 rounded-full">
                 <ChevronLeft className="text-primary w-[18px]" />
-                دانلود گواهینامه آموزشی
+                دانلود گواهینامه آموزشی  (به زودی)
             </button>
             <button className="w-full flex items-center border border-slate-200 text-sm text-right  text-grey p-2 rounded-full">
                 <ChevronLeft className="text-primary w-[18px]" />
-                دانلود کارت شناسایی
+                دانلود کارت شناسایی  (به زودی)
             </button>
         </div>
     </main>

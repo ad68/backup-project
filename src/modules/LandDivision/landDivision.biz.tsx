@@ -114,7 +114,7 @@ const useLandDivision = () => {
             subjectItemId: subjectItemId,
             newInsured: data.newInsured,
             reason: data.reason,
-
+            isTest: true,
             newExtraInfo: `${JSON.stringify(removeKeys(data, "newInsured", "reason"))}`
         }
         useAxiosWithToken.post("/sabka/technical/annex/add/split-subject-item", params).then().finally(() => setActionLoading(false))

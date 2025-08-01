@@ -8,7 +8,14 @@ import { CheckIcon, DeleteIcon, Edit2Icon, MapPin, MapPinHouseIcon, Undo2 } from
 import type { AddPolyGonProp } from "./addPolygon.typs";
 import CustomButton from "@/components/kit/CustomButton";
 import { WKTToPolygon } from "@/utils/global";
-export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPolygon, farmLat, farmLng }: AddPolyGonProp) {
+
+export default function Index({
+  setIsAddPolygonModalOpen,
+  setGeoInWkt,
+  defaultPolygon,
+  farmLat,
+  farmLng,
+}: AddPolyGonProp) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapRefInstance = useRef<L.Map | null>(null);
   const drawnItemsRef = useRef<L.FeatureGroup>(new L.FeatureGroup());
@@ -18,22 +25,26 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    /*  const def = defaultPolygon */
+    console.log("defaultPolygon", defaultPolygon)
+  }, [defaultPolygon])
+  useEffect(() => {
     if (mapRef.current && !mapRefInstance.current) {
       const map = L.map(mapRef.current, {
         zoomControl: false,
         attributionControl: false,
-      }).setView(farmLat && farmLng ? [Number(farmLat), Number(farmLng)] : [35.70218, 51.3386], 14);
-      mapRefInstance.current = map;
-      const baseLayer = L.tileLayer(
-        "https://mt{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}",
-        {
-          maxZoom: 20,
-          subdomains: "0123",
-        }
+      }).setView(
+        farmLat && farmLng ? [Number(farmLat), Number(farmLng)] : [35.70218, 51.3386],
+        14
       );
+      mapRefInstance.current = map;
+
+      const baseLayer = L.tileLayer("https://mt{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}", {
+        maxZoom: 20,
+        subdomains: "0123",
+      });
       baseLayer.addTo(map);
       map.addLayer(drawnItemsRef.current);
+
       const drawControl = new L.Control.Draw({
         draw: {
           polygon: {
@@ -58,31 +69,36 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
       drawControlRef.current = drawControl;
       map.addControl(drawControl);
 
-      // ✅ رویدادها
+      // وقتی کاربر یک نقطه روی نقشه میذاره، تعداد نقاط رو چک کن و اگر رسید به 3 خودکار پلی‌گان رو تکمیل کن
+      map.on("draw:drawvertex", () => {
+        if (!drawControlRef.current) return;
+        const polygonHandler = (drawControlRef.current as any)._toolbars.draw._modes.polygon.handler;
+        const pointsCount = polygonHandler._markers?.length || 0;
+
+        if (pointsCount === 3) {
+          polygonHandler.completeShape();
+        }
+      });
+
+      // رویداد ایجاد پلی‌گان جدید
       map.on(L.Draw.Event.CREATED, function (event: any) {
         const layer = event.layer;
         drawnItemsRef.current.addLayer(layer);
         updatePolygonState();
       });
 
+      // رویداد ویرایش پلی‌گان
       map.on(L.Draw.Event.EDITED, function () {
         updatePolygonState();
       });
 
+      // رویداد حذف پلی‌گان
       map.on(L.Draw.Event.DELETED, function () {
         updatePolygonState();
       });
 
-
-      /*    const defaultPolygonCoords: L.LatLngExpression[] = [
-           [35.701, 51.335],
-           [35.703, 51.336],
-           [35.702, 51.339],
-           [35.701, 51.335],
-         ]; */
-
+      // اضافه کردن پلی‌گان پیش‌فرض اگر وجود داشت
       if (defaultPolygon) {
-        /* const defaultPolygonCoords2: L.LatLngExpression[] = WKTToPolygon("POLYGON ((51.335 35.701, 51.336 35.703, 51.339 35.702, 51.335 35.701))"); */
         const myDefaultPolygon = L.polygon(WKTToPolygon(defaultPolygon), {
           color: "red",
           weight: 2,
@@ -91,10 +107,9 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
         });
         drawnItemsRef.current.addLayer(myDefaultPolygon);
         updatePolygonState();
-        console.log("defaultPolygon", defaultPolygon)
-        console.log("defaultPolygon", WKTToPolygon(defaultPolygon))
+        console.log("defaultPolygon", defaultPolygon);
+        console.log("defaultPolygon", WKTToPolygon(defaultPolygon));
       }
-
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -138,7 +153,7 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
   const deleteAll = () => {
     drawnItemsRef.current.clearLayers();
     updatePolygonState();
-    setGeoInWkt("")
+    setGeoInWkt("");
     setIsEditing(false);
   };
 
@@ -154,6 +169,7 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
     updatePolygonState();
     setIsEditing(false);
   };
+
   const showUserLocation = () => {
     if (!navigator.geolocation) {
       alert("موقعیت مکانی در مرورگر شما پشتیبانی نمی‌شود.");
@@ -170,13 +186,11 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
         const userLatLng: L.LatLngExpression = [latitude, longitude];
 
         if (mapRefInstance.current) {
-          // اضافه کردن مارکر روی نقشه
           L.marker(userLatLng, { icon: blueDotIcon })
             .addTo(mapRefInstance.current)
             .bindPopup("موقعیت شما")
             .openPopup();
 
-          // حرکت دادن مرکز نقشه
           mapRefInstance.current.setView(userLatLng, 15);
         }
       },
@@ -186,14 +200,10 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
       }
     );
   };
+
   useEffect(() => {
-    /* if (polygonsState.length > 0) {
-      generateAndUploadKml();
-    } */
-
+    // هر زمان polygonsState تغییر کرد میتونی اینجا کار کنی
   }, [polygonsState]);
-
-
 
   return (
     <section style={{ height: "95%", width: "100%", position: "relative" }}>
@@ -247,22 +257,38 @@ export default function Index({ setIsAddPolygonModalOpen, setGeoInWkt, defaultPo
 
       <section className="mt-2 h-[8%] gap-1 pr-1 flex justify-between pl-2">
         <div>
-          <CustomButton className="rounded-full bg-purple-600" onClick={() => { showUserLocation() }}>
+          <CustomButton
+            className="rounded-full bg-purple-600"
+            onClick={() => {
+              showUserLocation();
+            }}
+          >
             <MapPin className="w-[20px]" />
             <span className="text-xs">موقعیت شما</span>
           </CustomButton>
         </div>
         <div className="flex gap-1">
-          <CustomButton variant="outlined" className="rounded-full" onClick={() => { setIsAddPolygonModalOpen(false); deleteAll() }}>
+          <CustomButton
+            variant="outlined"
+            className="rounded-full"
+            onClick={() => {
+              setIsAddPolygonModalOpen(false);
+              deleteAll();
+            }}
+          >
             <Undo2 className="w-[20px]" />
             <span className="text-xs">بازگشت</span>
           </CustomButton>
-          {(hasPolygon && !isEditing) && <CustomButton className="rounded-full" onClick={() => setIsAddPolygonModalOpen(false)}>
-            <CheckIcon className="w-[20px]" />
-            <span className="text-xs">تایید</span>
-          </CustomButton>}
+          {hasPolygon && !isEditing && (
+            <CustomButton
+              className="rounded-full"
+              onClick={() => setIsAddPolygonModalOpen(false)}
+            >
+              <CheckIcon className="w-[20px]" />
+              <span className="text-xs">تایید</span>
+            </CustomButton>
+          )}
         </div>
-
       </section>
     </section>
   );

@@ -3,6 +3,10 @@ import Home from '@/modules/Home'
 import Login from '@/modules/Login'
 import TechnicalAttachment from '@/modules/TechnicalAttachment'
 import LocationDetermination from '@/modules/TechnicalAttachment/LocationDetermination'
+import LocationWithFile from '@/modules/TechnicalAttachment/LocationWithFile'
+import LocationDeterminationType from '@/modules/TechnicalAttachment/LocationDeterminationType'
+import SubjectNotExist from '@/modules/TechnicalAttachment/SubjectNotExist'
+import LocationOnMap from '@/modules/TechnicalAttachment/LocationOnMap'
 import CheckSpecifications from '@/modules/TechnicalAttachment/CheckSpecifications'
 import InsuranceDetail from '@/modules/InsuranceDetail'
 import InsuranceAction from '@/modules/InsuranceAction'
@@ -16,7 +20,6 @@ import Pagination from '@/modules/Pagination'
 import Damage from '@/modules/Damage/Home'
 import DamageRegistration from '@/modules/Damage/DamageRegistration'
 import CurrentActions from '@/modules/Damage/CurrentActions'
-
 import PreviousActions from '@/modules/Damage/Search'
 import Search from '@/modules/Damage/Search'
 import PhenologyMonitoring from '@/modules/PhenologyMonitoring/Home'
@@ -61,11 +64,16 @@ export default function Index() {
         { path: "program", element: <PhenologyMonitoringProgram /> },
         { path: "emergency-visit", element: <PhenologyMonitoringEmergencyVisit /> },
     ];
-
+    const TechnicalAttachmentRoutes = [
+        { path: "location-with-file", element: <LocationWithFile /> },
+        { path: "location-determination-type", element: <LocationDeterminationType /> },
+        { path: "subject-not-exist", element: <SubjectNotExist /> },
+        { path: "location-on-map", element: <LocationOnMap /> },
+        /*  { path: "/location-determination-map", element: <LocationOnMap /> }, */
+    ];
     const dashboardLayoutRoutes = [
         { path: "/home", element: <Home /> },
         { path: "/technical-attachment", element: <TechnicalAttachment /> },
-
     ];
     return <Routes>
         <Route path="/" element={<Login />} />
@@ -96,7 +104,15 @@ export default function Index() {
                 />
             ))}
         </Route>
-
+        <Route path="technical-attachment" element={<DashboardLayout />}>
+            {TechnicalAttachmentRoutes.map(({ path, element }) => (
+                <Route
+                    key={path}
+                    path={path}
+                    element={<ProtectedRoute>{element}</ProtectedRoute>}
+                />
+            ))}
+        </Route>
         <Route path="phenology-monitoring" element={<DashboardLayout />}>
             {PhenologyMonitoringRoutes.map(({ path, element }) => (
                 <Route

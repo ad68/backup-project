@@ -32,15 +32,18 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat: strin
                     <span className="font-light text-slate-500 text-sm">مساحت بیمه شده:</span>
                     <span className="text-sm">{item.insured} هکتار</span>
                 </section>
+
             </section>
             <section className="flex justify-between w-full">
+
                 <section className="flex gap-1">
-                    <span className="font-light text-slate-500 text-sm">عملکرد:</span>
-                    <span className="text-sm">{item?.property01}</span>
+                    <span className="font-light text-slate-500 text-sm">مساحت:</span>
+                    {item.actual && <span className="text-sm">{item?.actual?.toFixed(2)} هکتار</span>}
+
                 </section>
                 <section className="flex gap-1">
-                    <span className="font-light text-slate-500 text-sm">عارضه مکانی:</span>
-                    <span className="text-sm">{item.featureId}</span>
+                    <span className="font-light text-slate-500 text-sm">عملکرد:</span>
+                    <span className="text-sm">{item?.property02}</span>
                 </section>
             </section>
             {isOpenDtl && <> <span className="w-full block bg-slate-200 h-[1px]"></span>
@@ -70,12 +73,20 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat: strin
                             </section>
                         </PopoverContent>
                     </Popover>
-                    {!item.featureId && <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}`}>
+                    {/*  {!item.featureId && <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}`}>
+                        <button className="border w-[90px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
+                            <span className="font-light text-sm">تعیین مکان</span>
+                        </button>
+                    </Link>} */}
+                    {!item.featureId && <Link to={`/technical-attachment/location-determination-type?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}`}>
                         <button className="border w-[90px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
                             <span className="font-light text-sm">تعیین مکان</span>
                         </button>
                     </Link>}
-                    {item.featureId && <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}`}> <button className="border w-[110px] bg-orange-500 border-orange-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
+                    {/*  {item.featureId && <Link to={`/insurance-location?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}`}> <button className="border w-[110px] bg-orange-500 border-orange-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
+                        <span className="font-light text-sm">ویرایش مکان</span>
+                    </button></Link>} */}
+                    {item.featureId && <Link to={`/technical-attachment/location-determination-type?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}`}> <button className="border w-[110px] bg-orange-500 border-orange-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
                         <span className="font-light text-sm">ویرایش مکان</span>
                     </button></Link>}
                 </section>

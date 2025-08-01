@@ -1,7 +1,7 @@
 import { toastSuccess } from "@/components/kit/toast";
 import { useAxios, useAxiosWithToken } from "@/hooks";
 import { useAuthStore } from "@/store/authStore";
-import { objectToQueryString } from "@/utils/global";
+import { objectToQueryString, WKTToPolygon } from "@/utils/global";
 import { useEffect, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom";
 const useInsuranceLocation = () => {
@@ -34,6 +34,7 @@ const useInsuranceLocation = () => {
         }
         useAxiosWithToken.post("/sabka/technical/annex/get/feature", params).then(res => {
             setFeatureData(res.data.wkt)
+            console.log("wkt", WKTToPolygon(res.data.wkt))
         }).finally(() => setFetchLoading(false))
     }
     const locateSubjectItem = () => {
@@ -43,7 +44,8 @@ const useInsuranceLocation = () => {
             policyId: policyId && parseInt(policyId),
             subjectItemId: subjectId && parseInt(subjectId),
             subjectNotExist: subjectNotExist,
-            geoInWkt: geoInWkt
+            geoInWkt: geoInWkt,
+
         }
         useAxiosWithToken.post("/sabka/technical/annex/add/locate-subject-item", params).finally(() => { setActionLoading(false) })
     }
@@ -54,7 +56,6 @@ const useInsuranceLocation = () => {
             subjectItemId: subjectItemId,
             subjectNotExist: subjectNotExist,
             geoInWkt: geoInWkt,
-
         }
         setActionLoading(true)
         useAxiosWithToken.post("/sabka/technical/annex/add/locate-subject-item", params).then(() => {
@@ -68,7 +69,6 @@ const useInsuranceLocation = () => {
             policyId: policyId,
             subjectItemId: subjectItemId,
             subjectNotExist: subjectNotExist,
-
         }
         setActionLoading(true)
         useAxios.post("/sabka/technical/annex/add/locate-subject-item-file?" + objectToQueryString(params) + "&token=" + token, selectedFile).then(() => {
@@ -76,9 +76,6 @@ const useInsuranceLocation = () => {
             toastSuccess("عملیات با موفقیت اانجام شد")
         }).catch().finally(() => setActionLoading(false))
     }
-
-
-
     const saveLocationData = () => {
         if (geoInWkt && !selectedFile) {
             saveMapPolygon()

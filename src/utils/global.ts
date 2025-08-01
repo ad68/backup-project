@@ -1,4 +1,5 @@
 import moment from "moment-jalaali"
+
 export const persianToEnglishNumber = (input: string) => {
     const persianDigits: string[] = [
         '۰',
@@ -177,6 +178,7 @@ export const plus1000 = (value: any) => {
 export const objectToQueryString = (obj: Record<string, any>): string => {
     const filteredObj = Object.fromEntries(
         Object.entries(obj).filter(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             ([_, value]) =>
                 value !== null &&
                 value !== undefined &&
@@ -187,3 +189,23 @@ export const objectToQueryString = (obj: Record<string, any>): string => {
     const params = new URLSearchParams(filteredObj)
     return params.toString()
 }
+
+
+export const polygonToWKT = (polygon: [number, number][]): string => {
+    if (!polygon?.length) return "";
+
+    const closedPolygon = [...polygon];
+    const [firstLat, firstLng] = polygon[0];
+    const [lastLat, lastLng] = polygon[polygon.length - 1];
+
+    // اطمینان از بسته بودن پلی‌گان
+    if (firstLat !== lastLat || firstLng !== lastLng) {
+        closedPolygon.push([firstLat, firstLng]);
+    }
+
+    const coordinates = closedPolygon
+        .map(([lat, lng]) => `${lng} ${lat}`) // ترتیب WKT: lng lat
+        .join(", ");
+
+    return `POLYGON ((${coordinates}))`;
+};
