@@ -34,13 +34,10 @@ export default function Index() {
                     previousLabel="<"
                 />
             </section>}
-
             {loading && <section className='flex justify-center mt-8'><ListLoader /></section>}
             {!loading && <section className='m-auto relative mt-2  max-w-5x'>
                 {data?.map((item: any, index: any) => (<Card showSmsModal={showSmsModal} item={item} key={index} />))}
             </section>}
-
-
             {data.length !== 0 && <section className='mt-1'>
                 <ReactPaginate
                     pageCount={totalPage}

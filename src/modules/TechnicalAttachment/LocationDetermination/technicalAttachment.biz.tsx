@@ -1,6 +1,6 @@
 import { toastError } from "@/components/kit/toast"
 import { useAxiosWithToken } from "@/hooks"
-import { bulkSaveToIDB, clearStore, getPaginatedDataFromIDB, searchByIndex } from "@/lib/indexdb"
+import { bulkSaveToIDB, clearStore, getPaginatedDataFromIDB, /* searchByIndex */ } from "@/lib/indexdb"
 import { useEffect, useState } from "react"
 
 const useCheckSpecifications = () => {
@@ -15,20 +15,20 @@ const useCheckSpecifications = () => {
     const saveToDataBase = async (data: any) => {
         await bulkSaveToIDB(data);
     };
-    const getSearch = async () => {
-        const result = await searchByIndex<any>(
-            'myDatabase',
-            'locateReviews',
-            'policyId_beneficiary',
-            [23655276, "ناصر نوروزی"]
-        );
-        console.log(result)
-    }
-    useEffect(() => {
-        setTimeout(() => {
-            getSearch()
-        }, 6000);
-    }, [])
+    /*     const getSearch = async () => {
+            const result = await searchByIndex<any>(
+                'myDatabase',
+                'locateReviews',
+                'policyId_beneficiary',
+                [23655276, "ناصر نوروزی"]
+            );
+            console.log(result)
+        }
+        useEffect(() => {
+            setTimeout(() => {
+                getSearch()
+            }, 6000);
+        }, []) */
     const showSmsModal = (value: any) => {
         setSelectedItem(value)
         setSmsModalIsOpen(true)

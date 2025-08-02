@@ -6,7 +6,7 @@ export default function UpdatePwaModal({ onConfirm }: { onConfirm: () => void })
             <div className="w-[90%] h-[90%] rounded-[20px] flex flex-col gap-2 justify-center items-center bg-white">
                 <img src="/images/home/rocket.png" className="w-[120px]" alt="rocket" />
                 <span className="text-2xl font-bold text-slate-800 mt-4">تغییرات نسخه جدید</span>
-                <span className="text-lg">
+                {/*  <span className="text-lg">
                     نسخه 1.1
                 </span>
                 <ul className="list-disc text-xs pr-10 leading-6">
@@ -17,6 +17,14 @@ export default function UpdatePwaModal({ onConfirm }: { onConfirm: () => void })
                     <li>نمایش مساحت ذخیره شده در سامانه صندوق</li>
                     <li>اضافه شدن اطلاعات بیمه گذار (شماره موبایل، کد ملی)</li>
                     <li>بهبود ریسپانسیو تبلت</li>
+                </ul> */}
+                <span className="text-lg">
+                    نسخه 1.1.1
+                </span>
+                <ul className="list-disc text-xs pr-10 leading-6">
+                    <li>رفع مشکل ارسال مستندات برای فایل های gpx , kml</li>
+                    <li>اضافه کردن قابلیت جستجو در قسمت تقسیمات کشوری</li>
+
                 </ul>
                 <div className="px-5 flex w-full mt-10">
                     <CustomButton onClick={onConfirm} className="w-full">به روز رسانی</CustomButton>

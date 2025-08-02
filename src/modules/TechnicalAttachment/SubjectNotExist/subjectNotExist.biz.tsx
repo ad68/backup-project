@@ -16,8 +16,7 @@ const useSubjectNotExist = () => {
             policyId: policyId,
             subjectItemId: subjectItemId,
             subjectNotExist: true,
-            /*  isTest: true, */
-            /*   geoInWkt: "", */
+
         }
         setActionLoading(true)
         const question = confirm("آیا مطمئن هستید؟")

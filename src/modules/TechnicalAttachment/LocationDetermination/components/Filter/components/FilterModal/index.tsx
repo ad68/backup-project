@@ -4,6 +4,7 @@ import SlidingModal from "@/components/kit/SlidingModal";
 import type { FilterModalProp } from "@/modules/TechnicalAttachment/LocationDetermination/technicalAttachment.type";
 import { SearchIcon, Undo2Icon } from "lucide-react";
 import useFilter from "../../Filter.biz";
+import CustomSearchableSelect from "@/components/kit/CustomSearchableSelect/inex";
 
 export default function Index({ isOpen, setIsOpen, setSearchParams }: FilterModalProp) {
     const { provinces, setProvinceId, counties, setCountyId, subSectionId, setSubSectionId, districts, setDistrictId, searchList, places, ruralDistricts, products, setPlaceId, setRuralDistrictId, placeId, districtId, ruralDistrictId, provinceId, countyId, productId, setProductId, nationalCode, setNationalCode, policyId, setPolicyId, clearForm } = useFilter(setSearchParams)
@@ -37,30 +38,30 @@ export default function Index({ isOpen, setIsOpen, setSearchParams }: FilterModa
             </section>
             <section className="mt-1">
                 <span className="font-light text-slate-700 text-xs">شهرستان:</span>
-                <CustomSelect value={countyId} options={counties.map((item: any) => ({ label: item.title, value: item.id }))} onChange={(e) => { setCountyId(e) }} />
+                <CustomSearchableSelect value={countyId} options={counties.map((item: any) => ({ label: item.title, value: item.id }))} onChange={(e) => { setCountyId(e) }} />
             </section>
             <section className="mt-1">
                 <span className="font-light text-slate-700 text-xs">بخش:</span>
-                <CustomSelect value={districtId} options={districts.map((item: any) => ({ label: item.title, value: item.id }))} onChange={(e) => { setDistrictId(e) }} />
+                <CustomSearchableSelect value={districtId} options={districts.map((item: any) => ({ label: item.title, value: item.id }))} onChange={(e) => { setDistrictId(e) }} />
             </section>
             <section className="mt-1">
                 <span className="font-light text-slate-700 text-xs">دهستان:</span>
-                <CustomSelect value={ruralDistrictId} options={ruralDistricts.map((item: any) => ({ label: item.title, value: item.id }))} onChange={(e) => { setRuralDistrictId(e) }} />
+                <CustomSearchableSelect value={ruralDistrictId} options={ruralDistricts.map((item: any) => ({ label: item.title, value: item.id }))} onChange={(e) => { setRuralDistrictId(e) }} />
             </section>
             <section className="mt-1">
                 <span className="font-light text-slate-700 text-xs">آبادی یا شهر:</span>
-                <CustomSelect value={placeId} options={places.map((item: any) => ({ label: item.title, value: item.id }))} onChange={(e) => { setPlaceId(e) }} />
+                <CustomSearchableSelect value={placeId} options={places.map((item: any) => ({ label: item.title, value: item.id }))} onChange={(e) => { setPlaceId(e) }} />
             </section>
             <section className="mt-5">
                 <span className="text-primary font-bold text-sm">بخش سوم:</span>
             </section>
             <section className="mt-1">
                 <span className="font-light text-slate-700 text-xs">زیربخش:</span>
-                <CustomSelect value={subSectionId} options={[{ label: "محصولات زراعی", value: "1" }]} onChange={(e) => setSubSectionId(e)} />
+                <CustomSearchableSelect value={subSectionId} options={[{ label: "محصولات زراعی", value: "1" }]} onChange={(e) => setSubSectionId(e)} />
             </section>
             <section className="mt-1">
                 <span className="font-light text-slate-700 text-xs"> موضوع:</span>
-                <CustomSelect value={productId} options={products.map((item: any) => ({ label: item.title, value: item.id }))} onChange={(e) => { setProductId(e) }} />
+                <CustomSearchableSelect value={productId} options={products.map((item: any) => ({ label: item.title, value: item.id }))} onChange={(e) => { setProductId(e) }} />
             </section>
             <section className="flex sticky bg-white bottom-0 gap-2 mt-4 border-t py-3 justify-end w-full">
                 <button onClick={() => setIsOpen(false)} className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
