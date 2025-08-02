@@ -16,7 +16,6 @@ const useSubjectNotExist = () => {
             policyId: policyId,
             subjectItemId: subjectItemId,
             subjectNotExist: true,
-
         }
         setActionLoading(true)
         const question = confirm("آیا مطمئن هستید؟")
@@ -26,7 +25,6 @@ const useSubjectNotExist = () => {
                 toastSuccess("عملیات با موفقیت اانجام شد")
             }).catch().finally(() => setActionLoading(false))
         }
-
     }
     return {
         saveData, actionLoading
