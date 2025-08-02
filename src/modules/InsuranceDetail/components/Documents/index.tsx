@@ -6,6 +6,7 @@ import useDocument from "./document.biz";
 import AddDocumentModal from './components/AddDocumentModal'
 import TakePhotoModal from './components/TakePhotoModal'
 import ListLoader from "@/components/kit/ListLoader";
+import NoRecord from "@/components/kit/NoRecord";
 
 export default function Index() {
     const { isAddDocumentModal, setIsAddDocumentModal, takePhotoModalIsOpen, setTakePhotoModalIsOpen, actionLoading, data, downloadFile, deleteFile, getFileList } = useDocument()
@@ -30,6 +31,7 @@ export default function Index() {
                 {!actionLoading && <section className="grid grid-cols-2 gap-2">
                     {data.map((item: any, index: number) => (<FileItem downloadFile={downloadFile} deleteFile={deleteFile} key={index} item={item} />))}
                 </section>}
+                {!actionLoading && data.length === 0 && <NoRecord />}
             </section>
         </section>
         <SlidingModal isOpen={isAddDocumentModal}>

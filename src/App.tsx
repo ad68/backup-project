@@ -24,6 +24,7 @@ function App() {
   return (
     <>
       <Routes />
+
       {needRefresh && updateFn && (
         <UpdatePwaModal onConfirm={() => {
           updateFn()

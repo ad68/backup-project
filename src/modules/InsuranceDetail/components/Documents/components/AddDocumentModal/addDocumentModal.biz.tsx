@@ -1,5 +1,5 @@
 import { useAxiosWithToken } from "@/hooks"
-import { convertToBase64, getImageFormatFromBase64, getPureBase64 } from "@/utils/global"
+import { convertToBase64, getExtensionFromFileName, getPureBase64 } from "@/utils/global"
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import { useForm } from 'react-hook-form';
@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toastSuccess } from "@/components/kit/toast";
 const schema = z.object({
     title: z.string().min(1, 'عنوان الزامی است'),
-    name: z.string().min(1, 'نام الزامی است'),
+
     document: z
         .custom<FileList>()
         .refine((files) => files && files.length > 0, 'انتخاب فایل الزامی است'),
@@ -23,7 +23,7 @@ const useAddDocumentModal = (setIsAddDocumentModal: (value: boolean) => void, ge
         resolver: zodResolver(schema),
         defaultValues: {
             title: '',
-            name: '',
+
             document: undefined,
         }
     });
@@ -33,15 +33,18 @@ const useAddDocumentModal = (setIsAddDocumentModal: (value: boolean) => void, ge
     const [actionLoading, setActionLoading] = useState<boolean>(false)
     const onSubmit = async (data: FormData) => {
         const file = data.document[0];
+        if (!file) return;
         const base64 = await convertToBase64(file);
-
+        const extension = getExtensionFromFileName(file.name);
+        console.log("extension", extension)
         setActionLoading(true)
         const params = {
             reviewId: reviewId,
             subjectId: subjectId,
             title: data.title,
-            name: data.name + "." + getImageFormatFromBase64(String(base64)),
-            fileContentInBase64: getPureBase64(String(base64))
+            name: data.title + "." + extension,
+            fileContentInBase64: getPureBase64(String(base64)),
+
         }
         useAxiosWithToken.post("/sabka/technical/annex/add/subject-file", params)
             .then(() => {

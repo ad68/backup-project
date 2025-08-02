@@ -21,14 +21,14 @@ const useDocument = () => {
         }).finally(() => { setActionLoading(false) })
     }
     const downloadBase64FromApi = async (item: any, base64: string) => {
-        const mimeType = `application/${item.extension.replace(".", "")}`; // بسته به فایل
+        const mimeType = `application/${item.extension.replace(".", "")}`;
         const byteCharacters = atob(base64);
         const byteArray = new Uint8Array([...byteCharacters].map(c => c.charCodeAt(0)));
         const blob = new Blob([byteArray], { type: mimeType });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = item?.name; // اسم دلخواه
+        link.download = item?.name;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

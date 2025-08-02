@@ -19,7 +19,7 @@ export default function Index({ setIsAddDocumentModal, getFileList }: { setIsAdd
             {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
         </section>
 
-        <section className="mt-2">
+        {/* <section className="mt-2">
             <span className="font-light text-slate-700 text-xs">نام:</span>
             <Controller
                 name="name"
@@ -30,7 +30,7 @@ export default function Index({ setIsAddDocumentModal, getFileList }: { setIsAdd
             />
             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
         </section>
-
+ */}
         <section className="mt-5 flex flex-col gap-2">
             <span className="font-light text-slate-700 text-xs">مستندات:</span>
             <Controller

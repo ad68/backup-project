@@ -44,7 +44,7 @@ function Index({ center, offset, polygonBounds }: MapProps) {
             subjectItemId: subjectItemId && parseInt(subjectItemId),
             subjectNotExist: false,
             geoInWkt: geoInWkt,
-            isTest: true
+
         }
         useAxiosWithToken.post("/sabka/technical/annex/add/locate-subject-item", params).finally(() => { setActionLoading(false) })
     }

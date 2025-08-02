@@ -17,7 +17,7 @@ const useResult = () => {
         const params = {
             reviewId,
             subjectId,
-            isTest: true
+
         }
         useAxiosWithToken.post("/sabka/technical/annex/add/locate-result", params).then(() => {
             toastSuccess("عملیات با موفقیت انجام شد")
