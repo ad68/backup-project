@@ -18,13 +18,19 @@ export default function UpdatePwaModal({ onConfirm }: { onConfirm: () => void })
                     <li>اضافه شدن اطلاعات بیمه گذار (شماره موبایل، کد ملی)</li>
                     <li>بهبود ریسپانسیو تبلت</li>
                 </ul> */}
-                <span className="text-lg">
+                {/*   <span className="text-lg">
                     نسخه 1.1.1
                 </span>
                 <ul className="list-disc text-xs pr-10 leading-6">
                     <li>رفع مشکل ارسال مستندات برای فایل های gpx , kml</li>
                     <li>اضافه کردن قابلیت جستجو در قسمت تقسیمات کشوری</li>
 
+                </ul> */}
+                <span className="text-lg">
+                    نسخه 1.1.2
+                </span>
+                <ul className="list-disc text-xs pr-10 leading-6">
+                    <li>اضافه شدن قابلیت ذخیره نتایج جستجو</li>
                 </ul>
                 <div className="px-5 flex w-full mt-10">
                     <CustomButton onClick={onConfirm} className="w-full">به روز رسانی</CustomButton>
