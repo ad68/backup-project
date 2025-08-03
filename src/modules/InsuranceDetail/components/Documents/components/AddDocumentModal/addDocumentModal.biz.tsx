@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toastSuccess } from "@/components/kit/toast";
+import { isDev } from "@/config/env";
 const schema = z.object({
     title: z.string().min(1, 'عنوان الزامی است'),
 
@@ -44,6 +45,7 @@ const useAddDocumentModal = (setIsAddDocumentModal: (value: boolean) => void, ge
             title: data.title,
             name: data.title + "." + extension,
             fileContentInBase64: getPureBase64(String(base64)),
+            isTest: isDev
 
         }
         useAxiosWithToken.post("/sabka/technical/annex/add/subject-file", params)
