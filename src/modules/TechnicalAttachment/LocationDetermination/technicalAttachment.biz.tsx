@@ -1,15 +1,17 @@
 import { toastError } from "@/components/kit/toast"
 import { useAxiosWithToken } from "@/hooks"
 import { bulkSaveToIDB, clearStore, getPaginatedDataFromIDB, /* searchByIndex */ } from "@/lib/indexdb"
+import { useLocationDeterminationStore } from "@/store/locationDeterminationStore"
 import { useEffect, useState } from "react"
 
 const useCheckSpecifications = () => {
+    const { filter } = useLocationDeterminationStore()
     const [data, setData] = useState<any>([])
     const [loading, setLoading] = useState(false)
     const [hasFetched, setHasFetched] = useState(false)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [totalPage, setTotalPage] = useState<number>(1)
-    const [searchParams, setSearchParams] = useState<any>()
+
     const [smsModalIsOpen, setSmsModalIsOpen] = useState(false)
     const [selectedItem, setSelectedItem] = useState()
     const saveToDataBase = async (data: any) => {
@@ -39,19 +41,24 @@ const useCheckSpecifications = () => {
     }
     const getList = async () => {
         setLoading(true);
-        const params = searchParams ? searchParams : {
-            formReviewId: "",
-            productId: "",
-            nationalCode: "",
-            policyId: "",
-            provinceId: "",
-            countyId: "",
-            districtId: "",
-            ruralDistrictId: "",
-            placeId: ""
-        }
+        /*  if (searchParams) {
+             setParams(searchParams)
+         } */
+        /*  const data = filter ? filter : {
+             formReviewId: "",
+             productId: "",
+             nationalCode: "",
+             policyId: "",
+             provinceId: "",
+             countyId: "",
+             districtId: "",
+             ruralDistrictId: "",
+             placeId: ""
+         } */
+        const data = filter
+
         try {
-            const res = await useAxiosWithToken.post("/sabka/technical/annex/search/locate-reviews", params);
+            const res = await useAxiosWithToken.post("/sabka/technical/annex/search/locate-reviews", data);
             const aaa = [...res.data]
             await clearStore()
             await saveToDataBase(aaa);
@@ -80,7 +87,7 @@ const useCheckSpecifications = () => {
     useEffect(() => {
         getList()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchParams])
+    }, [])
 
     useEffect(() => {
         if (hasFetched) {
@@ -92,8 +99,9 @@ const useCheckSpecifications = () => {
         data,
         loading,
         currentPage,
+        getList,
         setCurrentPage,
-        totalPage, setSearchParams, showSmsModal, closeSmsModal, smsModalIsOpen, selectedItem
+        totalPage, showSmsModal, closeSmsModal, smsModalIsOpen, selectedItem
     }
 }
 export default useCheckSpecifications

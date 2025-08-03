@@ -9,12 +9,12 @@ import PageTitle from '@/components/kit/PageTitle'
 import SlidingModal from '@/components/kit/SlidingModal'
 import SendSms from './components/SendSms'
 export default function Index() {
-    const { data, loading, setCurrentPage, totalPage, currentPage, setSearchParams, closeSmsModal, selectedItem, showSmsModal, smsModalIsOpen } = useTechnicalAttachment()
+    const { data, loading, setCurrentPage, totalPage, currentPage, getList, closeSmsModal, selectedItem, showSmsModal, smsModalIsOpen } = useTechnicalAttachment()
     return <>
         <PageTitle title='تعیین مکان' />
         <section className='pb-10 px-2 max-w-5xl m-auto'>
             <section className=''>
-                <Filter setSearchParams={setSearchParams} />
+                <Filter getList={getList} />
             </section>
             {data.length !== 0 && <section className='mt-10'>
                 <ReactPaginate

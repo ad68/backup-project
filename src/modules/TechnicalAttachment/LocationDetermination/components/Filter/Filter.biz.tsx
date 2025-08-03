@@ -1,167 +1,134 @@
 import { useAxiosWithToken, useAxiosWithTokenFormUrlEncoded } from '@/hooks'
-import { useAuthStore } from '@/store/authStore'
 import { useEffect, useState } from 'react'
+import { useLocationDeterminationStore } from '@/store/locationDeterminationStore';
 
-const useFilter = (setSearchParams: (value: any) => void) => {
-    const { token } = useAuthStore()
+const useFilter = () => {
+    const { filter, updateFilter, clearParams } = useLocationDeterminationStore();
     const [provinces, setProvinces] = useState([])
-    const [provinceId, setProvinceId] = useState<any>("")
     const [counties, setCounties] = useState([])
-    const [countyId, setCountyId] = useState<any>("")
     const [districts, setDistricts] = useState<any>([])
-    const [districtId, setDistrictId] = useState<any>("")
-    const [formReviewId, setFormReviewId] = useState<string>("")
-    const [productId, setProductId] = useState<string>("")
     const [products, setProducts] = useState<any>([])
-    const [nationalCode, setNationalCode] = useState<string>("")
-    const [policyId, setPolicyId] = useState<string>("")
     const [ruralDistricts, setRuralDistricts] = useState<any>([])
-    const [ruralDistrictId, setRuralDistrictId] = useState("")
     const [places, setPlaces] = useState<any>([])
-    const [placeId, setPlaceId] = useState("")
-    const [subSectionId, setSubSectionId] = useState("1")
-    const getProvinceList = () => {
 
-        const form = new URLSearchParams();
-        if (token) form.append('token', token);
-        useAxiosWithTokenFormUrlEncoded.post("/sabka/admin-levels/get/provinces").then(res => {
-            setProvinces(res.data)
-        }).catch()
+    const getProvinceList = () => {
+        useAxiosWithTokenFormUrlEncoded.post("/sabka/admin-levels/get/provinces")
+            .then(res => setProvinces(res.data))
+            .catch(console.error)
     }
     const getCounties = () => {
-        const params = { provinceId: provinceId }
-        useAxiosWithToken.post("/sabka/admin-levels/get/counties", params).then(res => {
-            setCounties(res.data)
-        }).catch()
+        const params = { provinceId: filter.provinceId }
+        useAxiosWithToken.post("/sabka/admin-levels/get/counties", params)
+            .then(res => setCounties(res.data))
+            .catch(console.error)
     }
     const getDistricts = () => {
-        const params = { provinceId: provinceId, countyId: countyId }
-        useAxiosWithToken.post("/sabka/admin-levels/get/districts", params).then(res => {
-            setDistricts(res.data)
-        }).catch()
+        const params = { provinceId: filter.provinceId, countyId: filter.countyId }
+        useAxiosWithToken.post("/sabka/admin-levels/get/districts", params)
+            .then(res => setDistricts(res.data))
+            .catch(console.error)
     }
     const getRuralDistricts = () => {
-        const params = { provinceId: provinceId, countyId: countyId, districtId: districtId }
-        useAxiosWithToken.post("/sabka/admin-levels/get/rural-districts", params).then(res => {
-            setRuralDistricts(res.data)
-        }).catch()
+        const params = { provinceId: filter.provinceId, countyId: filter.countyId, districtId: filter.districtId }
+        useAxiosWithToken.post("/sabka/admin-levels/get/rural-districts", params)
+            .then(res => setRuralDistricts(res.data))
+            .catch(console.error)
     }
     const getPlaces = () => {
-        const params = { provinceId: provinceId, countyId: countyId, ruralDistrictId: ruralDistrictId, districtId: districtId }
-        useAxiosWithToken.post("/sabka/admin-levels/get/places", params).then(res => {
-            setPlaces(res.data)
-        }).catch()
+        const params = {
+            provinceId: filter.provinceId,
+            countyId: filter.countyId,
+            districtId: filter.districtId,
+            ruralDistrictId: filter.ruralDistrictId
+        }
+        useAxiosWithToken.post("/sabka/admin-levels/get/places", params)
+            .then(res => setPlaces(res.data))
+            .catch(console.error)
     }
     const getProducts = () => {
-        const params = { subSectionId: parseInt(subSectionId), }
-        useAxiosWithToken.post("/sabka/plans/get/products", params).then(res => {
-            setProducts(res.data)
-        }).catch()
+        const params = { subSectionId: parseInt(filter.subSectionId) }
+        useAxiosWithToken.post("/sabka/plans/get/products", params)
+            .then(res => setProducts(res.data))
+            .catch(console.error)
     }
+
     const clearForm = () => {
-        setProvinces([])
-        setProvinceId("")
+        updateFilter("provinceId", "")
         setCounties([])
-        setCountyId("")
+        updateFilter("countyId", "")
         setDistricts([])
-        setDistrictId("")
-        setFormReviewId("")
-        setProductId("")
-        setNationalCode("")
-        setPolicyId("")
+        updateFilter("districtId", "")
+        updateFilter("formReviewId", "")
+        updateFilter("productId", "")
+        updateFilter("nationalCode", "")
+        updateFilter("policyId", "")
         setRuralDistricts([])
-        setRuralDistrictId("")
+        updateFilter("ruralDistrictId", "")
         setPlaces([])
-        setPlaceId("")
+        updateFilter("placeId", "")
+        clearParams()
     }
+
     useEffect(() => {
         getProvinceList()
     }, [])
+
     useEffect(() => {
-        setCountyId("")
-        setDistrictId("")
-        setRuralDistrictId("")
-        setPlaceId("")
-        if (provinceId) {
+        if (filter.provinceId) {
             getCounties()
+        } else {
+            setCounties([])
+            updateFilter("countyId", "")
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [provinceId])
+    }, [filter.provinceId])
+
     useEffect(() => {
-        setDistrictId("")
-        setRuralDistrictId("")
-        setPlaceId("")
-        if (countyId) {
+        if (filter.countyId) {
             getDistricts()
+        } else {
+            setDistricts([])
+            updateFilter("districtId", "")
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [countyId])
+    }, [filter.countyId])
+
     useEffect(() => {
-        setRuralDistrictId("")
-        if (districtId) {
+        if (filter.districtId) {
             getRuralDistricts()
+        } else {
+            setRuralDistricts([])
+            updateFilter("ruralDistrictId", "")
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [districtId])
+    }, [filter.districtId])
+
     useEffect(() => {
-        setPlaceId("")
-        if (ruralDistrictId) {
+        if (filter.ruralDistrictId) {
             getPlaces()
+        } else {
+            setPlaces([])
+            updateFilter("placeId", "")
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ruralDistrictId])
+    }, [filter.ruralDistrictId])
+
     useEffect(() => {
         getProducts()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [subSectionId])
-    const searchList = () => {
-        const params = {
-            formReviewId: formReviewId,
-            productId: productId,
-            nationalCode: nationalCode,
-            policyId: policyId,
-            provinceId: provinceId,
-            countyId: countyId,
-            districtId: districtId,
-            ruralDistrictId: ruralDistrictId,
-            placeId: placeId
-        }
-        setSearchParams(params)
-    }
+    }, [filter.subSectionId])
+
+
     return {
         provinces,
-        setProvinceId,
-        provinceId,
         counties,
-        setCountyId,
-        countyId,
         districts,
-        setDistrictId,
-        districtId,
-        searchList,
         ruralDistricts,
-        ruralDistrictId,
-        setRuralDistrictId,
         places,
-        setPlaceId,
-        placeId,
-        policyId,
-        setPolicyId,
-        formReviewId,
-        setFormReviewId,
-        nationalCode,
-        setNationalCode,
         products,
-        productId,
-        setProductId,
         clearForm,
-        subSectionId,
-        setSubSectionId,
-
+        updateFilter,
+        filter
     }
 }
 export default useFilter
