@@ -87,10 +87,22 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen, getFileLi
 
                         finalizeImage();
                     },
-                    () => {
+                    (error) => {
+                        console.error("Geolocation error:", error);
+
+                        if (error.code === error.PERMISSION_DENIED) {
+                            alert("دسترسی به موقعیت مکانی غیرفعال است.");
+                        } else if (error.code === error.POSITION_UNAVAILABLE) {
+                            alert("GPS روشن است اما موقعیت مکانی قابل دریافت نیست. لطفاً از اتصال مناسب اطمینان حاصل کنید.");
+                        } else if (error.code === error.TIMEOUT) {
+                            alert("در دریافت موقعیت مکانی تاخیر ایجاد شد. لطفاً دوباره تلاش کنید.");
+                        }
+
+                        // حتی اگر ارور داد، عکس بدون لوکیشن بگیر
                         drawTextWithBackground(dateTimeText, canvas.height - 10, "white");
                         finalizeImage();
-                    }
+                    },
+
                 );
             } else {
                 drawTextWithBackground(dateTimeText, canvas.height - 10, "white");
