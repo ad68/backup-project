@@ -35,11 +35,18 @@ export default function UpdatePwaModal({ onConfirm }: { onConfirm: () => void })
                 <div className="px-5 flex w-full mt-10">
                     <CustomButton onClick={onConfirm} className="w-full">به روز رسانی</CustomButton>
                 </div> */}
-                <span className="text-lg">
+                {/*  <span className="text-lg">
                     نسخه 1.1.3
                 </span>
                 <ul className="list-disc text-xs pr-10 leading-6">
                     <li>رفع مشکل ظاهر شدن popup زمان رسم هر نقطه polygon</li>
+                </ul> */}
+                <span className="text-lg">
+                    نسخه 1.1.4
+                </span>
+                <ul className="list-disc text-xs pr-10 leading-6">
+                    <li>رفع مشکل بر عکس بودن جهت دوربین در زمان عکاسی</li>
+                    <li>نمایش پیغام خطا در زمان عدم دریافت موقعیت مکانی توسط موقعیت یاب (gps)</li>
                 </ul>
                 <div className="px-5 flex w-full mt-10">
                     <CustomButton onClick={onConfirm} className="w-full">به روز رسانی</CustomButton>
