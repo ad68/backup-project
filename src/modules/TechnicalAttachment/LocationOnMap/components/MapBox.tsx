@@ -56,9 +56,9 @@ export default function Index({
                 draw: {
                     polygon: {
                         shapeOptions: {
-                            color: "red",
+                            color: "yellow",
                             weight: 2,
-                            fillColor: "orange",
+                            fillColor: "#1de477",
                             fillOpacity: 0.5,
                         },
                     },
@@ -102,17 +102,17 @@ export default function Index({
                 updatePolygonState();
             });
 
-            // رویداد حذف پلی‌گان
+
             map.on(L.Draw.Event.DELETED, function () {
                 updatePolygonState();
             });
 
-            // اضافه کردن پلی‌گان پیش‌فرض اگر وجود داشت
+
             if (defaultPolygon) {
                 const myDefaultPolygon = L.polygon(WKTToPolygon(defaultPolygon), {
-                    color: "red",
+                    color: "yellow",
                     weight: 2,
-                    fillColor: "orange",
+                    fillColor: "#1de477",
                     fillOpacity: 0.5,
                 });
                 drawnItemsRef.current.addLayer(myDefaultPolygon);
@@ -168,9 +168,9 @@ export default function Index({
             draw: {
                 polygon: {
                     shapeOptions: {
-                        color: "red",
+                        color: "yellow",
                         weight: 2,
-                        fillColor: "orange",
+                        fillColor: "#1de477",
                         fillOpacity: 0.5,
                     },
                 },
@@ -267,7 +267,7 @@ export default function Index({
         <section className="relative z-[1001]  w-full h-full" >
             <section ref={mapRef} className="h-[100%]  w-full gap-1" />
             <section className="fixed z-[1002] left-0 top-0 h-[8%]  overflow-x-auto w-full flex">
-                <section className="w-full bg-[#ffffff87] flex justify-between shadow-2xl flex-row items-center gap-1 px-2">
+                <section className="w-full bg-[#ffffffc9] flex justify-between shadow-2xl flex-row items-center gap-1 px-2">
                     <div className="flex gap-1">
                         {!hasPolygon && (
                             <button

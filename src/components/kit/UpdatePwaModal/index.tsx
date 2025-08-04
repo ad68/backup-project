@@ -26,7 +26,7 @@ export default function UpdatePwaModal({ onConfirm }: { onConfirm: () => void })
                     <li>اضافه کردن قابلیت جستجو در قسمت تقسیمات کشوری</li>
 
                 </ul> */}
-                <span className="text-lg">
+                {/*    <span className="text-lg">
                     نسخه 1.1.2
                 </span>
                 <ul className="list-disc text-xs pr-10 leading-6">
@@ -34,8 +34,16 @@ export default function UpdatePwaModal({ onConfirm }: { onConfirm: () => void })
                 </ul>
                 <div className="px-5 flex w-full mt-10">
                     <CustomButton onClick={onConfirm} className="w-full">به روز رسانی</CustomButton>
+                </div> */}
+                <span className="text-lg">
+                    نسخه 1.1.3
+                </span>
+                <ul className="list-disc text-xs pr-10 leading-6">
+                    <li>رفع مشکل ظاهر شدن popup زمان رسم هر نقطه polygon</li>
+                </ul>
+                <div className="px-5 flex w-full mt-10">
+                    <CustomButton onClick={onConfirm} className="w-full">به روز رسانی</CustomButton>
                 </div>
-
             </div>
         </section>
     </>

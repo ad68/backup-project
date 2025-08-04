@@ -290,11 +290,15 @@ input:-webkit-autofill {
   }
 }
 .leaflet-div-icon.leaflet-editing-icon {
-  border-radius: 50% !important; /* دایره‌ای کردن */
-  width: 20px !important;
-  height: 20px !important;
+  border-radius: 50% !important;
+  width: 15px !important;
+  height: 15px !important;
   margin-left: -10px !important;
   margin-top: -10px !important;
-  background-color: white !important; /* رنگ دلخواه */
+  background-color: yellow;
   border: 2px solid gray;
+}
+
+.leaflet-draw-tooltip {
+  display: none !important;
 }

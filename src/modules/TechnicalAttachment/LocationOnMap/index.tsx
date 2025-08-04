@@ -30,22 +30,17 @@ export default function Index() {
 
         }).finally(() => setFetchLoading(false))
     }
-
     useEffect(() => {
         if (featureId && featureId !== "null") {
             getFeatureInfo()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-
-
     return (<>
         {fetchLoading && <div className='fixed flex flex-col gap-2 justify-center items-center top-0 left-0 w-full h-full bg-white z-[1005]' >
             <ListLoader />
             <span className='text-lg text-primary'>لطفا چند لحظه صبر کنید</span>
         </div>}
-
         {(featureId && featureId !== "null" && featureData) && <MapBox farmLat={farmLat} farmLng={farmLng} defaultPolygon={featureData} />}
         {featureId === "null" && <MapBox farmLat={farmLat} farmLng={farmLng} />}
 
