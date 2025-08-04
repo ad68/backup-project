@@ -128,7 +128,7 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen, getFileLi
                 <Webcam
                     ref={webcamRef}
                     audio={false}
-                    mirrored={true}
+                    mirrored={false}
                     screenshotFormat="image/png"
                     videoConstraints={{ facingMode: cameraMode }}
                     style={{

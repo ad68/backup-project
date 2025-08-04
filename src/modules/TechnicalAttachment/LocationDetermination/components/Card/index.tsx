@@ -6,7 +6,6 @@ import type { CardProp } from "../../technicalAttachment.type";
 import { gregorianToJalali } from "@/utils/global";
 export default function Index({ item, showSmsModal }: CardProp) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
-
     return <section className="p-2">
         <section className={`border relative flex flex-col gap-4 bg-white border-slate-100  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[162px]`} shadow-lg`}>
             <section className="flex justify-between w-full">
@@ -18,18 +17,13 @@ export default function Index({ item, showSmsModal }: CardProp) {
                     <span className="font-light text-slate-500 text-sm">مورد:</span>
                     <span className="text-sm">{item.subjectId}</span>
                 </section>
-
             </section>
-
             <section className="flex justify-between w-full">
                 <section className="flex gap-1">
                     <span className="font-light text-slate-500 text-sm">شخص:</span>
                     <span className="text-sm">{item.beneficiary.title}</span>
                 </section>
-
-
             </section>
-
             <section className="flex justify-between w-full">
                 <section className="flex gap-1">
                     <span className="font-light text-slate-500 text-sm">کد ملی:</span>
