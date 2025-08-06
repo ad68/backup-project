@@ -23,9 +23,6 @@ export default function Index({ rowData, closeSmsModal }: any) {
         console.log("rowData", rowData)
     }, [rowData])
     const sendSms = () => {
-
-
-
         if (selectedDate && fromHour && toHour) {
             const params = {
                 policyId: rowData.policyId,

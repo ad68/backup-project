@@ -1,5 +1,6 @@
 import { openDB } from 'idb';
 const DB_NAME = 'myDatabase';
+/* const OFFLINE_DB_NAME = "offline-db" */
 const STORE_NAME = 'locateReviews';
 /* export async function initDB() {
     const db = await openDB(DB_NAME, 1, {
@@ -121,3 +122,18 @@ export async function getPaginatedDataFromIDB<T>(
         totalItems
     };
 }
+///create database
+/* export async function initOfflineDb() {
+    const db = await openDB(OFFLINE_DB_NAME, 1, {
+        upgrade(db) {
+            if (!db.objectStoreNames.contains('tasks')) {
+                db.createObjectStore('tasks', {
+                   
+                    autoIncrement: true,
+                });
+            }
+        },
+    });
+
+    return db;
+} */
