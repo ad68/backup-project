@@ -27,6 +27,7 @@ import PhenologyMonitoringCases from '@/modules/PhenologyMonitoring/Cases'
 import PhenologyMonitoringProgram from '@/modules/PhenologyMonitoring/Program'
 import PhenologyMonitoringEmergencyVisit from '@/modules/PhenologyMonitoring/EmergencyVisit'
 import Profile from '@/modules/Profile'
+import Indexdb from '@/modules/Indexdb'
 import ProtectedRoute from './ProtectedRoute'
 import MAIN_LAYOUT from '../components/layout/MainLayout'
 import DashboardLayout from '../components/layout/DashboardLayout'
@@ -122,6 +123,8 @@ export default function Index() {
                 />
             ))}
         </Route>
+
+        <Route path="/index-db" element={<Indexdb />} />
         {/*  <Route path="screen-shot" element={<ScreenShot />} />
         <Route path="webcam" element={<Webcam />} />
         <Route path="google-map" element={<GoogleMap />} /> */}

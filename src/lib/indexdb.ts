@@ -1,6 +1,6 @@
-import { openDB } from 'idb';
+import { openDB, type IDBPDatabase } from 'idb';
 const DB_NAME = 'myDatabase';
-/* const OFFLINE_DB_NAME = "offline-db" */
+const OFFLINE_DB_NAME = "offline-db"
 const STORE_NAME = 'locateReviews';
 /* export async function initDB() {
     const db = await openDB(DB_NAME, 1, {
@@ -123,17 +123,78 @@ export async function getPaginatedDataFromIDB<T>(
     };
 }
 ///create database
-/* export async function initOfflineDb() {
+export async function initOfflineDb() {
     const db = await openDB(OFFLINE_DB_NAME, 1, {
         upgrade(db) {
             if (!db.objectStoreNames.contains('tasks')) {
                 db.createObjectStore('tasks', {
-                   
-                    autoIncrement: true,
+                    keyPath: 'personalCode'
+                    /*    autoIncrement: true, */
                 });
             }
         },
     });
-
     return db;
-} */
+}
+export const addRecordToDb = async (db: IDBPDatabase, storeName: string, object: any) => {
+    try {
+        const tx = db.transaction(storeName, 'readwrite');
+        const store = tx.objectStore(storeName);
+        const id = await store.add(object);
+        await tx.done;
+        return id
+    }
+    catch (err) {
+        console.error('خطا در ذخیره اطلاعات', err);
+        throw err;
+    }
+}
+//get record from store
+export const getAllRecord = async (db: IDBPDatabase, storeName: string) => {
+    try {
+        const tx = db.transaction(storeName, 'readonly');
+        const store = tx.objectStore(storeName);
+        const allRecords = await store.getAll();
+        await tx.done;
+        return allRecords
+    }
+    catch (err) {
+        console.error('خطا در دریافت اطلاعات', err);
+        throw err;
+    }
+}
+////delete record from db
+
+
+export const deleteRecordFromDb = async (
+    db: IDBPDatabase,
+    storeName: string,
+    key: IDBValidKey
+): Promise<void> => {
+    try {
+        const tx = db.transaction(storeName, 'readwrite');
+        const store = tx.objectStore(storeName);
+        await store.delete(key);
+        await tx.done;
+    } catch (err) {
+        console.error('خطا در حذف رکورد:', err);
+        throw err;
+    }
+};
+
+export const getRecordById = async (
+    db: IDBPDatabase,
+    storeName: string,
+    key: IDBValidKey
+): Promise<any | undefined> => {
+    try {
+        const tx = db.transaction(storeName, 'readonly');
+        const store = tx.objectStore(storeName);
+        const record = await store.get(key);
+        await tx.done;
+        return record;
+    } catch (err) {
+        console.error('خطا در دریافت رکورد با آیدی:', err);
+        throw err;
+    }
+};
