@@ -10,6 +10,7 @@ function App() {
   useEffect(() => {
     initDB()
     initOfflineDb()
+    /* initOfflineReviewDb() */
   }, [])
   useEffect(() => {
     const updateSW = registerSW({

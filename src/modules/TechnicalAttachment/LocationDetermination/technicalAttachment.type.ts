@@ -21,6 +21,7 @@ export type CardProp = {
         insured: number
     }
     showSmsModal: (value: any) => void
+
 }
 export type FilterState = {
     provinceId: string

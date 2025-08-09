@@ -4,7 +4,6 @@ export enum DATABASES {
 }
 
 export enum STORES {
-    USERS = 'users',
     TASKS = 'tasks',
-    MESSAGES = 'messages'
+    Reviews = 'reviews',
 }

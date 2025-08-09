@@ -2,7 +2,7 @@ import CustomButton from "@/components/kit/CustomButton";
 import { toastError, toastSuccess } from "@/components/kit/toast";
 import { Button } from "@/components/ui/button";
 import { STORES } from "@/constants/dbEnums";
-import { addRecordToDb, deleteRecordFromDb, getAllRecord, getRecordById, initOfflineDb } from "@/lib/indexdb";
+import { addRecordToDb, deleteRecordFromDb, getAllRecord, getRecordById, initOfflineDb, updateRecordInDb } from "@/lib/indexdb";
 import { useEffect, useState } from "react";
 
 export default function Index() {
@@ -12,7 +12,6 @@ export default function Index() {
         const db = await initOfflineDb()
         try {
             const list = await getAllRecord(db, STORES.TASKS);
-            /* console.log(list) */
             setList(list)
         }
         catch (err: unknown) {
@@ -23,7 +22,7 @@ export default function Index() {
     const saveData = async () => {
         const db = await initOfflineDb()
         try {
-            const newUserId = await addRecordToDb(db, STORES.TASKS, { name: 'amir', personalCode: 332 });
+            const newUserId = await addRecordToDb(db, STORES.TASKS, { name: 'amir', personalCode: 445 });
             toastSuccess(`ID کاربر جدید: ${newUserId}`)
             getAllData()
         }
@@ -48,7 +47,12 @@ export default function Index() {
         const task = await getRecordById(db, STORES.TASKS, id);
         console.log(task);
     }
-
+    const updateRecord = async () => {
+        const db = await initOfflineDb();
+        const task = await updateRecordInDb(db, STORES.TASKS, { name: "hasan", personalCode: 123 });
+        getAllData()
+        console.log(task);
+    }
     useEffect(() => {
         getAllData()
     }, [])
@@ -64,6 +68,7 @@ export default function Index() {
                     <td> {item.personalCode}</td>
                     <td><Button className="bg-red-500" onClick={() => handleDelete(item.personalCode)}>حذف</Button></td>
                     <td>  <Button className="bg-blue-500" onClick={() => getById(item.personalCode)}>get by id</Button></td>
+                    <td>  <Button className="bg-blue-500" onClick={() => updateRecord()}>update</Button></td>
                 </tr>))}
             </tbody>
 

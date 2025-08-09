@@ -3,7 +3,15 @@ import "./style.css";
 import { OnlineIcon } from "@/assets/icons/OnlineIcon";
 import { OfflineIcon } from "@/assets/icons/OfflineIcon";
 
-const CircleButton = ({ hideModal, onlineStatus, setOnlineStatus }: { hideModal: () => void, onlineStatus: boolean, setOnlineStatus: (value: boolean) => void }) => {
+const CircleButton = ({
+    hideModal,
+    onlineStatus,
+    setOnlineStatus,
+}: {
+    hideModal: () => void;
+    onlineStatus: boolean;
+    setOnlineStatus: (value: boolean) => void;
+}) => {
     const [progress, setProgress] = useState(0);
     const animationRef = useRef<number>(0);
     const startTimeRef = useRef<number>(0);
@@ -18,34 +26,37 @@ const CircleButton = ({ hideModal, onlineStatus, setOnlineStatus }: { hideModal:
             const elapsed = time - startTimeRef.current!;
             const percent = Math.min(elapsed / duration, 1);
             setProgress(percent);
+
             if (percent < 1) {
                 animationRef.current = requestAnimationFrame(animate);
             } else if (!doneRef.current) {
                 doneRef.current = true;
-                setOnlineStatus(!onlineStatus)
-                hideModal()
+                setOnlineStatus(!onlineStatus);
+                hideModal();
             }
         };
 
         animationRef.current = requestAnimationFrame(animate);
     };
-
     const resetProgress = () => {
         cancelAnimationFrame(animationRef.current!);
         setProgress(0);
         doneRef.current = false;
     };
-
-    return (<>
+    return (
         <div
             className={onlineStatus ? "circle-button-green" : "circle-button"}
-            onMouseDown={startProgress}
-            onMouseUp={resetProgress}
-            onMouseLeave={resetProgress}
-            onTouchStart={startProgress}
-            onTouchEnd={resetProgress}
+            onPointerDown={startProgress}
+            onPointerUp={resetProgress}
+            onPointerCancel={resetProgress}
+            onPointerLeave={resetProgress}
+            style={{ touchAction: "none" }} // جلوگیری از رفتار پیشفرض مرورگر در تاچ
         >
-            <svg className={onlineStatus ? "progress-ring-green" : "progress-ring"} width="150" height="15ُُ0">
+            <svg
+                className={onlineStatus ? "progress-ring-green" : "progress-ring"}
+                width="150"
+                height="150"
+            >
                 <circle
                     className={onlineStatus ? "ring-bg-green" : "ring-bg"}
                     cx="75"
@@ -68,8 +79,6 @@ const CircleButton = ({ hideModal, onlineStatus, setOnlineStatus }: { hideModal:
                 {onlineStatus ? <OnlineIcon className="w-[80px]" /> : <OfflineIcon className="w-[80px]" />}
             </span>
         </div>
-
-    </>
     );
 };
 

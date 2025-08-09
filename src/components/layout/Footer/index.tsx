@@ -1,7 +1,7 @@
 /* import { DashboardIcon } from "@/assets/icons/DashboardIcon"; */
 import { LogoutIcon } from "@/assets/icons/LogoutIcon";
 import { ProfileIcon } from "@/assets/icons/ProfileIcon";
-/* import OnlineStatusBtn from "./components/OnlineStatusBtn"; */
+import OnlineStatusBtn from "./components/OnlineStatusBtn";
 import { DashboardIcon } from "@/assets/icons/DashboardIcon";
 import { Link, /* useLocation */ } from "react-router-dom";
 import useFooter from "./footer.biz";
@@ -18,16 +18,16 @@ export default function Index() {
                 <ProfileIcon className="text-slate-400 w-[30px]" />
                 <span className="text-xs text-slate-500 mt-[1px]">پروفایل</span>
             </Link>
-            <Link to="/home" className="flex flex-col w-[70px] mt-[-3px] items-center justify-center">
+            {/*  <Link to="/home" className="flex flex-col w-[70px] mt-[-3px] items-center justify-center">
                 <DashboardIcon className="text-slate-400 w-[38px]" />
                 <span className="text-xs text-slate-500 ">داشبورد</span>
-            </Link>
-            {/* {location.pathname === "/home" ? <section>
+            </Link> */}
+            {location.pathname === "/home" ? <section>
                 <OnlineStatusBtn />
             </section> : <Link to="/home" className="flex flex-col w-[70px] mt-[-3px] items-center justify-center">
                 <DashboardIcon className="text-slate-400 w-[38px]" />
                 <span className="text-xs text-slate-500 ">داشبورد</span>
-            </Link>} */}
+            </Link>}
             <section onClick={() => setIsLogoutModalOpen(true)} className="flex flex-col items-center justify-center">
                 <LogoutIcon className="text-slate-400 w-[28px] shadow-2xl" />
                 <span className="text-xs text-slate-500">خروج</span>

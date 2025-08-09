@@ -1,13 +1,15 @@
 
-import { ChevronDown, ChevronUp, EyeIcon } from "lucide-react";
+import { ChevronDown, ChevronUp, MessageCircleIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import type { CardProp } from "../../technicalAttachment.type";
 import { gregorianToJalali } from "@/utils/global";
+import useCard from "./card.biz";
 export default function Index({ item, showSmsModal }: CardProp) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
+    const { addReviewToOfflineList } = useCard()
     return <section className="p-2">
-        <section className={`border relative flex flex-col gap-4 bg-white border-slate-100  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[162px]`} shadow-lg`}>
+        <section className={`border relative flex flex-col gap-4 bg-white border-slate-100  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[200px]`} shadow-lg`}>
             <section className="flex justify-between w-full">
                 <section className="flex gap-1">
                     <span className="font-light text-slate-500 text-sm">بیمه نامه:</span>
@@ -69,20 +71,27 @@ export default function Index({ item, showSmsModal }: CardProp) {
                     <span className="block text-sm break-words">{item.region}</span>
                 </section>
             </>}
+
             <footer className="absolute flex justify-between bottom-2 px-2 w-full left-0">
-                <Link to={`/insurance-detail?reviewId=${item.reviewId}&policyId=${item.policyId}&subjectId=${item.subjectId}&farmerName=${item.beneficiary.title}`}>
-                    <button className="border w-[100px] bg-primary border-primary shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
-                        <span className="font-light text-sm">مشاهده</span>
-                        <EyeIcon color="#2ebf70" className="w-[20px] stroke-white" />
+                <div className="flex gap-2">
+                    <Link to={`/insurance-detail?reviewId=${item.reviewId}&policyId=${item.policyId}&subjectId=${item.subjectId}&farmerName=${item.beneficiary.title}`}>
+                        <button className="border w-[80px] h-[30px] bg-primary border-primary shadow-md text-[12px] flex justify-center text-white items-center gap-2 rounded-full">
+                            {/* <EyeIcon color="#2ebf70" className="w-[30px] stroke-white" /> */}
+                            مشاهده
+                        </button>
+                    </Link>
+                    <button onClick={() => showSmsModal(item)} className="border w-[40px] h-[30px] bg-blue-500 border-blue-500 shadow-md flex justify-center items-center text-white gap-2 rounded-full">
+                        <MessageCircleIcon className="w-[18px]" />
                     </button>
-                </Link>
-                <button onClick={() => showSmsModal(item)} className="border w-[140px] bg-blue-500 border-blue-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
-                    <span className="font-light text-sm">پیام اطلاع رسانی</span>
-                </button>
+                    <button onClick={() => addReviewToOfflineList(item)} className="border w-[40px] h-[30px] bg-red-500 border-red-500 shadow-md  flex justify-center  items-center text-white gap-2 rounded-full">
+                        <PlusIcon className="w-[20px]" />
+                    </button>
+                </div>
                 <button onClick={() => setIsOpenDtl(!isOpenDtl)} className="bg-yellow-400 shadow-md w-[36px] h-[30px] flex justify-center items-center rounded-full">
                     {isOpenDtl ? <ChevronUp color="white" className="w-[20px]" /> : <ChevronDown color="white" className="w-[20px]" />}
                 </button>
             </footer>
+
         </section>
     </section>
 }

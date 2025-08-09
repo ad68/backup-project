@@ -1,9 +1,8 @@
 import { toastError } from "@/components/kit/toast"
 import { useAxiosWithToken } from "@/hooks"
-import { bulkSaveToIDB, clearStore, getPaginatedDataFromIDB, /* searchByIndex */ } from "@/lib/indexdb"
+import { bulkSaveToIDB, clearStore, getPaginatedDataFromIDB } from "@/lib/indexdb"
 import { useLocationDeterminationStore } from "@/store/locationDeterminationStore"
 import { useEffect, useState } from "react"
-
 const useCheckSpecifications = () => {
     const { filter } = useLocationDeterminationStore()
     const [data, setData] = useState<any>([])
@@ -11,26 +10,13 @@ const useCheckSpecifications = () => {
     const [hasFetched, setHasFetched] = useState(false)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [totalPage, setTotalPage] = useState<number>(1)
-
     const [smsModalIsOpen, setSmsModalIsOpen] = useState(false)
     const [selectedItem, setSelectedItem] = useState()
     const saveToDataBase = async (data: any) => {
         await bulkSaveToIDB(data);
     };
-    /*     const getSearch = async () => {
-            const result = await searchByIndex<any>(
-                'myDatabase',
-                'locateReviews',
-                'policyId_beneficiary',
-                [23655276, "ناصر نوروزی"]
-            );
-            console.log(result)
-        }
-        useEffect(() => {
-            setTimeout(() => {
-                getSearch()
-            }, 6000);
-        }, []) */
+
+
     const showSmsModal = (value: any) => {
         setSelectedItem(value)
         setSmsModalIsOpen(true)
