@@ -35,3 +35,8 @@ export type FilterState = {
     policyId: string
     subSectionId: string
 }
+export type PaginationProp = {
+    setCurrentPage: (value: number) => void,
+    totalPage: number,
+    currentPage: number
+}

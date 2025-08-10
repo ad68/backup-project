@@ -31,6 +31,9 @@ import Indexdb from '@/modules/Indexdb'
 import ProtectedRoute from './ProtectedRoute'
 import MAIN_LAYOUT from '../components/layout/MainLayout'
 import DashboardLayout from '../components/layout/DashboardLayout'
+import LocationReviews from '../modules/Offline/LocationReviews'
+import LocationReviewDetail from '../modules/Offline/LocationReviewDetail'
+import OfflineLandDivision from '../modules/Offline/LandDivision'
 import Rules from '@/modules/rules'
 /* import GoogleMap from '@/modules/GoogleMap' */
 import { useEffect } from "react";
@@ -58,6 +61,13 @@ export default function Index() {
         { path: "current-actions", element: <CurrentActions /> },
         { path: "previous-actions", element: <PreviousActions /> },
         { path: "search", element: <Search /> },
+    ];
+    const OfflineRoutes = [
+        { path: "locate-reviews", element: <LocationReviews /> },
+        { path: "locate-reviews/:id", element: <LocationReviewDetail /> },
+        { path: "land-division/:id", element: <OfflineLandDivision /> },
+
+
     ];
     const PhenologyMonitoringRoutes = [
         { path: "home", element: <PhenologyMonitoring /> },
@@ -98,6 +108,15 @@ export default function Index() {
         </Route>
         <Route path="damage" element={<DashboardLayout />}>
             {DamageRoutes.map(({ path, element }) => (
+                <Route
+                    key={path}
+                    path={path}
+                    element={<ProtectedRoute>{element}</ProtectedRoute>}
+                />
+            ))}
+        </Route>
+        <Route path="offline" element={<DashboardLayout />}>
+            {OfflineRoutes.map(({ path, element }) => (
                 <Route
                     key={path}
                     path={path}

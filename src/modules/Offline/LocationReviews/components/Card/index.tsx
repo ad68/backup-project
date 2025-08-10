@@ -1,13 +1,13 @@
 
-import { ChevronDown, ChevronUp, MessageCircleIcon, PlusIcon } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import type { CardProp } from "../../technicalAttachment.type";
+
 import { gregorianToJalali } from "@/utils/global";
-import useCard from "./card.biz";
-export default function Index({ item, showSmsModal }: CardProp) {
+/* import useCard from "./card.biz"; */
+export default function Index({ item, id }: any) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
-    const { addReviewToOfflineList, actionLoading } = useCard()
+    /* const { addReviewToOfflineList, actionLoading } = useCard() */
     return <section className="p-2">
         <section className={`border relative flex flex-col gap-4 bg-white border-slate-100  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[200px]`} shadow-lg`}>
             <section className="flex justify-between w-full">
@@ -74,19 +74,12 @@ export default function Index({ item, showSmsModal }: CardProp) {
 
             <footer className="absolute flex justify-between bottom-2 px-2 w-full left-0">
                 <div className="flex gap-2">
-                    <Link to={`/insurance-detail?reviewId=${item.reviewId}&policyId=${item.policyId}&subjectId=${item.subjectId}&farmerName=${item.beneficiary.title}`}>
+                    <Link to={`/offline/locate-reviews/${id}?reviewId=${item.reviewId}&policyId=${item.policyId}&subjectId=${item.subjectId}&farmerName=${item.beneficiary.title}`}>
                         <button className="border w-[80px] h-[30px] bg-primary border-primary shadow-md text-[12px] flex justify-center text-white items-center gap-2 rounded-full">
                             {/* <EyeIcon color="#2ebf70" className="w-[30px] stroke-white" /> */}
                             مشاهده
                         </button>
                     </Link>
-                    <button onClick={() => showSmsModal(item)} className="border w-[40px] h-[30px] bg-blue-500 border-blue-500 shadow-md flex justify-center items-center text-white gap-2 rounded-full">
-                        <MessageCircleIcon className="w-[18px]" />
-                    </button>
-                    <button disabled={actionLoading} onClick={() => addReviewToOfflineList(item)} className="border w-[40px] h-[30px] bg-red-500 border-red-500 shadow-md  flex justify-center  items-center text-white gap-2 rounded-full">
-                        {actionLoading ? <span className="tinyBtnLoader"></span> : <PlusIcon className="w-[20px]" />}
-                        {/*  <PlusIcon className="w-[20px]" /> */}
-                    </button>
                 </div>
                 <button onClick={() => setIsOpenDtl(!isOpenDtl)} className="bg-yellow-400 shadow-md w-[36px] h-[30px] flex justify-center items-center rounded-full">
                     {isOpenDtl ? <ChevronUp color="white" className="w-[20px]" /> : <ChevronDown color="white" className="w-[20px]" />}
