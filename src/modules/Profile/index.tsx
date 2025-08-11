@@ -1,10 +1,13 @@
 import { UserIcon } from "@/assets/icons/UserIcon"
 import { ChevronLeft, MapPin } from "lucide-react"
 import useUserProfile from "./useUserProfile"
+import { useOfflineStore } from "@/store/useOfflineStore"
 export default function Index() {
     const { userInfo } = useUserProfile()
+    const { isOnline } = useOfflineStore()
+
     return <main className='m-auto w-[440px] max-w-full'>
-        <div className="h-[250px] rounded-b-[82px] flex flex-col gap-4 justify-center items-center bg-gradient-to-b from-primary to-[#247f4d] overflow-hidden relative z-0">
+        <div className={`h-[250px] rounded-b-[82px] flex flex-col gap-4 justify-center items-center bg-gradient-to-b ${isOnline ? `from-primary to-[#247f4d]` : `from-offline to-offline-900`} overflow-hidden relative z-0`}>
             <div className="w-[100px] h-[100px] bg-slate-200 border-[2px] border-slate-500 shadow-xl rounded-full overflow-hidden mt-[-80px]">
                 <img src={userInfo?.picture ? `data:image/jpg;base64,${userInfo?.picture}` : "/images/profile/no-avatar.svg"} className="w-[100px]" alt="" />
             </div>

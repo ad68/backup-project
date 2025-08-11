@@ -19,7 +19,7 @@ const useItemPlace = () => {
         useAxiosWithToken.post("/sabka/technical/annex/get/policy", params)
             .then((res) => {
                 setLoading(false)
-                setData(res.data)
+                setData(res.data.policyItems)
             })
             .catch(() => {
                 setLoading(false)

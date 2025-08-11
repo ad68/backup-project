@@ -34,6 +34,7 @@ import DashboardLayout from '../components/layout/DashboardLayout'
 import LocationReviews from '../modules/Offline/LocationReviews'
 import LocationReviewDetail from '../modules/Offline/LocationReviewDetail'
 import OfflineLandDivision from '../modules/Offline/LandDivision'
+import LocationOnMapOffline from '../modules/Offline/LocationOnMap'
 import Rules from '@/modules/rules'
 /* import GoogleMap from '@/modules/GoogleMap' */
 import { useEffect } from "react";
@@ -66,7 +67,7 @@ export default function Index() {
         { path: "locate-reviews", element: <LocationReviews /> },
         { path: "locate-reviews/:id", element: <LocationReviewDetail /> },
         { path: "land-division/:id", element: <OfflineLandDivision /> },
-
+        { path: "location-on-map", element: <LocationOnMapOffline /> },
 
     ];
     const PhenologyMonitoringRoutes = [

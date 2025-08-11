@@ -227,9 +227,7 @@ export default function Index() {
                     </CustomButton>
                 </section>
             </form>
-
         </section>
-
         <InfoModal isOpen={isInfoModalOpen} setIsOpen={setIsInfoModalOpen} />
     </main>
 }

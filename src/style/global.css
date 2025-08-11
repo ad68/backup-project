@@ -321,3 +321,21 @@ input:-webkit-autofill {
     transform: rotate(360deg);
   }
 }
+
+.ring-progress {
+  stroke-dasharray: 440; /* محیط دایره */
+  stroke-dashoffset: 440;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0s;
+}
+
+.animate-progress {
+  animation: fillRing linear forwards;
+  animation-duration: 5s; /* مدت تایمر */
+}
+
+@keyframes fillRing {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

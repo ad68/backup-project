@@ -85,10 +85,10 @@ export const gregorianToJalaliDateTime = (value: string) => {
 export const getPersianDate = (): string => {
     moment.loadPersian({ usePersianDigits: false });
     const now = moment();
-    const weekday = now.format('dddd'); // مثلا "سه‌شنبه"
-    const day = now.format('jD');       // مثلا "13"
-    const month = now.format('jMMMM');  // مثلا "خرداد"
-    const year = now.format('jYYYY');   // مثلا "1404"
+    const weekday = now.format('dddd');
+    const day = now.format('jD');
+    const month = now.format('jMMMM');
+    const year = now.format('jYYYY');
     return `${weekday} ${day} ${month} ${year}`;
 };
 export const convertToBase64 = (file: File) => {

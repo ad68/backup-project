@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from 'react-hook-form';
@@ -13,11 +13,18 @@ const loginSchema = z.object({
     password: z.string().min(3, "کلمه عبور باید حداقل ۶ کاراکتر باشد"),
 });
 type LoginFormInputs = z.infer<typeof loginSchema>;
+
 const useLoginForm = () => {
     const navigation = useNavigate()
+    const { token } = useAuthStore()
     const login = useAuthStore((state) => state.login);
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [actionLoading, setActionLoading] = useState(false)
+    useEffect(() => {
+        if (token) {
+            navigation("/home")
+        }
+    }, [])
     const {
         control,
         handleSubmit,

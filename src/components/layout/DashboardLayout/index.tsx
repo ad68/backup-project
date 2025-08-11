@@ -6,9 +6,9 @@ export default function Index() {
     const pathname = location.pathname;
     return (
 
-        <section className={`h-full w-full max-w-7xl ${!pathname.startsWith("/technical-attachment/location-on-map") && `pb-[70px]`} m-auto`}>
+        <section className={`h-full w-full max-w-7xl ${!pathname.startsWith("/technical-attachment/location-on-map") && !pathname.startsWith("/offline/location-on-map") && `pb-[70px]`} m-auto`}>
             <Outlet />
-            {!pathname.startsWith("/technical-attachment/location-on-map") && <Footer />}
+            {!pathname.startsWith("/technical-attachment/location-on-map") && !pathname.startsWith("/offline/location-on-map") && <Footer />}
 
         </section>
     );

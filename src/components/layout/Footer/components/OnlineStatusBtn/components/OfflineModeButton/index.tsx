@@ -2,17 +2,15 @@ import { useRef, useState } from "react";
 import "./style.css";
 import { OnlineIcon } from "@/assets/icons/OnlineIcon";
 import { OfflineIcon } from "@/assets/icons/OfflineIcon";
+import { useOfflineStore } from "@/store/useOfflineStore";
 
 const CircleButton = ({
     hideModal,
-    onlineStatus,
-    setOnlineStatus,
 }: {
     hideModal: () => void;
-    onlineStatus: boolean;
-    setOnlineStatus: (value: boolean) => void;
 }) => {
     const [progress, setProgress] = useState(0);
+    const { goToOffline, isOnline, goToOnline } = useOfflineStore()
     const animationRef = useRef<number>(0);
     const startTimeRef = useRef<number>(0);
     const doneRef = useRef(false);
@@ -26,12 +24,17 @@ const CircleButton = ({
             const elapsed = time - startTimeRef.current!;
             const percent = Math.min(elapsed / duration, 1);
             setProgress(percent);
-
             if (percent < 1) {
                 animationRef.current = requestAnimationFrame(animate);
             } else if (!doneRef.current) {
                 doneRef.current = true;
-                setOnlineStatus(!onlineStatus);
+                if (isOnline) {
+                    goToOffline()
+                }
+                else {
+                    goToOnline()
+                }
+
                 hideModal();
             }
         };
@@ -45,7 +48,7 @@ const CircleButton = ({
     };
     return (
         <div
-            className={onlineStatus ? "circle-button-green" : "circle-button"}
+            className={isOnline ? "circle-button-green" : "circle-button"}
             onPointerDown={startProgress}
             onPointerUp={resetProgress}
             onPointerCancel={resetProgress}
@@ -53,19 +56,19 @@ const CircleButton = ({
             style={{ touchAction: "none" }} // جلوگیری از رفتار پیشفرض مرورگر در تاچ
         >
             <svg
-                className={onlineStatus ? "progress-ring-green" : "progress-ring"}
+                className={isOnline ? "progress-ring-green" : "progress-ring"}
                 width="150"
                 height="150"
             >
                 <circle
-                    className={onlineStatus ? "ring-bg-green" : "ring-bg"}
+                    className={isOnline ? "ring-bg-green" : "ring-bg"}
                     cx="75"
                     cy="75"
                     r={radius}
                     strokeWidth="9"
                 />
                 <circle
-                    className={onlineStatus ? "ring-progress-green" : "ring-progress"}
+                    className={isOnline ? "ring-progress-green" : "ring-progress"}
                     cx="75"
                     cy="75"
                     r={radius}
@@ -75,8 +78,8 @@ const CircleButton = ({
                     strokeLinecap="round"
                 />
             </svg>
-            <span className={`${onlineStatus ? `button-label-green` : `button-label`}`}>
-                {onlineStatus ? <OnlineIcon className="w-[80px]" /> : <OfflineIcon className="w-[80px]" />}
+            <span className={`${isOnline ? `button-label-green` : `button-label`}`}>
+                {isOnline ? <OnlineIcon className="w-[80px]" /> : <OfflineIcon className="w-[80px]" />}
             </span>
         </div>
     );

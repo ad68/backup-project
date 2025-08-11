@@ -8,16 +8,7 @@ import { useState } from "react"
 const useCard = () => {
     const { userInfo } = useAuthStore()
     const [actionLoading, setActionLoading] = useState<boolean>(false)
-    const addReviewToOfflineList = (item: any) => {
-        setActionLoading(true)
-        let params = {
-            policyId: item.policyId,
-            userName: userInfo?.username
-        }
-        useAxiosWithToken.post('/sabka/technical/annex/add/offline-list', params).then((res) => {
-            addReviewToOfflineListIndexDb(res.data)
-        }).finally(() => { setActionLoading(false) })
-    }
+
     const addReviewToOfflineListIndexDb = async (item: any) => {
         const db = await initOfflineDb()
         try {
@@ -29,6 +20,16 @@ const useCard = () => {
             console.log("errrrr", err)
             toastError("رکورد تکراری است")
         }
+    }
+    const addReviewToOfflineList = (item: any) => {
+        setActionLoading(true)
+        let params = {
+            policyId: item.policyId,
+            userName: userInfo?.username
+        }
+        useAxiosWithToken.post('/sabka/technical/annex/add/offline-list', params).then((res) => {
+            addReviewToOfflineListIndexDb(res.data)
+        }).finally(() => { setActionLoading(false) })
     }
     return {
         addReviewToOfflineList,
