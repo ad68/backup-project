@@ -1,87 +1,51 @@
-import { useRef, useState } from "react";
 import "./style.css";
 import { OnlineIcon } from "@/assets/icons/OnlineIcon";
 import { OfflineIcon } from "@/assets/icons/OfflineIcon";
 import { useOfflineStore } from "@/store/useOfflineStore";
-
+import { useState } from "react";
 const CircleButton = ({
     hideModal,
 }: {
     hideModal: () => void;
 }) => {
-    const [progress, setProgress] = useState(0);
     const { goToOffline, isOnline, goToOnline } = useOfflineStore()
-    const animationRef = useRef<number>(0);
-    const startTimeRef = useRef<number>(0);
-    const doneRef = useRef(false);
-    const radius = 70;
-    const circumference = 2 * Math.PI * radius;
-    const duration = 5000;
-    const startProgress = () => {
-        startTimeRef.current = performance.now();
-        doneRef.current = false;
-        const animate = (time: number) => {
-            const elapsed = time - startTimeRef.current!;
-            const percent = Math.min(elapsed / duration, 1);
-            setProgress(percent);
-            if (percent < 1) {
-                animationRef.current = requestAnimationFrame(animate);
-            } else if (!doneRef.current) {
-                doneRef.current = true;
-                if (isOnline) {
-                    goToOffline()
-                }
-                else {
-                    goToOnline()
-                }
-
-                hideModal();
-            }
-        };
-
-        animationRef.current = requestAnimationFrame(animate);
-    };
-    const resetProgress = () => {
-        cancelAnimationFrame(animationRef.current!);
-        setProgress(0);
-        doneRef.current = false;
-    };
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState<boolean>(false)
+    const changeOnlineMode = () => {
+        if (isOnline) {
+            goToOffline()
+            showSuccessNotify()
+            setTimeout(() => {
+                hideModal()
+            }, 2000);
+            /* hideModal() */
+        }
+        else {
+            goToOnline()
+            showSuccessNotify()
+            setTimeout(() => {
+                hideModal()
+            }, 2000);
+            /* hideModal() */
+        }
+    }
+    const showSuccessNotify = () => {
+        setIsSuccessModalOpen(true)
+    }
     return (
-        <div
-            className={isOnline ? "circle-button-green" : "circle-button"}
-            onPointerDown={startProgress}
-            onPointerUp={resetProgress}
-            onPointerCancel={resetProgress}
-            onPointerLeave={resetProgress}
-            style={{ touchAction: "none" }} // جلوگیری از رفتار پیشفرض مرورگر در تاچ
-        >
-            <svg
-                className={isOnline ? "progress-ring-green" : "progress-ring"}
-                width="150"
-                height="150"
+        <>
+            <div
+                onClick={() => { changeOnlineMode() }}
+                className={`${isOnline ? `bg-primary border-green-600` : `bg-offline  border-offline-600`} w-[150px] shadow-2xl border-[8px] h-[150px] rounded-full flex justify-center items-center`}
             >
-                <circle
-                    className={isOnline ? "ring-bg-green" : "ring-bg"}
-                    cx="75"
-                    cy="75"
-                    r={radius}
-                    strokeWidth="9"
-                />
-                <circle
-                    className={isOnline ? "ring-progress-green" : "ring-progress"}
-                    cx="75"
-                    cy="75"
-                    r={radius}
-                    strokeWidth="9"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={circumference * (1 - progress)}
-                    strokeLinecap="round"
-                />
-            </svg>
-            <span className={`${isOnline ? `button-label-green` : `button-label`}`}>
-                {isOnline ? <OnlineIcon className="w-[80px]" /> : <OfflineIcon className="w-[80px]" />}
-            </span>
-        </div>
+                <span>
+                    {isOnline ? <OnlineIcon className="w-[80px] text-white" /> : <OfflineIcon className="w-[80px] text-white" />}
+                </span>
+            </div>
+            <div className={`fixed w-[90%] rounded-2xl h-[80%] flex justify-center items-center text-white text-2xl ${isOnline ? "bg-primary" : "bg-red-500"}  ${isSuccessModalOpen ? `top-[10%]` : `top-[-80%]`} transition-all duration-300 ease-in-out z-50`}>
+                شما وارد حالت {isOnline ? "آنلاین" : "آفلاین"} شدید
+            </div>
+        </>
+
     );
 };
 
