@@ -52,7 +52,7 @@ export default function UpdatePwaModal({ onConfirm }: { onConfirm: () => void })
                     نسخه 1.1.5
                 </span>
                 <ul className="list-disc text-xs pr-10 leading-6">
-                    <li>نمایش پیام در زمان موفق بودن تقسیم قلم</li>
+                    <li>رفع ایرادات جزیی بخش تقسیم قلم و اطلاعات شخصی</li>
                 </ul>
                 <div className="px-5 flex w-full mt-10">
                     <CustomButton onClick={onConfirm} className="w-full">به روز رسانی</CustomButton>
