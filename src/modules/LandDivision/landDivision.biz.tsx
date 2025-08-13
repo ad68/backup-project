@@ -1,11 +1,12 @@
 
+import { toastSuccess } from "@/components/kit/toast";
 import { validationMessages } from "@/constants/validationMessages";
 import { useAxiosWithToken } from "@/hooks";
 import { JSONStringToObject, shamsiToMiladi } from "@/utils/global";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { z } from "zod";
 const schema = z.object({
     F125: z.coerce.number({ required_error: validationMessages.required, invalid_type_error: "این فیلد باید عدد باشد" }).min(1, validationMessages.minLength(1)), /* شماره قطعه */
@@ -26,6 +27,7 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 const useLandDivision = () => {
+    const navigation = useNavigate()
     const {
         control,
         handleSubmit,
@@ -114,10 +116,14 @@ const useLandDivision = () => {
             subjectItemId: subjectItemId,
             newInsured: data.newInsured,
             reason: data.reason,
-
+            isTest: true,
             newExtraInfo: `${JSON.stringify(removeKeys(data, "newInsured", "reason"))}`
         }
-        useAxiosWithToken.post("/sabka/technical/annex/add/split-subject-item", params).then().finally(() => setActionLoading(false))
+        useAxiosWithToken.post("/sabka/technical/annex/add/split-subject-item", params).then(() => {
+            toastSuccess("تقسیم قلم با موفقیت انجام شد.")
+            navigation(-1)
+
+        }).finally(() => setActionLoading(false))
     };
     return {
         isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isInfoModalOpen, setIsInfoModalOpen, ownerShipsOptions,
