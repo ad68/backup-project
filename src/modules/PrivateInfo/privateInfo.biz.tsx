@@ -1,11 +1,12 @@
 
+import { toastSuccess } from "@/components/kit/toast";
 import { validationMessages } from "@/constants/validationMessages";
 import { useAxiosWithToken } from "@/hooks";
 import { convertToJSONStringWithEscapes, JSONStringToObject, shamsiToMiladi } from "@/utils/global";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { z } from "zod";
 const schema = z.object({
     F125: z.coerce.number({ required_error: validationMessages.required, invalid_type_error: "این فیلد باید عدد باشد" }).min(1, validationMessages.minLength(1)), /* شماره قطعه */
@@ -24,6 +25,7 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 const usePrivateInfo = () => {
+    const navigation = useNavigate()
     const {
         control,
         handleSubmit,
@@ -87,7 +89,7 @@ const usePrivateInfo = () => {
                     F128: formValue?.F128,
                     F129: formValue?.F129,
                     F131: formValue?.F131,
-                    F132: new Date(formValue?.F132),
+                    F132: formValue?.F132 ? new Date(formValue?.F132) : new Date(),
                     F150: ownerShipsOptions.find(el => el.value === formValue?.F150)?.value,
                     F134: waterResourceOptions.find(el => el.value === formValue?.F134)?.value,
                     F2941: irrigationSystemOptions.find(el => el.value === formValue?.F2941)?.value,
@@ -108,10 +110,12 @@ const usePrivateInfo = () => {
             policyId: policyId,
             subjectItemId: subjectItemId,
             subjectId: subjectId,
-
             extraInfo: `${JSON.stringify(data)}`
         }
-        useAxiosWithToken.post("/sabka/technical/annex/add/fix-extra-info", params).then().finally(() => { setActionLoading(false) })
+        useAxiosWithToken.post("/sabka/technical/annex/add/fix-extra-info", params).then(() => {
+            toastSuccess("تقسیم قلم با موفقیت انجام شد.")
+            navigation(-1)
+        }).finally(() => { setActionLoading(false) })
     };
 
     return {

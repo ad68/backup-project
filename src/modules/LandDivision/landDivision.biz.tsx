@@ -97,7 +97,7 @@ const useLandDivision = () => {
                     F128: formValue?.F128,
                     F129: formValue?.F129,
                     F131: formValue?.F131,
-                    F132: new Date(formValue?.F132),
+                    F132: formValue?.F132 ? new Date(formValue?.F132) : new Date(),
                     F150: ownerShipsOptions.find(el => el.value === formValue?.F150)?.value,
                     F134: waterResourceOptions.find(el => el.value === formValue?.F134)?.value,
                     F2941: irrigationSystemOptions.find(el => el.value === formValue?.F2941)?.value,
