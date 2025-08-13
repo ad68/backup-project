@@ -92,7 +92,7 @@ const useLandDivision = () => {
     const getById = async () => {
         const db = await initOfflineDb();
         const review: OfflineReview = await getRecordById(db, STORES.Reviews, id ? Number(id) : 0);
-        setPolicyList(review.locateReviews[0].policyList[0].policyItemList)
+        setPolicyList(review.locateReviews.policy.policyItems)
         console.log(review)
         setCurrentReview(review)
     }
@@ -190,7 +190,7 @@ const useLandDivision = () => {
         let currentRecord = currentReview;
         arr.push(params)
         if (currentRecord) {
-            currentRecord.locateReviews[0].policyList[0].policyItemList = arr
+            currentRecord.locateReviews.policy.policyItems = arr
             console.log("currentRecord", currentRecord)
         }
 

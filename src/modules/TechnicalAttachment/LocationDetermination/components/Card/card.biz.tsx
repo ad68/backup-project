@@ -3,17 +3,20 @@ import { STORES } from "@/constants/dbEnums"
 import { useAxiosWithToken } from "@/hooks"
 import { addRecordToDb, initOfflineDb } from "@/lib/indexdb"
 import { useAuthStore } from "@/store/authStore"
+
 import { useState } from "react"
+
 
 const useCard = () => {
     const { userInfo } = useAuthStore()
     const [actionLoading, setActionLoading] = useState<boolean>(false)
-
-    const addReviewToOfflineListIndexDb = async (item: any) => {
+    const addReviewToOfflineListIndexDb = async (items: any) => {
         const db = await initOfflineDb()
+        await db.clear(String(STORES.Reviews))
         try {
-            await addRecordToDb(db, STORES.Reviews, item);
-            /*  toastSuccess(`ID کاربر جدید: ${newUserId}`) */
+            for (const item of items) {
+                await addRecordToDb(db, STORES.Reviews, item);
+            }
             toastSuccess('با موفقیت به لیست آفلاین افزوده شد')
         }
         catch (err: unknown) {

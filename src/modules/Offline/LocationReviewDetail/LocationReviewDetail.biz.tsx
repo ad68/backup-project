@@ -10,13 +10,11 @@ const useLocationReviewDetail = () => {
     const getById = async () => {
         const db = await initOfflineDb();
         const Review: OfflineReview = await getRecordById(db, STORES.Reviews, id ? Number(id) : 0);
-        setPolicyList(Review.locateReviews[0].policyList[0].policyItemList)
-        console.log(Review)
+        setPolicyList(Review.locateReviews.policy.policyItems)
+        /* console.log("Review", Review.locateReviews.policy.policyItems) */
     }
     useEffect(() => {
-
         getById()
-
     }, [])
     useEffect(() => {
         console.log(policyList)

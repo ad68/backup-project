@@ -13,7 +13,7 @@ import { useAxiosWithToken } from "@/hooks";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toastSuccess } from "@/components/kit/toast";
 
-// ====== اینجا CachedTileLayer رو اضافه کن ======
+
 import { getTile, saveTile } from '@/utils/tileCache';
 
 const CachedTileLayer = L.TileLayer.extend({
@@ -95,8 +95,6 @@ export default function Index({
                 16
             );
             mapRefInstance.current = map;
-
-            // استفاده از CachedTileLayer به جای tileLayer عادی
             const baseLayer = new (CachedTileLayer as any)("https://map.optimoai.ir/wmts/gm_layer/gm_grid/{z}/{x}/{y}.png", {
                 maxZoom: 20,
                 subdomains: "0123",
@@ -124,10 +122,8 @@ export default function Index({
                     featureGroup: drawnItemsRef.current,
                 },
             });
-
             drawControlRef.current = drawControl;
             map.addControl(drawControl);
-
             map.on("draw:drawvertex", () => {
                 if (!drawControlRef.current) return;
                 const polygonHandler = (drawControlRef.current as any)._toolbars.draw._modes.polygon.handler;
