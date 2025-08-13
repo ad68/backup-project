@@ -64,7 +64,7 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat: strin
                         </PopoverTrigger>
                         <PopoverContent>
                             <section className="flex gap-2">
-                                <Link to={`/land-division??reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&rawExtraInfo=${item?.rawExtraInfo}`}>
+                                <Link to={`/land-division?reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&rawExtraInfo=${item?.rawExtraInfo}`}>
                                     <button className="text-[10px] bg-white p-2 rounded-lg border border-blue-500 font-light text-blue-500">تقسیم قلم بیمه شده</button>
                                 </Link>
                                 <Link to={`/private-info?reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&rawExtraInfo=${item?.rawExtraInfo}&subjectId=${subjectId}`}>
