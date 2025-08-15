@@ -1,14 +1,14 @@
-import { useAxiosWithToken } from "@/hooks"
-import { getExtensionFromFileName } from "@/utils/global"
+import { formDataToObject, getExtensionFromFileName } from "@/utils/global"
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toastSuccess } from "@/components/kit/toast";
+import { toastError, toastSuccess } from "@/components/kit/toast";
+import { addRecordToDb, initOfflineDb } from "@/lib/indexdb";
+import { STORES } from "@/constants/dbEnums";
 const schema = z.object({
     title: z.string().min(1, 'عنوان الزامی است'),
-
     document: z
         .custom<FileList>()
         .refine((files) => files && files.length > 0, 'انتخاب فایل الزامی است'),
@@ -29,34 +29,33 @@ const useAddDocumentModal = (setIsAddDocumentModal: (value: boolean) => void, ge
     const [searchParams] = useSearchParams()
     const reviewId = searchParams.get("reviewId")
     const subjectId = searchParams.get("subjectId")
-    const [actionLoading, setActionLoading] = useState<boolean>(false)
+
     const onSubmit = async (data: FormData) => {
         const file = data.document[0];
         if (!file) return;
-
         const extension = getExtensionFromFileName(file.name);
         console.log("extension", extension)
         let formData = new FormData()
         formData.append('reviewId', reviewId ? reviewId : "")
         formData.append('subjectId', subjectId ? subjectId : "")
+        formData.append('status', "ready")
         formData.append('title', data.title)
         formData.append('name', data.title + "." + extension)
         formData.append('file', file)
-        setActionLoading(true)
-
-        useAxiosWithToken.post("/sabka/technical/annex/add/subject-file", formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-        })
-            .then(() => {
-                toastSuccess("سند شما با موفقیت بارگذاری شد")
-                getFileList()
-                setIsAddDocumentModal(false)
-            }
-            )
-            .finally(() => setActionLoading(false))
+        console.log(formData)
+        console.log("object", formDataToObject(formData))
+        const db = await initOfflineDb()
+        try {
+            await addRecordToDb(db, STORES.Documents, formDataToObject(formData));
+            toastSuccess("با موفقیت ذخیره شد")
+            setIsAddDocumentModal(false)
+        }
+        catch (err: unknown) {
+            console.log(err)
+            toastError("خطا در ذخیره اطلاعات")
+        }
     };
     return {
-        actionLoading,
         onSubmit,
         control,
         handleSubmit,

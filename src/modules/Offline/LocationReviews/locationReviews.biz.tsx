@@ -1,7 +1,8 @@
 import { STORES } from "@/constants/dbEnums";
-import { getAllRecord, initOfflineDb } from "@/lib/indexdb";
+import { clearAndUpdateReviewStore, getAllRecord, initOfflineDb } from "@/lib/indexdb";
 import { useEffect, useState } from "react";
 import type { OfflineReview } from "./locationReviews.types";
+import { useAxios } from "@/hooks";
 
 const useLocationReviews = () => {
     const [list, setList] = useState<Array<OfflineReview>>([])
@@ -14,17 +15,23 @@ const useLocationReviews = () => {
         }
         catch (err: unknown) {
             console.log(err)
-
         }
+    }
+    const syncData = () => {
+        let data = [...list]
+        useAxios.post("/sabka/technical/annex/sync/offline-annexes", data).then(async (res) => {
+            await clearAndUpdateReviewStore(res.data)
+            getAllData()
+
+        }).finally()
     }
     useEffect(() => {
         getAllData()
     }, [])
-    useEffect(() => {
-        console.log("list", list)
-    }, [list])
+
     return {
-        list
+        list,
+        syncData
     }
 }
 export default useLocationReviews

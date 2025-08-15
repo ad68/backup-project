@@ -9,13 +9,13 @@ import { CheckIcon, DeleteIcon, Edit2Icon, LocateFixed, MapPinPlus, RocketIcon, 
 import type { AddPolyGonProp } from "./addPolygon.types";
 import CustomButton from "@/components/kit/CustomButton";
 import { WKTToPolygon } from "@/utils/global";
-import { useAxiosWithToken } from "@/hooks";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { toastSuccess } from "@/components/kit/toast";
-
-
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getTile, saveTile } from '@/utils/tileCache';
-
+import { getRecordById, initOfflineDb, updateRecordInDb } from "@/lib/indexdb";
+import type { OfflineReview } from "../../LocationReviews/locationReviews.types";
+import { STORES } from "@/constants/dbEnums";
+import { toastSuccess } from "@/components/kit/toast";
+import { useAuthStore } from "@/store/authStore";
 const CachedTileLayer = L.TileLayer.extend({
     createTile: function (coords: any, done: any) {
         const tile = document.createElement('img');
@@ -62,16 +62,17 @@ const CachedTileLayer = L.TileLayer.extend({
         return tile;
     },
 });
-
 export default function Index({
     defaultPolygon,
     farmLat,
     farmLng,
 }: AddPolyGonProp) {
     const [searchParams] = useSearchParams()
-    const subjectItemId = searchParams.get("subjectItemId")
-    const policyId = searchParams.get("policyId")
-    const reviewId = searchParams.get("reviewId")
+    const { token } = useAuthStore()
+    const { id } = useParams()
+    const virtualId = searchParams.get("virtualId")
+    const [policyList, setPolicyList] = useState<Array<any>>([])
+    const [currentReview, setCurrentReview] = useState<OfflineReview>()
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapRefInstance = useRef<L.Map | null>(null);
     const drawnItemsRef = useRef<L.FeatureGroup>(new L.FeatureGroup());
@@ -81,7 +82,7 @@ export default function Index({
     const [isStartDrawing, setIsStartDrawing] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [geoInWkt, setGeoInWkt] = useState<string>()
-    const [actionLoading, setActionLoading] = useState(false)
+
     const [hectares, setHectares] = useState<string>('0')
     const [meter, setMeter] = useState<string>('0')
     const navigate = useNavigate()
@@ -167,6 +168,7 @@ export default function Index({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+
     const updatePolygonState = () => {
         const polygons: L.LatLng[][] = [];
         drawnItemsRef.current.eachLayer((layer: any) => {
@@ -232,19 +234,29 @@ export default function Index({
         polygonHandler.enable();
         setIsStartDrawing(true);
     };
-    const locateSubjectItem = () => {
-        setActionLoading(true)
-        const params = {
-            reviewId: reviewId && parseInt(reviewId),
-            policyId: policyId && parseInt(policyId),
-            subjectItemId: subjectItemId && parseInt(subjectItemId),
-            subjectNotExist: false,
-            geoInWkt: geoInWkt,
+    const getById = async () => {
+        const db = await initOfflineDb();
+        const review: OfflineReview = await getRecordById(db, STORES.Reviews, id ? Number(id) : 0);
+        setPolicyList(review.locateReviews.policy.policyItems)
+        console.log(review)
+        setCurrentReview(review)
+    }
+    const locateSubjectItem = async () => {
+        let arr = [...policyList]
+        const recordIndex = arr.findIndex(el => el.virtualId === virtualId);
+        arr[recordIndex].wkt = geoInWkt
+        let currentRecord = currentReview;
+        if (currentRecord) {
+            currentRecord.token = token
+            currentRecord.locateReviews.policy.policyItems = arr
+            console.log("currentRecord", currentRecord)
         }
-        useAxiosWithToken.post("/sabka/technical/annex/add/locate-subject-item", params).then(() => {
-            toastSuccess("با موفقیت ذخیره شد")
-            navigate(-1)
-        }).finally(() => { setActionLoading(false) })
+        const db = await initOfflineDb();
+        const task = await updateRecordInDb(db, STORES.Reviews, currentRecord);
+        console.log(task)
+        toastSuccess("مکان با موفقیت ثبت شد")
+        navigate(-1)
+
     }
     const deleteAll = () => {
         drawnItemsRef.current.clearLayers();
@@ -295,15 +307,23 @@ export default function Index({
         );
     };
     useEffect(() => {
-        // هر زمان polygonsState تغییر کرد میتونی اینجا کار کنی
+        // polygon state
     }, [polygonsState]);
     useEffect(() => {
-        console.log("geooInnnnn", geoInWkt)
+        console.log("geoInnnnn", geoInWkt)
     }, [geoInWkt])
     useEffect(() => {
         console.log("isDrawingPolygon", isStartDrawing)
     }, [isStartDrawing])
-
+    useEffect(() => {
+        getById()
+    }, [])
+    useEffect(() => {
+        console.log('currentReview', currentReview)
+    }, [currentReview])
+    useEffect(() => {
+        console.log('policyList', policyList)
+    }, [policyList])
     return (
         <section className="relative z-[1001]  w-full h-full" >
             <section ref={mapRef} className="h-[100%]  w-full gap-1" />
@@ -387,7 +407,7 @@ export default function Index({
                     </CustomButton>
                     {hasPolygon && !isEditing && (
                         <CustomButton
-                            loading={actionLoading}
+
                             className="rounded-full"
                             onClick={() => locateSubjectItem()}
                         >
@@ -400,3 +420,8 @@ export default function Index({
         </section>
     );
 }
+
+
+
+
+

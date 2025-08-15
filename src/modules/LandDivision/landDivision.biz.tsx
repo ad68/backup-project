@@ -1,4 +1,5 @@
 
+import { isDev } from "@/config/env";
 import { validationMessages } from "@/constants/validationMessages";
 import { useAxiosWithToken } from "@/hooks";
 import { JSONStringToObject, shamsiToMiladi } from "@/utils/global";
@@ -114,7 +115,7 @@ const useLandDivision = () => {
             subjectItemId: subjectItemId,
             newInsured: data.newInsured,
             reason: data.reason,
-
+            isTest: isDev,
             newExtraInfo: `${JSON.stringify(removeKeys(data, "newInsured", "reason"))}`
         }
         useAxiosWithToken.post("/sabka/technical/annex/add/split-subject-item", params).then().finally(() => setActionLoading(false))

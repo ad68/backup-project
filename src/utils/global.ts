@@ -215,3 +215,62 @@ export const polygonToWKT = (polygon: [number, number][]): string => {
 
     return `POLYGON ((${coordinates}))`;
 };
+export const downloadBase64FromApi = async (item: any, base64: string) => {
+    const mimeType = `application/${item.extension.replace(".", "")}`;
+    const byteCharacters = atob(base64);
+    const byteArray = new Uint8Array([...byteCharacters].map(c => c.charCodeAt(0)));
+    const blob = new Blob([byteArray], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = item?.name;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+};
+
+export function formDataToObject(formData: FormData): Record<string, any> {
+    const obj: Record<string, any> = {};
+    formData.forEach((value, key) => {
+
+        if (obj[key]) {
+            if (Array.isArray(obj[key])) {
+                obj[key].push(value);
+            } else {
+                obj[key] = [obj[key], value];
+            }
+        } else {
+            obj[key] = value;
+        }
+    });
+    return obj;
+}
+
+export function objectToFormData(obj: Record<string, any>): FormData {
+    const formData = new FormData();
+
+    for (const key in obj) {
+        if (Array.isArray(obj[key])) {
+            obj[key].forEach((value: any) => formData.append(key, value));
+        } else {
+            formData.append(key, obj[key]);
+        }
+    }
+
+    return formData;
+}
+
+export function base64ToFile(base64String: string, fileName: string): File {
+    const arr = base64String.split(',');
+    const mime = arr[0].match(/:(.*?);/)![1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], fileName, { type: mime });
+}

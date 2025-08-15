@@ -1,17 +1,26 @@
-type PolicyItem = {
-    policyItemId: number;
+export type PolicyItem = {
+    policyItemId: number | null;
     subjectItemId: number;
     property01: string | null;
     property02: string | null;
     property03: string | null;
     property04: string | null;
+    errorDesc: string | null;
     tag: string | null;
-    rawExtraInfo: string;
+    id: number | null
+    edited: boolean,
+    rawExtraInfo: string | null;
+    newExtraInfo: string | null;
+    newInsured: number;
+    reason: string | null | undefined,
+    subjectNotExist: boolean | null
     extraInfo: string;
     insured: number;
     actual: number | null;
     note: string;
     featureId: number | null;
+    virtualId: string | null,
+    wkt: string | null
 };
 type Policy = {
     id: number;
@@ -35,7 +44,7 @@ type Branch = {
     title: string;
 };
 
-type PlaceModel = {
+export type PlaceModel = {
     title: string;
     latitude: number;
     longitude: number;
@@ -60,6 +69,8 @@ export type OfflineReview = {
     locateReviews: LocateReview;
     caseStatus: string;
     visible: boolean;
+    edited: boolean,
+    token: string | null
     createdBy: string | null;
     createdOn: string;
     modifiedBy: string | null;

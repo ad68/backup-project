@@ -35,6 +35,9 @@ import LocationReviews from '../modules/Offline/LocationReviews'
 import LocationReviewDetail from '../modules/Offline/LocationReviewDetail'
 import OfflineLandDivision from '../modules/Offline/LandDivision'
 import LocationOnMapOffline from '../modules/Offline/LocationOnMap'
+import DocumentUpload from '../modules/Offline/DocumentUpload'
+import Plimit from '../modules/Offline/Plimit'
+import LocationDeterminationTypeOffline from '../modules/Offline/LocationDeterminationType'
 import Rules from '@/modules/rules'
 /* import GoogleMap from '@/modules/GoogleMap' */
 import { useEffect } from "react";
@@ -63,13 +66,7 @@ export default function Index() {
         { path: "previous-actions", element: <PreviousActions /> },
         { path: "search", element: <Search /> },
     ];
-    const OfflineRoutes = [
-        { path: "locate-reviews", element: <LocationReviews /> },
-        { path: "locate-reviews/:id", element: <LocationReviewDetail /> },
-        { path: "land-division/:id", element: <OfflineLandDivision /> },
-        { path: "location-on-map", element: <LocationOnMapOffline /> },
 
-    ];
     const PhenologyMonitoringRoutes = [
         { path: "home", element: <PhenologyMonitoring /> },
         { path: "cases", element: <PhenologyMonitoringCases /> },
@@ -86,6 +83,15 @@ export default function Index() {
     const dashboardLayoutRoutes = [
         { path: "/home", element: <Home /> },
         { path: "/technical-attachment", element: <TechnicalAttachment /> },
+    ];
+    const OfflineRoutes = [
+        { path: "locate-reviews", element: <LocationReviews /> },
+        { path: "locate-reviews/:id", element: <LocationReviewDetail /> },
+        { path: "land-division/:id", element: <OfflineLandDivision /> },
+        { path: "location-on-map/:id", element: <LocationOnMapOffline /> },
+        { path: "Plimit", element: <Plimit /> },
+        { path: "location-determination-type/:id", element: <LocationDeterminationTypeOffline /> },
+        { path: "document-upload", element: <DocumentUpload /> },
     ];
     return <Routes>
         <Route path="/" element={<Login />} />
@@ -116,15 +122,7 @@ export default function Index() {
                 />
             ))}
         </Route>
-        <Route path="offline" element={<DashboardLayout />}>
-            {OfflineRoutes.map(({ path, element }) => (
-                <Route
-                    key={path}
-                    path={path}
-                    element={<ProtectedRoute>{element}</ProtectedRoute>}
-                />
-            ))}
-        </Route>
+
         <Route path="technical-attachment" element={<DashboardLayout />}>
             {TechnicalAttachmentRoutes.map(({ path, element }) => (
                 <Route
@@ -143,8 +141,17 @@ export default function Index() {
                 />
             ))}
         </Route>
-
+        <Route path="offline" element={<DashboardLayout />}>
+            {OfflineRoutes.map(({ path, element }) => (
+                <Route
+                    key={path}
+                    path={path}
+                    element={<ProtectedRoute>{element}</ProtectedRoute>}
+                />
+            ))}
+        </Route>
         <Route path="/index-db" element={<Indexdb />} />
+
         {/*  <Route path="screen-shot" element={<ScreenShot />} />
         <Route path="webcam" element={<Webcam />} />
         <Route path="google-map" element={<GoogleMap />} /> */}

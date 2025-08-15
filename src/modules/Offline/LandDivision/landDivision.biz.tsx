@@ -5,9 +5,11 @@ import { JSONStringToObject, shamsiToMiladi } from "@/utils/global";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { nanoid } from 'nanoid';
+
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { z } from "zod";
-import type { OfflineReview } from "../LocationReviews/locationReviews.types";
+import type { OfflineReview, PolicyItem } from "../LocationReviews/locationReviews.types";
 import { STORES } from "@/constants/dbEnums";
 const schema = z.object({
     F125: z.coerce.number({ required_error: validationMessages.required, invalid_type_error: "این فیلد باید عدد باشد" }).min(1, validationMessages.minLength(1)), /* شماره قطعه */
@@ -56,6 +58,7 @@ const useLandDivision = () => {
     });
     const { id } = useParams()
     const [policyList, setPolicyList] = useState<Array<any>>([])
+
     const [searchParams] = useSearchParams();
     const rawExtraInfo = searchParams.get("rawExtraInfo")
     const subjectItemId = searchParams.get("subjectItemId")
@@ -109,7 +112,7 @@ const useLandDivision = () => {
                     F128: formValue?.F128,
                     F129: formValue?.F129,
                     F131: formValue?.F131,
-                    F132: new Date(formValue?.F132),
+                    F132: formValue?.F132 ? new Date(formValue?.F132) : new Date(),
                     F150: ownerShipsOptions.find(el => el.value === formValue?.F150)?.value,
                     F134: waterResourceOptions.find(el => el.value === formValue?.F134)?.value,
                     F2941: irrigationSystemOptions.find(el => el.value === formValue?.F2941)?.value,
@@ -148,7 +151,6 @@ const useLandDivision = () => {
         };
         function toJalali(isoDate: any) {
             const date = new Date(isoDate);
-
             return date.toLocaleDateString('fa-IR').replace(/-/g, '/');
         }
 
@@ -166,9 +168,6 @@ const useLandDivision = () => {
             `سیستم آبیاری: ${irrigationMap[data.F2941] || data.F2941}, ` +
             `درصد سبز شدن: ${data.F2942} درصد`;
     }
-
-
-
     const onSubmit = async (data: FormData) => {
         if (data.F132) {
             data.F132 = shamsiToMiladi(data.F132) + "T00:00:00"
@@ -176,20 +175,37 @@ const useLandDivision = () => {
         setActionLoading(true)
         let arr = [...policyList]
         const prevRecord = arr.find(el => el.policyItemId === Number(policyItemId));
-        const params = {
-            insured: prevRecord.insured,
-            actual: data.newInsured,
-            subjectItemId: subjectItemId,
-            property02: prevRecord.property02,
-            newInsured: data.newInsured,
-            reason: data.reason,
+        const newId = nanoid()
+        const params: PolicyItem = {
+            actual: prevRecord.actual,
+            edited: true,
+            errorDesc: null,
             extraInfo: generateExtraInfo(data),
-            rawExtraInfo: `${JSON.stringify(removeKeys(data, "newInsured", "reason"))}`,
-            offlineDivide: true
+            featureId: prevRecord.featureId,
+            id: null,
+            virtualId: newId,
+            insured: prevRecord.insured,
+            newExtraInfo: `${JSON.stringify(removeKeys(data, "newInsured", "reason"))}`,
+            newInsured: data.newInsured,
+            note: prevRecord.note,
+            policyItemId: null,
+            property01: prevRecord.property01,
+            property02: prevRecord.property02,
+            property03: prevRecord.property03,
+            property04: prevRecord.property04,
+            rawExtraInfo: null,
+            reason: data.reason,
+            subjectItemId: Number(subjectItemId),
+            subjectNotExist: false,
+            tag: null,
+            wkt: null,
         }
+        console.log('params', params)
+        console.log('prevRecord', prevRecord)
         let currentRecord = currentReview;
         arr.push(params)
         if (currentRecord) {
+            currentRecord.edited = true;
             currentRecord.locateReviews.policy.policyItems = arr
             console.log("currentRecord", currentRecord)
         }

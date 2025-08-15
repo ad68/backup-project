@@ -1,7 +1,7 @@
 
 import type { PolicyItem } from "@/modules/InsuranceDetail/insuranceDetail.types";
 import { ChevronDown, ChevronUp, MoreVertical } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import {
     Popover,
@@ -16,12 +16,16 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat?: stri
     const subjectId = searchParams.get("subjectId")
     const policyId = searchParams.get("policyId")
     const farmerName = searchParams.get("farmerName")
+    useEffect(() => {
+        console.log("item", item)
+    }, [item])
     return <section className="p-2">
-        <section className={`border border-1 relative flex flex-col gap-4 ${item.offlineDivide ? "border-red-600" : "border-slate-100"}  bg-white relative  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[160px]`} shadow-lg`}>
-            {item.offlineDivide && <div className="bg-red-500 text-white  w-[50%] left-[25%] absolute top-[-10px] text-sm px-4 flex justify-center rounded-3xl">
+        <section className={`border border-1 relative flex flex-col gap-4 ${item.edited ? "border-slate-600" : "border-slate-100"}  bg-white relative  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[160px]`} shadow-lg`}>
+            {item.edited && <div className="bg-slate-500 text-white  w-[50%] left-[25%] absolute top-[-10px] text-sm px-4 flex justify-center rounded-3xl">
                 آفلاین
             </div>}
-            {!item.offlineDivide && <section className="flex justify-between w-full">
+
+            {!item.edited && <section className="flex justify-between w-full">
                 <section className="flex gap-1">
                     <span className="font-light text-slate-500 text-sm">قلم بیمه‌شده:</span>
                     <span className="text-sm">{item.policyItemId}</span>
@@ -32,7 +36,7 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat?: stri
                 </section>
             </section>}
 
-            <section className={`flex justify-between w-full ${item.offlineDivide && `mt-5`}`}>
+            <section className={`flex justify-between w-full ${item.edited && `mt-5`}`}>
                 <section className="flex gap-1">
                     <span className="font-light text-slate-500 text-sm">مساحت بیمه شده:</span>
                     <span className="text-sm">{item.insured} هکتار</span>
@@ -54,7 +58,7 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat?: stri
             {isOpenDtl && <> <span className="w-full block bg-slate-200 h-[1px]"></span>
                 <section className="flex justify-between w-full">
                     <section className="flex flex-col gap-1">
-                        <span className="font-light text-slate-500 text-sm">مشخصات اختصاصی:</span>
+                        <span className="font-light text-slate-500">مشخصات اختصاصی:</span>
                         <span className="text-sm">
                             {item?.extraInfo}
                         </span>
@@ -72,7 +76,7 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat?: stri
                         </PopoverTrigger>
                         <PopoverContent>
                             <section className="flex gap-1">
-                                {!item.offlineDivide && <Link to={`/offline/land-division/${id}?policyItemId=${item.policyItemId}&reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&rawExtraInfo=${item?.rawExtraInfo}`}>
+                                {!item.edited && !item.wkt && <Link to={`/offline/land-division/${id}?policyItemId=${item.policyItemId}&reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&rawExtraInfo=${item?.rawExtraInfo}`}>
                                     <button className="text-[10px] bg-blue-500 p-2 rounded-lg border border-blue-500 font-light text-white">تقسیم قلم بیمه شده</button>
                                 </Link>}
 
@@ -83,13 +87,13 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat?: stri
                         </PopoverContent>
                     </Popover>
 
-                    {!item.featureId && <Link to={`/technical-attachment/location-determination-type?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}`}>
+                    {!item.wkt && <Link to={`/offline/location-determination-type/${id}?virtualId=${item.virtualId}&reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}&wkt=${item.wkt}`}>
                         <button className="border w-[90px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
                             <span className="font-light text-sm">تعیین مکان</span>
                         </button>
                     </Link>}
 
-                    {item.featureId && <Link to={`/technical-attachment/location-on-map?reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}`}> <button className="border w-[110px] bg-orange-500 border-orange-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
+                    {item.wkt && <Link to={`/offline/location-on-map/${id}?virtualId=${item.virtualId}&reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}&wkt=${item.wkt}`}> <button className="border w-[110px] bg-orange-500 border-orange-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
                         <span className="font-light text-sm">ویرایش مکان</span>
                     </button></Link>}
                 </section>
@@ -97,6 +101,11 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat?: stri
                     {isOpenDtl ? <ChevronUp color="white" className="w-[20px]" /> : <ChevronDown color="white" className="w-[20px]" />}
                 </button>
             </footer>
+            {item.errorDesc ?
+                <div className="bg-red-600 w-[90%] left-[5%] text-center absolute bottom-[-25px] text-white rounded-b-full">{item.errorDesc}</div> :
+                (item.virtualId && !item.wkt) ? <div className="bg-red-600 w-[90%] left-[5%] text-center absolute bottom-[-25px] text-white rounded-b-full">تعیین مکان شود</div> : ""}
+
         </section>
+
     </section>
 }

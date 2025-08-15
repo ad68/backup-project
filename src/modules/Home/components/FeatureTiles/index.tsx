@@ -20,6 +20,8 @@ export default function Index() {
             </section>}
             {!isOnline && <section className="grid grid-cols-2 md:grid-cols-3 gap-5">
                 <Tile offline link="/offline/locate-reviews" iconBgColor='bg-[#effff2]' borderColorClass={'border-primary'} title="پیوست فنی" image={<AttachIcon className="text-primary stroke-primary w-[25px]" />} />
+                <Tile offline link="/offline/document-upload" iconBgColor='bg-[#effff2]' borderColorClass={'border-primary'} title="اسناد" image={<AttachIcon className="text-primary stroke-primary w-[25px]" />} />
+
                 <Tile offline link="/offline/location-on-map?reviewId=22789922&subjectId=23251462&featureId=18490675&policyId=27094174&subjectItemId=162098912&farmerName=%D8%AF%D9%84%DB%8C%D8%B1%20%D9%85%D8%AD%D9%85%D8%AF%DB%8C&lat=undefined&lng=undefined" iconBgColor='bg-[#effff2]' borderColorClass={'border-primary'} title="نقشه آفلاین" image={<AttachIcon className="text-primary stroke-primary w-[25px]" />} />
             </section>}
 
