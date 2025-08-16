@@ -80,12 +80,12 @@ export default function Index({ item, showSmsModal }: CardProp) {
                             مشاهده
                         </button>
                     </Link>
+                    <button disabled={actionLoading} onClick={() => addReviewToOfflineList(item)} className="border w-[120px] h-[30px] bg-red-500 border-red-500 shadow-md text-xs flex justify-center  items-center text-white gap-2 rounded-full">
+                        {actionLoading ? <span className="tinyBtnLoader"></span> : <div className="flex items-center"><PlusIcon className="w-[20px]" /><span>افزودن به آفلاین </span></div>}
+                        {/*  <PlusIcon className="w-[20px]" /> */}
+                    </button>
                     <button onClick={() => showSmsModal(item)} className="border w-[40px] h-[30px] bg-blue-500 border-blue-500 shadow-md flex justify-center items-center text-white gap-2 rounded-full">
                         <MessageCircleIcon className="w-[18px]" />
-                    </button>
-                    <button disabled={actionLoading} onClick={() => addReviewToOfflineList(item)} className="border w-[40px] h-[30px] bg-red-500 border-red-500 shadow-md  flex justify-center  items-center text-white gap-2 rounded-full">
-                        {actionLoading ? <span className="tinyBtnLoader"></span> : <PlusIcon className="w-[20px]" />}
-                        {/*  <PlusIcon className="w-[20px]" /> */}
                     </button>
                 </div>
                 <button onClick={() => setIsOpenDtl(!isOpenDtl)} className="bg-yellow-400 shadow-md w-[36px] h-[30px] flex justify-center items-center rounded-full">

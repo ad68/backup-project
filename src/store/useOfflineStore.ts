@@ -11,7 +11,7 @@ export const useOfflineStore = create<OfflineMode>()(
     devtools(
         persist(
             (set) => ({
-                isOnline: false,
+                isOnline: true,
                 goToOnline: () => set({ isOnline: true }, false, 'offlineMode/offline'),
                 goToOffline: () => set({ isOnline: false }, false, 'offlineMode/online'),
             }),

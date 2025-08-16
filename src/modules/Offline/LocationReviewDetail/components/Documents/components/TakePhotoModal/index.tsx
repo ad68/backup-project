@@ -1,16 +1,17 @@
 import CustomButton from "@/components/kit/CustomButton";
 import { toastError, toastSuccess } from "@/components/kit/toast";
 import { STORES } from "@/constants/dbEnums";
-import { useAxiosWithToken } from "@/hooks";
+
 import { addRecordToDb, initOfflineDb } from "@/lib/indexdb";
 import { base64ToFile, formDataToObject } from "@/utils/global";
 
 import { CameraIcon, SaveAllIcon, SwitchCameraIcon, Undo2Icon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Webcam from "react-webcam";
 
-export default function WebcamWithWatermark({ setTakePhotoModalIsOpen, getFileList }: any) {
+export default function WebcamWithWatermark({ setTakePhotoModalIsOpen }: any) {
+    const navigation = useNavigate()
     const webcamRef = useRef<Webcam>(null);
     const [searchParams] = useSearchParams()
     const reviewId = searchParams.get("reviewId")
@@ -18,7 +19,7 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen, getFileLi
     const [cameraMode, setCameraMode] = useState("environment")
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [saveLoading, setSaveLoading] = useState(false)
+
     const [base64Image, setBase64Image] = useState<string | null>(null);
     const [blob, setBlob] = useState<any>(null);
     const [base64WithFormat, setBase64WithFormat] = useState<string | null>(null)
@@ -116,20 +117,17 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen, getFileLi
         };
     };
     const savePicture = async () => {
-
-
         let formData = new FormData()
         formData.append('reviewId', reviewId ? reviewId : "")
         formData.append('subjectId', subjectId ? subjectId : "")
         formData.append('title', "camera-document")
         formData.append('name', "camera-document" + "." + imageMimeType,)
         formData.append('file', blob)
-
         const db = await initOfflineDb()
         try {
             await addRecordToDb(db, STORES.Documents, formDataToObject(formData));
             toastSuccess("با موفقیت ذخیره شد")
-
+            navigation(-1)
         }
         catch (err: unknown) {
             console.log(err)
@@ -198,7 +196,7 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen, getFileLi
                     <span className="text-xs">بازگشت</span>
                     <Undo2Icon className="w-[20px]" />
                 </CustomButton>
-                {capturedImage && <CustomButton loading={saveLoading} onClick={savePicture} className="rounded-full w-[170px]">
+                {capturedImage && <CustomButton onClick={savePicture} className="rounded-full w-[170px]">
                     <span className="text-xs">ذخیره</span>
                     <SaveAllIcon className="w-[20px]" />
                 </CustomButton>}

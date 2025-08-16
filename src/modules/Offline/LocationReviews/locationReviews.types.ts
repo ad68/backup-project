@@ -21,6 +21,7 @@ export type PolicyItem = {
     featureId: number | null;
     virtualId: string | null,
     wkt: string | null
+    token: string | null
 };
 type Policy = {
     id: number;

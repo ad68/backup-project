@@ -1,5 +1,5 @@
 
-import ReactPaginate from 'react-paginate'
+
 import Card from './components/Card'
 import Filter from './components/Filter'
 import useTechnicalAttachment from './technicalAttachment.biz'

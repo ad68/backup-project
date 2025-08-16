@@ -5,11 +5,12 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import type { OfflineReview } from "../LocationReviews/locationReviews.types"
 import { STORES } from "@/constants/dbEnums"
+import { useAuthStore } from "@/store/authStore"
 
 const useSubjectNotExist = () => {
     const navigation = useNavigate()
     const { id } = useParams()
-
+    const { token } = useAuthStore()
     const [currentReview, setCurrentReview] = useState<any>()
     const [subjectNotExist, setSubjectNotExist] = useState(false)
     const [searchParams] = useSearchParams();
@@ -38,8 +39,11 @@ const useSubjectNotExist = () => {
                 recordIndex = arr.findIndex((el: any) => el.virtualId === virtualId);
             }
             arr[recordIndex].subjectNotExist = subjectNotExist
+            arr[recordIndex].edited = true
+
         }
         if (currentRecord) {
+            currentRecord.token = token
             currentRecord.edited = true;
             currentRecord.locateReviews.policy.policyItems = arr
             console.log("currentRecord", currentRecord)

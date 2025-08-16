@@ -6,6 +6,7 @@ import { AttachIcon } from '@/assets/icons/AttachIcon';
 import { ReportIcon } from '@/assets/icons/ReportIcon';
 import { TeachIcon } from '@/assets/icons/TeachIcon';
 import { useOfflineStore } from '@/store/useOfflineStore';
+import { MapIcon } from 'lucide-react';
 export default function Index() {
     const { isOnline } = useOfflineStore()
     return <section>
@@ -18,11 +19,10 @@ export default function Index() {
                 <Tile soon link="#" iconBgColor='bg-[#ffffeb]' borderColorClass={'border-yellow-400'} title="آموزش" image={<TeachIcon className="text-yellow-400 w-[21px]" />} />
                 <Tile link="/Rules" iconBgColor='bg-[#e2f9ff]' borderColorClass={'border-[#15cefa]'} title="قوانین و مقررات" image={<TeachIcon className="text-[#15cefa] w-[21px]" />} />
             </section>}
-            {!isOnline && <section className="grid grid-cols-2 md:grid-cols-3 gap-5">
+            {!isOnline && <section className="grid grid-cols-2 md:grid-cols-3 gap-7">
                 <Tile offline link="/offline/locate-reviews" iconBgColor='bg-[#effff2]' borderColorClass={'border-primary'} title="پیوست فنی" image={<AttachIcon className="text-primary stroke-primary w-[25px]" />} />
-                <Tile offline link="/offline/document-upload" iconBgColor='bg-[#effff2]' borderColorClass={'border-primary'} title="اسناد" image={<AttachIcon className="text-primary stroke-primary w-[25px]" />} />
-
-                <Tile offline link="/offline/location-on-map?reviewId=22789922&subjectId=23251462&featureId=18490675&policyId=27094174&subjectItemId=162098912&farmerName=%D8%AF%D9%84%DB%8C%D8%B1%20%D9%85%D8%AD%D9%85%D8%AF%DB%8C&lat=undefined&lng=undefined" iconBgColor='bg-[#effff2]' borderColorClass={'border-primary'} title="نقشه آفلاین" image={<AttachIcon className="text-primary stroke-primary w-[25px]" />} />
+                <Tile offline link="/offline/document-upload" iconBgColor='bg-[#fffaf4]' borderColorClass={'border-orange-300'} title="مستندات پرونده ها" image={<ReportIcon className="text-orange-300 stroke-orange-300 w-[25px]" />} />
+                <Tile offline link="/offline/map" iconBgColor='bg-[#f4f9ff]' borderColorClass={'border-blue-500'} title="نقشه آفلاین" image={<MapIcon className="text-blue-500 stroke-blue-500 w-[25px]" />} />
             </section>}
 
             {/*  <section className='flex-center mt-5'>

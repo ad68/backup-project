@@ -3,10 +3,12 @@ import { clearAndUpdateReviewStore, getAllRecord, initOfflineDb } from "@/lib/in
 import { useEffect, useState } from "react";
 import type { OfflineReview } from "./locationReviews.types";
 import { useAxios } from "@/hooks";
+import { useAuthStore } from "@/store/authStore";
 
 const useLocationReviews = () => {
     const [list, setList] = useState<Array<OfflineReview>>([])
     const [actionLoading, setActionLoading] = useState(false)
+    const { setToken } = useAuthStore()
     const getAllData = async () => {
         const db = await initOfflineDb()
         try {
@@ -21,7 +23,14 @@ const useLocationReviews = () => {
         setActionLoading(true)
         let data = [...list]
         useAxios.post("/sabka/technical/annex/sync/offline-annexes", data).then(async (res) => {
-            await clearAndUpdateReviewStore(res.data)
+            if (res.data[0].policyId === null) {
+                setToken("Bearer " + res.data[0].token)
+                await clearAndUpdateReviewStore([])
+            }
+            else {
+                setToken("Bearer " + res.data[0].token)
+                await clearAndUpdateReviewStore(res.data)
+            }
             getAllData()
 
         }).finally(() => setActionLoading(false))

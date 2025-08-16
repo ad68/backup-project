@@ -259,6 +259,7 @@ export default function Index({
             recordIndex = arr.findIndex(el => el.subjectItemId == subjectItemId)
         }
         arr[recordIndex].wkt = geoInWkt
+        arr[recordIndex].actual = hectares
         arr[recordIndex].edited = true
         let currentRecord = currentReview;
         if (currentRecord) {

@@ -1,5 +1,5 @@
 import { formDataToObject, getExtensionFromFileName } from "@/utils/global"
-import { useState } from "react"
+
 import { useSearchParams } from "react-router-dom"
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -14,7 +14,7 @@ const schema = z.object({
         .refine((files) => files && files.length > 0, 'انتخاب فایل الزامی است'),
 });
 type FormData = z.infer<typeof schema>;
-const useAddDocumentModal = (setIsAddDocumentModal: (value: boolean) => void, getFileList: () => void) => {
+const useAddDocumentModal = (setIsAddDocumentModal: (value: boolean) => void) => {
     const {
         control,
         handleSubmit,

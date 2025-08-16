@@ -1,6 +1,7 @@
 import CustomButton from "@/components/kit/CustomButton";
 import { toastSuccess } from "@/components/kit/toast";
 import { useAxiosWithToken } from "@/hooks";
+import { base64ToFile } from "@/utils/global";
 
 import { CameraIcon, SaveAllIcon, SwitchCameraIcon, Undo2Icon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -14,6 +15,7 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen, getFileLi
     const subjectId = searchParams.get("subjectId")
     const [cameraMode, setCameraMode] = useState("environment")
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
+    const [blob, setBlob] = useState<any>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [saveLoading, setSaveLoading] = useState(false)
     const [base64Image, setBase64Image] = useState<string | null>(null);
@@ -72,6 +74,7 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen, getFileLi
                 setBase64Image(base64Data)
                 setBase64WithFormat(finalImage)
                 setImageMimeType(mimeType.split('/')[1]);
+                setBlob(base64ToFile(finalImage, `camera-document.${mimeType.split('/')[1]}`))
                 setIsLoading(false);
             };
 
@@ -112,14 +115,15 @@ export default function WebcamWithWatermark({ setTakePhotoModalIsOpen, getFileLi
     };
     const savePicture = () => {
         setSaveLoading(true)
-        const params = {
-            reviewId: reviewId,
-            subjectId: subjectId,
-            title: "camera-document",
-            name: "camera-document" + "." + imageMimeType,
-            fileContentInBase64: base64Image
-        }
-        useAxiosWithToken.post("/sabka/technical/annex/add/subject-file", params)
+        let formData = new FormData()
+        formData.append('reviewId', reviewId ? reviewId : "")
+        formData.append('subjectId', subjectId ? subjectId : "")
+        formData.append('title', "camera-document")
+        formData.append('name', "camera-document" + "." + imageMimeType,)
+        formData.append('file', blob)
+        useAxiosWithToken.post("/sabka/technical/annex/add/subject-file", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        })
             .then(() => {
                 toastSuccess("سند شما با موفقیت بارگذاری شد")
                 setTakePhotoModalIsOpen(false)

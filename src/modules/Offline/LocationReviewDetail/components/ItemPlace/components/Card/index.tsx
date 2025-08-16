@@ -21,9 +21,11 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat?: stri
     }, [item])
     return <section className="p-2">
         <section className={`border border-1 relative flex flex-col gap-4 ${item.edited ? "border-slate-600" : "border-slate-100"}  bg-white relative  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[160px]`} shadow-lg`}>
-            {item.edited && <div className="bg-slate-500 text-white  w-[50%] left-[25%] absolute top-[-10px] text-sm px-4 flex justify-center rounded-3xl">
-                آفلاین
-            </div>}
+            {item.virtualId ? <div className="bg-slate-500 text-white  w-[50%] left-[25%] absolute top-[-10px] text-sm px-4 flex justify-center rounded-3xl">
+                تقسیم قلم آفلاین
+            </div> : item.edited ? <div className="bg-slate-500 text-white  w-[50%] left-[25%] absolute top-[-10px] text-sm px-4 flex justify-center rounded-3xl">
+                ویرایش آفلاین
+            </div> : ""}
 
             {!item.edited && <section className="flex justify-between w-full">
                 <section className="flex gap-1">
@@ -39,7 +41,7 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat?: stri
             <section className={`flex justify-between w-full ${item.edited && `mt-5`}`}>
                 <section className="flex gap-1">
                     <span className="font-light text-slate-500 text-sm">مساحت بیمه شده:</span>
-                    <span className="text-sm">{item.insured} هکتار</span>
+                    <span className="text-sm">{item.virtualId ? parseInt(item?.newInsured).toFixed(2) : parseInt(item?.insured).toFixed(2)} هکتار</span>
                 </section>
 
             </section>
@@ -47,7 +49,7 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat?: stri
 
                 <section className="flex gap-1">
                     <span className="font-light text-slate-500 text-sm">مساحت:</span>
-                    {item.actual && <span className="text-sm">{item?.actual?.toFixed(2)} هکتار</span>}
+                    {item.actual && <span className="text-sm">{parseInt(item?.actual).toFixed(2)} هکتار</span>}
 
                 </section>
                 <section className="flex gap-1">
@@ -79,10 +81,12 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat?: stri
                                 {!item.edited && !item.wkt && <Link to={`/offline/land-division/${id}?policyItemId=${item.policyItemId}&reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&rawExtraInfo=${item?.rawExtraInfo}`}>
                                     <button className="text-[10px] bg-blue-500 p-2 rounded-lg border border-blue-500 font-light text-white">تقسیم قلم بیمه شده</button>
                                 </Link>}
+                                {
+                                    !item.virtualId && <Link to={`/offline/private-info/${id}?reviewId=${reviewId}&policyItemId=${item.policyItemId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&rawExtraInfo=${item?.rawExtraInfo}&subjectId=${subjectId}`}>
+                                        <button className="text-[10px] bg-red-500 p-2 rounded-lg border border-red-500  text-white">تکمیل اطلاعات اختصاصی</button>
+                                    </Link>
+                                }
 
-                                <Link to={`/private-info?reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&rawExtraInfo=${item?.rawExtraInfo}&subjectId=${subjectId}`}>
-                                    <button className="text-[10px] bg-red-500 p-2 rounded-lg border border-red-500  text-white">تکمیل اطلاعات اختصاصی</button>
-                                </Link>
                                 {item.edited && item.virtualId && <Link to={`/offline/land-division/${id}?virtualId=${item.virtualId}&reason=${item.reason}&newInsured=${item.newInsured}&policyItemId=${item.policyItemId}&reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&newExtraInfo=${item?.newExtraInfo}&edited=true`} >
                                     <button className="text-[10px] bg-orange-500 p-2 rounded-lg border border-orange-500 text-white">ویرایش قلم</button>
                                 </Link>}
@@ -110,7 +114,7 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat?: stri
         <div className="flex justify-center">
             {item.errorDesc ?
                 <div className="bg-red-600 w-[90%] px-4 text-center bottom-[-25px] text-sm text-white rounded-b-xl">{item.errorDesc}</div> :
-                (item.virtualId && !item.wkt) ? <div className="bg-red-600 w-[90%] left-[5%] text-center bottom-[-25px] text-white rounded-b-full">تعیین مکان شود</div> : ""}
+                (item.virtualId && !item.wkt) ? <div className="bg-red-600 w-[90%] left-[5%] text-center bottom-[-25px] text-white rounded-b-full">تعیین مکان الزامی می باشد</div> : ""}
         </div>
     </section>
 }

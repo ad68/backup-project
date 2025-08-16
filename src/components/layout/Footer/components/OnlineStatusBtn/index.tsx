@@ -7,7 +7,7 @@ import { useOfflineStore } from "@/store/useOfflineStore";
 
 export default function Index() {
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const { isOnline, goToOnline, goToOffline } = useOfflineStore()
+    const { isOnline } = useOfflineStore()
     useEffect(() => {
         console.log(isOnline)
     }, [isOnline])

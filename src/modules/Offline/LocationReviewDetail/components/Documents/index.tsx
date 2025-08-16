@@ -1,15 +1,13 @@
 import { CameraIcon, Link2Icon } from "lucide-react";
-/* import Card from './components/Card' */
-/* import FileItem from './components/FileItem' */
+
 import SlidingModal from "@/components/kit/SlidingModal";
 import useDocument from "./document.biz";
 import AddDocumentModal from './components/AddDocumentModal'
 import TakePhotoModal from './components/TakePhotoModal'
-import ListLoader from "@/components/kit/ListLoader";
-/* import NoRecord from "@/components/kit/NoRecord"; */
+
 
 export default function Index() {
-    const { isAddDocumentModal, setIsAddDocumentModal, takePhotoModalIsOpen, setTakePhotoModalIsOpen, actionLoading, data, deleteFile, getFileList } = useDocument()
+    const { isAddDocumentModal, setIsAddDocumentModal, takePhotoModalIsOpen, setTakePhotoModalIsOpen } = useDocument()
     return <>
         <section className="p-2">
             <section className="border border-slate-200  rounded-lg p-2">
@@ -25,9 +23,7 @@ export default function Index() {
                         <span className="font-light text-sm">گرفتن عکس</span>
                     </button>
                 </section>
-                <div className="flex justify-center">
-                    {actionLoading && <ListLoader />}
-                </div>
+
                 {/* {!actionLoading && <section className="grid grid-cols-2 gap-2">
                     {data.map((item: any, index: number) => (<FileItem deleteFile={deleteFile} key={index} item={item} />))}
                 </section>}
@@ -35,10 +31,10 @@ export default function Index() {
             </section>
         </section>
         <SlidingModal isOpen={isAddDocumentModal}>
-            <AddDocumentModal getFileList={getFileList} setIsAddDocumentModal={setIsAddDocumentModal} />
+            <AddDocumentModal setIsAddDocumentModal={setIsAddDocumentModal} />
         </SlidingModal>
         <SlidingModal isOpen={takePhotoModalIsOpen}>
-            <TakePhotoModal getFileList={getFileList} setTakePhotoModalIsOpen={setTakePhotoModalIsOpen} />
+            <TakePhotoModal setTakePhotoModalIsOpen={setTakePhotoModalIsOpen} />
         </SlidingModal>
     </>
 }

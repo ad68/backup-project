@@ -1,23 +1,19 @@
 
 import { validationMessages } from "@/constants/validationMessages";
-import { getRecordById, initOfflineDb, updateRecordInDb } from "@/lib/indexdb";
 import { JSONStringToObject, shamsiToMiladi } from "@/utils/global";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { nanoid } from 'nanoid';
-
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { z } from "zod";
-import type { OfflineReview, PolicyItem } from "../LocationReviews/locationReviews.types";
+import type { OfflineReview } from "../LocationReviews/locationReviews.types";
+import { getRecordById, initOfflineDb, updateRecordInDb } from "@/lib/indexdb";
 import { STORES } from "@/constants/dbEnums";
 import { useAuthStore } from "@/store/authStore";
 const schema = z.object({
     F125: z.coerce.number({ required_error: validationMessages.required, invalid_type_error: "این فیلد باید عدد باشد" }).min(1, validationMessages.minLength(1)), /* شماره قطعه */
     F149: z.string().max(100, validationMessages.maxLength(100)).optional(), /* نام محلی */
     F3115: z.string().max(500, validationMessages.maxLength(500)).optional(), /* ملاحظات*/
-    newInsured: z.coerce.number({ required_error: validationMessages.required, invalid_type_error: "این فیلد باید عدد باشد" }).max(500, validationMessages.maxLength(500)), /* مساحت قلم جدید*/
-    reason: z.string().max(500, validationMessages.maxLength(500)).optional(), /* علت*/
     F126: z.string({ required_error: validationMessages.required }).max(50, validationMessages.maxLength(50)), /* شمالا*/
     F128: z.string({ required_error: validationMessages.required }).max(50, validationMessages.maxLength(50)), /* جنوبا*/
     F127: z.string({ required_error: validationMessages.required }).max(50, validationMessages.maxLength(50)), /* شرقا*/
@@ -30,8 +26,9 @@ const schema = z.object({
     F2942: z.coerce.number({ invalid_type_error: "این فیلد باید عدد باشد", }).optional(), /*درصد سبز شدن*/
 });
 type FormData = z.infer<typeof schema>;
-const useLandDivision = () => {
+const usePrivateInfo = () => {
     const navigation = useNavigate()
+    const { token } = useAuthStore()
     const {
         control,
         handleSubmit,
@@ -49,8 +46,6 @@ const useLandDivision = () => {
             F129: undefined,
             F131: undefined,
             F132: undefined,
-            reason: undefined,
-            newInsured: undefined,
             F150: undefined,
             F134: undefined,
             F2941: undefined,
@@ -58,18 +53,11 @@ const useLandDivision = () => {
         }
     });
     const { id } = useParams()
-    const [policyList, setPolicyList] = useState<Array<any>>([])
-    const { token } = useAuthStore()
     const [searchParams] = useSearchParams();
-    const rawExtraInfo = searchParams.get("rawExtraInfo")
-    const virtualId = searchParams.get("virtualId")
-    const newInsured = searchParams.get("newInsured")
-    const reason = searchParams.get("reason")
-    const newExtraInfo = searchParams.get("newExtraInfo")
-    const subjectItemId = searchParams.get("subjectItemId")
-    const policyItemId = searchParams.get("policyItemId")
-    const [actionLoading, setActionLoading] = useState(false)
     const [currentReview, setCurrentReview] = useState<OfflineReview>()
+    const [policyList, setPolicyList] = useState<Array<any>>([])
+    const policyItemId = searchParams.get("policyItemId")
+    const rawExtraInfo = searchParams.get("rawExtraInfo")
     const ownerShipsOptions = [
         { label: "استیجاری", value: "1016" },
         { label: "خصوصی", value: "1017" },
@@ -88,15 +76,6 @@ const useLandDivision = () => {
         { label: "غرقابی", value: "1688" },
         { label: "نواری", value: "1689" }
     ]
-    const [isOpenDtl, setIsOpenDtl] = useState<boolean>(false)
-    const [isOpenDtl1, setIsOpenDtl1] = useState<boolean>(false)
-    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
-    function removeKeys(obj: any, key1: any, key2: any) {
-        const newObj = { ...obj };
-        delete newObj[key1];
-        delete newObj[key2];
-        return newObj;
-    }
     const getById = async () => {
         const db = await initOfflineDb();
         const review: OfflineReview = await getRecordById(db, STORES.Reviews, id ? Number(id) : 0);
@@ -104,6 +83,9 @@ const useLandDivision = () => {
         console.log(review)
         setCurrentReview(review)
     }
+    useEffect(() => {
+        getById()
+    }, [])
     useEffect(() => {
         if (rawExtraInfo) {
             const formValue = JSONStringToObject(rawExtraInfo)
@@ -117,29 +99,7 @@ const useLandDivision = () => {
                     F128: formValue?.F128,
                     F129: formValue?.F129,
                     F131: formValue?.F131,
-                    F132: formValue?.F132 ? new Date(formValue?.F132) : new Date(),
-                    F150: ownerShipsOptions.find(el => el.value === formValue?.F150)?.value,
-                    F134: waterResourceOptions.find(el => el.value === formValue?.F134)?.value,
-                    F2941: irrigationSystemOptions.find(el => el.value === formValue?.F2941)?.value,
-                    F2942: formValue?.F2942,
-                })
-            }, 100);
-        }
-        else if (newExtraInfo) {
-            const formValue = JSONStringToObject(newExtraInfo)
-            setTimeout(() => {
-                reset({
-                    newInsured: newInsured ? parseInt(newInsured) : 0,
-                    reason: reason ? reason : "",
-                    F125: formValue?.F125,
-                    F149: formValue?.F149,
-                    F3115: formValue?.F3115,
-                    F126: formValue?.F126,
-                    F127: formValue?.F127,
-                    F128: formValue?.F128,
-                    F129: formValue?.F129,
-                    F131: formValue?.F131,
-                    F132: formValue?.F132 ? new Date(formValue?.F132) : new Date(),
+                    F132: new Date(formValue?.F132),
                     F150: ownerShipsOptions.find(el => el.value === formValue?.F150)?.value,
                     F134: waterResourceOptions.find(el => el.value === formValue?.F134)?.value,
                     F2941: irrigationSystemOptions.find(el => el.value === formValue?.F2941)?.value,
@@ -150,12 +110,8 @@ const useLandDivision = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rawExtraInfo])
     useEffect(() => {
-        getById()
-    }, [])
-    useEffect(() => {
-        console.log("policyList", policyList)
-    }, [policyList])
-
+        console.log('currentReview', currentReview)
+    }, [currentReview])
     function generateExtraInfo(data: any) {
         const ownershipMap: any = {
             "1017": "خصوصی",
@@ -195,94 +151,50 @@ const useLandDivision = () => {
             `سیستم آبیاری: ${irrigationMap[data.F2941] || data.F2941}, ` +
             `درصد سبز شدن: ${data.F2942} درصد`;
     }
+
     const onSubmit = async (data: FormData) => {
         if (data.F132) {
             data.F132 = shamsiToMiladi(data.F132) + "T00:00:00"
         }
-        setActionLoading(true)
+        let currentRecord = currentReview
         let arr = [...policyList]
-        let prevRecord;
-        if (rawExtraInfo) {
-            prevRecord = arr.find(el => el.policyItemId === Number(policyItemId));
-        }
-        else if (newExtraInfo) {
-            prevRecord = arr.find(el => el.virtualId === virtualId);
-        }
-
-        console.log("prevRecord", prevRecord)
-        const newId = nanoid()
-        const params: PolicyItem = {
-            actual: prevRecord?.actual,
+        let recordIndex = arr.findIndex(el => el.policyItemId == policyItemId)
+        let params = {
+            ...arr[recordIndex],
             edited: true,
-            errorDesc: null,
-            token: token,
             extraInfo: generateExtraInfo(data),
-            featureId: prevRecord?.featureId,
-            id: null,
-            virtualId: newId,
-            insured: prevRecord?.insured,
-            newExtraInfo: `${JSON.stringify(removeKeys(data, "newInsured", "reason"))}`,
-            newInsured: data.newInsured,
-            note: prevRecord?.note,
-            policyItemId: null,
-            property01: prevRecord?.property01,
-            property02: prevRecord?.property02,
-            property03: prevRecord?.property03,
-            property04: prevRecord?.property04,
-            rawExtraInfo: null,
-            reason: data.reason,
-            subjectItemId: Number(subjectItemId),
-            subjectNotExist: false,
-            tag: null,
-            wkt: newExtraInfo ? prevRecord?.wkt : null,
+            rawExtraInfo: `${JSON.stringify(data)}`,
         }
-        console.log('params', params)
-        console.log('prevRecord', prevRecord)
-        if (rawExtraInfo) {
-            let currentRecord = currentReview;
-            arr.push(params)
-            if (currentRecord) {
-                currentRecord.token = token
-                currentRecord.edited = true;
-                currentRecord.locateReviews.policy.policyItems = arr
-                console.log("currentRecord", currentRecord)
-            }
-            ///update record
-            const db = await initOfflineDb();
-            const task = await updateRecordInDb(db, STORES.Reviews, currentRecord);
-            console.log(task);
-            navigation(-1)
+        arr[recordIndex] = params
+        if (currentRecord) {
+            currentRecord.token = token
+            currentRecord.edited = true;
+            currentRecord.locateReviews.policy.policyItems = arr
         }
-        else if (newExtraInfo) {
-
-            let currentRecord = currentReview;
-            let recordIndex = arr.findIndex(el => el.virtualId === virtualId)
-            arr[recordIndex] = params
-            if (currentRecord) {
-                currentRecord.token = token
-                currentRecord.edited = true;
-                currentRecord.locateReviews.policy.policyItems = arr
-                console.log("currentRecord", currentRecord)
-            }
-            const db = await initOfflineDb();
-            const task = await updateRecordInDb(db, STORES.Reviews, currentRecord);
-            console.log(task);
-            navigation(-1)
-            /* currentRecord?.locateReviews.policy.policyItems */
-        }
-
-
-
+        console.log("currentRecord", currentRecord)
+        ///update record
+        const db = await initOfflineDb();
+        const task = await updateRecordInDb(db, STORES.Reviews, currentRecord);
+        console.log(task);
+        navigation(-1)
     };
+
     return {
-        isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isInfoModalOpen, setIsInfoModalOpen, ownerShipsOptions,
+        ownerShipsOptions,
         waterResourceOptions,
         irrigationSystemOptions,
-        actionLoading,
+
         onSubmit,
         control,
         handleSubmit,
         errors
     }
+
 }
-export default useLandDivision
+export default usePrivateInfo
+
+
+
+
+
+

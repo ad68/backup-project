@@ -39,6 +39,8 @@ import DocumentUpload from '../modules/Offline/DocumentUpload'
 import Plimit from '../modules/Offline/Plimit'
 import LocationDeterminationTypeOffline from '../modules/Offline/LocationDeterminationType'
 import OfflineSubjectNotExist from '../modules/Offline/SubjectNotExist'
+import PrivateInfoOffline from '../modules/Offline/PrivateInfo'
+import OfflineMap from '../modules/Offline/OfflineMap'
 import Rules from '@/modules/rules'
 /* import GoogleMap from '@/modules/GoogleMap' */
 import { useEffect } from "react";
@@ -67,7 +69,6 @@ export default function Index() {
         { path: "previous-actions", element: <PreviousActions /> },
         { path: "search", element: <Search /> },
     ];
-
     const PhenologyMonitoringRoutes = [
         { path: "home", element: <PhenologyMonitoring /> },
         { path: "cases", element: <PhenologyMonitoringCases /> },
@@ -94,8 +95,8 @@ export default function Index() {
         { path: "location-determination-type/:id", element: <LocationDeterminationTypeOffline /> },
         { path: "document-upload", element: <DocumentUpload /> },
         { path: "subject-not-exist/:id", element: <OfflineSubjectNotExist /> },
-
-
+        { path: "private-info/:id", element: <PrivateInfoOffline /> },
+        { path: "map", element: <OfflineMap /> },
     ];
     return <Routes>
         <Route path="/" element={<Login />} />
