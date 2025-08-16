@@ -8,7 +8,7 @@ import { useAuthStore } from "@/store/authStore";
 const useLocationReviews = () => {
     const [list, setList] = useState<Array<OfflineReview>>([])
     const [actionLoading, setActionLoading] = useState(false)
-    const { setToken } = useAuthStore()
+    const { setToken, token } = useAuthStore()
     const getAllData = async () => {
         const db = await initOfflineDb()
         try {
@@ -22,6 +22,9 @@ const useLocationReviews = () => {
     const syncData = () => {
         setActionLoading(true)
         let data = [...list]
+        data.forEach((_, index) => {
+            data[index].token = token
+        });
         useAxios.post("/sabka/technical/annex/sync/offline-annexes", data).then(async (res) => {
             if (res.data[0].policyId === null) {
                 setToken("Bearer " + res.data[0].token)

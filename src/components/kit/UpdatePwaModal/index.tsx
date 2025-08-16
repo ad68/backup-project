@@ -49,10 +49,10 @@ export default function UpdatePwaModal({ onConfirm }: { onConfirm: () => void })
                     <li>نمایش پیغام خطا در زمان عدم دریافت موقعیت مکانی توسط موقعیت یاب (gps)</li>
                 </ul> */}
                 <span className="text-lg">
-                    نسخه 1.1.5
+                    نسخه 1.9.9
                 </span>
                 <ul className="list-disc text-xs pr-10 leading-6">
-                    <li>رفع ایرادات جزیی بخش تقسیم قلم و اطلاعات شخصی</li>
+                    <li>فعال شدن حالت آفلاین</li>
                 </ul>
                 <div className="px-5 flex w-full mt-10">
                     <CustomButton onClick={onConfirm} className="w-full">به روز رسانی</CustomButton>

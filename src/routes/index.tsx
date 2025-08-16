@@ -127,7 +127,6 @@ export default function Index() {
                 />
             ))}
         </Route>
-
         <Route path="technical-attachment" element={<DashboardLayout />}>
             {TechnicalAttachmentRoutes.map(({ path, element }) => (
                 <Route
