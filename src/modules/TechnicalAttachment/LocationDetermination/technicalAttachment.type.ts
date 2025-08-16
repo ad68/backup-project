@@ -21,6 +21,7 @@ export type CardProp = {
         insured: number
     }
     showSmsModal: (value: any) => void
+
 }
 export type FilterState = {
     provinceId: string
@@ -33,4 +34,9 @@ export type FilterState = {
     nationalCode: string
     policyId: string
     subSectionId: string
+}
+export type PaginationProp = {
+    setCurrentPage: (value: number) => void,
+    totalPage: number,
+    currentPage: number
 }

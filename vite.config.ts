@@ -34,13 +34,13 @@ export default defineConfig({
       workbox: {
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/your-api\.domain\//,
-            handler: 'NetworkFirst',
+            urlPattern: /^https:\/\/map\.optimoai\.ir\/wmts\/gm_layer\/gm_grid\/.*\.png$/,
+            handler: 'CacheFirst',
             options: {
-              cacheName: 'api-cache',
+              cacheName: 'tile-cache',
               expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 86400,
+                maxEntries: 500,
+                maxAgeSeconds: 30 * 24 * 60 * 60,
               },
             },
           },

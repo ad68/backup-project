@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Routes from './routes'
-import { initDB, /* initOfflineDb */ } from './lib/indexdb'
+import { initDB, initOfflineDb } from './lib/indexdb'
 import { registerSW } from 'virtual:pwa-register'
 import UpdatePwaModal from './components/kit/UpdatePwaModal'
 
@@ -9,7 +9,8 @@ function App() {
   const [updateFn, setUpdateFn] = useState<null | (() => void)>(null)
   useEffect(() => {
     initDB()
-    /* initOfflineDb() */
+    initOfflineDb()
+    /* initOfflineReviewDb() */
   }, [])
   useEffect(() => {
     const updateSW = registerSW({

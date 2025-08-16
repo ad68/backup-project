@@ -1,0 +1,19 @@
+import Tabs from './components/Tabs';
+import ItemPlace from './components/ItemPlace'
+import Documents from './components/Documents'
+import useLocationReview from './LocationReviewDetail.biz';
+import PageTitle from '@/components/kit/PageTitle';
+import { useSearchParams } from 'react-router-dom';
+export default function Index() {
+    const { activeTab, setActiveTab } = useLocationReview()
+    const [setSearchParams] = useSearchParams()
+    const farmerName = setSearchParams.get("farmerName")
+    const policyId = setSearchParams.get("policyId")
+    return <section className='m-auto max-w-5xl'>
+        <PageTitle size='small' miniDescription={`بیمه نامه: ${policyId}`} title={`${farmerName}`} />
+        <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        {activeTab === 1 && <ItemPlace />}
+        {activeTab === 2 && <Documents />}
+        {/*  {activeTab === 3 && <Result />} */}
+    </section>
+}

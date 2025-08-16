@@ -5,17 +5,26 @@ import { FireIcon } from "@/assets/icons/FireIcon";
 import { AttachIcon } from '@/assets/icons/AttachIcon';
 import { ReportIcon } from '@/assets/icons/ReportIcon';
 import { TeachIcon } from '@/assets/icons/TeachIcon';
+import { useOfflineStore } from '@/store/useOfflineStore';
+import { MapIcon } from 'lucide-react';
 export default function Index() {
+    const { isOnline } = useOfflineStore()
     return <section>
         <section className="pt-[40px] px-5">
-            <section className="grid grid-cols-2 md:grid-cols-3 gap-5">
+            {isOnline && <section className="grid grid-cols-2 md:grid-cols-3 gap-5">
                 <Tile link="/technical-attachment" iconBgColor='bg-[#effff2]' borderColorClass={'border-primary'} title="پیوست فنی" image={<AttachIcon className="text-primary stroke-primary w-[25px]" />} />
                 <Tile soon link="/phenology-monitoring/home" iconBgColor='bg-[#f4f9ff]' borderColorClass={'border-blue-400'} title="پایش فنولوژی" image={<MonitoringIcon className="text-blue-400 w-[25px]" />} />
                 <Tile soon link="/damage/home" iconBgColor='bg-[#fffaf4]' borderColorClass={'border-orange-300'} title="خسارت" image={<FireIcon className="text-orange-300 w-[25px]" />} />
                 <Tile soon link="#" iconBgColor='bg-[#fff5f5]' borderColorClass={'border-red-400'} title="گزارشات" image={<ReportIcon className="text-red-400 w-[21px]" />} />
                 <Tile soon link="#" iconBgColor='bg-[#ffffeb]' borderColorClass={'border-yellow-400'} title="آموزش" image={<TeachIcon className="text-yellow-400 w-[21px]" />} />
                 <Tile link="/Rules" iconBgColor='bg-[#e2f9ff]' borderColorClass={'border-[#15cefa]'} title="قوانین و مقررات" image={<TeachIcon className="text-[#15cefa] w-[21px]" />} />
-            </section>
+            </section>}
+            {!isOnline && <section className="grid grid-cols-2 md:grid-cols-3 gap-7">
+                <Tile offline link="/offline/locate-reviews" iconBgColor='bg-[#effff2]' borderColorClass={'border-primary'} title="پیوست فنی" image={<AttachIcon className="text-primary stroke-primary w-[25px]" />} />
+                <Tile offline link="/offline/document-upload" iconBgColor='bg-[#fffaf4]' borderColorClass={'border-orange-300'} title="مستندات پرونده ها" image={<ReportIcon className="text-orange-300 stroke-orange-300 w-[25px]" />} />
+                <Tile offline link="/offline/map" iconBgColor='bg-[#f4f9ff]' borderColorClass={'border-blue-500'} title="نقشه آفلاین" image={<MapIcon className="text-blue-500 stroke-blue-500 w-[25px]" />} />
+            </section>}
+
             {/*  <section className='flex-center mt-5'>
                 <Tile link="#" width="157px" iconBgColor='bg-[#fbf2fb]' borderColorClass={'border-purple-400'} title="کیف پول" image={<WalletIcon className="text-purple-400 w-[25px]" />} />
             </section> */}

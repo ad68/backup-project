@@ -27,9 +27,20 @@ import PhenologyMonitoringCases from '@/modules/PhenologyMonitoring/Cases'
 import PhenologyMonitoringProgram from '@/modules/PhenologyMonitoring/Program'
 import PhenologyMonitoringEmergencyVisit from '@/modules/PhenologyMonitoring/EmergencyVisit'
 import Profile from '@/modules/Profile'
+import Indexdb from '@/modules/Indexdb'
 import ProtectedRoute from './ProtectedRoute'
 import MAIN_LAYOUT from '../components/layout/MainLayout'
 import DashboardLayout from '../components/layout/DashboardLayout'
+import LocationReviews from '../modules/Offline/LocationReviews'
+import LocationReviewDetail from '../modules/Offline/LocationReviewDetail'
+import OfflineLandDivision from '../modules/Offline/LandDivision'
+import LocationOnMapOffline from '../modules/Offline/LocationOnMap'
+import DocumentUpload from '../modules/Offline/DocumentUpload'
+import Plimit from '../modules/Offline/Plimit'
+import LocationDeterminationTypeOffline from '../modules/Offline/LocationDeterminationType'
+import OfflineSubjectNotExist from '../modules/Offline/SubjectNotExist'
+import PrivateInfoOffline from '../modules/Offline/PrivateInfo'
+import OfflineMap from '../modules/Offline/OfflineMap'
 import Rules from '@/modules/rules'
 /* import GoogleMap from '@/modules/GoogleMap' */
 import { useEffect } from "react";
@@ -75,6 +86,18 @@ export default function Index() {
         { path: "/home", element: <Home /> },
         { path: "/technical-attachment", element: <TechnicalAttachment /> },
     ];
+    const OfflineRoutes = [
+        { path: "locate-reviews", element: <LocationReviews /> },
+        { path: "locate-reviews/:id", element: <LocationReviewDetail /> },
+        { path: "land-division/:id", element: <OfflineLandDivision /> },
+        { path: "location-on-map/:id", element: <LocationOnMapOffline /> },
+        { path: "Plimit", element: <Plimit /> },
+        { path: "location-determination-type/:id", element: <LocationDeterminationTypeOffline /> },
+        { path: "document-upload", element: <DocumentUpload /> },
+        { path: "subject-not-exist/:id", element: <OfflineSubjectNotExist /> },
+        { path: "private-info/:id", element: <PrivateInfoOffline /> },
+        { path: "map", element: <OfflineMap /> },
+    ];
     return <Routes>
         <Route path="/" element={<Login />} />
         <Route element={<MAIN_LAYOUT />}>
@@ -104,6 +127,7 @@ export default function Index() {
                 />
             ))}
         </Route>
+
         <Route path="technical-attachment" element={<DashboardLayout />}>
             {TechnicalAttachmentRoutes.map(({ path, element }) => (
                 <Route
@@ -122,6 +146,17 @@ export default function Index() {
                 />
             ))}
         </Route>
+        <Route path="offline" element={<DashboardLayout />}>
+            {OfflineRoutes.map(({ path, element }) => (
+                <Route
+                    key={path}
+                    path={path}
+                    element={<ProtectedRoute>{element}</ProtectedRoute>}
+                />
+            ))}
+        </Route>
+        <Route path="/index-db" element={<Indexdb />} />
+
         {/*  <Route path="screen-shot" element={<ScreenShot />} />
         <Route path="webcam" element={<Webcam />} />
         <Route path="google-map" element={<GoogleMap />} /> */}

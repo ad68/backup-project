@@ -302,3 +302,66 @@ input:-webkit-autofill {
 .leaflet-draw-tooltip {
   display: none !important;
 }
+
+.tinyBtnLoader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ffffffd5;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 0.8s linear infinite;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.ring-progress {
+  stroke-dasharray: 440;
+  stroke-dashoffset: 440;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0s;
+}
+
+.animate-progress {
+  animation: fillRing linear forwards;
+  animation-duration: 5s;
+}
+
+@keyframes fillRing {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.lineLoader {
+  height: 3px;
+  width: 60px;
+  --c: no-repeat linear-gradient(#6100ee 0 0);
+  background: var(--c), var(--c), #d7b8fc;
+  background-size: 60% 100%;
+  animation: llanimation 3s infinite;
+}
+@keyframes llanimation {
+  0% {
+    background-position:
+      -150% 0,
+      -150% 0;
+  }
+  66% {
+    background-position:
+      250% 0,
+      -150% 0;
+  }
+  100% {
+    background-position:
+      250% 0,
+      250% 0;
+  }
+}

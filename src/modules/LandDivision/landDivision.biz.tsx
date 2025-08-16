@@ -1,5 +1,6 @@
 
 import { toastSuccess } from "@/components/kit/toast";
+import { isDev } from "@/config/env";
 import { validationMessages } from "@/constants/validationMessages";
 import { useAxiosWithToken } from "@/hooks";
 import { JSONStringToObject, shamsiToMiladi } from "@/utils/global";
@@ -56,6 +57,8 @@ const useLandDivision = () => {
     const [searchParams] = useSearchParams();
     const rawExtraInfo = searchParams.get("rawExtraInfo")
     const subjectItemId = searchParams.get("subjectItemId")
+    const reviewId = searchParams.get("reviewId")
+    const policyId = searchParams.get("policyId")
     const [actionLoading, setActionLoading] = useState(false)
     const ownerShipsOptions = [
         { label: "استیجاری", value: "1016" },
@@ -113,10 +116,12 @@ const useLandDivision = () => {
         }
         setActionLoading(true)
         const params = {
+            policyId: policyId,
+            reviewId: reviewId,
             subjectItemId: subjectItemId,
             newInsured: data.newInsured,
             reason: data.reason,
-            isTest: true,
+            isTest: isDev,
             newExtraInfo: `${JSON.stringify(removeKeys(data, "newInsured", "reason"))}`
         }
         useAxiosWithToken.post("/sabka/technical/annex/add/split-subject-item", params).then(() => {
@@ -137,3 +142,5 @@ const useLandDivision = () => {
     }
 }
 export default useLandDivision
+
+

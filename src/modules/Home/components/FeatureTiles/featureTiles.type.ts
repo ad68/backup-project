@@ -7,5 +7,7 @@ export type TileProp = {
     borderColorClass: string,
     width?: string
     link: string,
-    soon?: boolean
+    soon?: boolean,
+    offline?: boolean
+
 }

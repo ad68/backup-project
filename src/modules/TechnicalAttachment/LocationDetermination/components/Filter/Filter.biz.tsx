@@ -54,6 +54,7 @@ const useFilter = () => {
 
     const clearForm = () => {
         updateFilter("provinceId", "")
+        updateFilter("keyword", "")
         setCounties([])
         updateFilter("countyId", "")
         setDistricts([])

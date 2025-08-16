@@ -1,12 +1,11 @@
 import { useAxiosWithToken } from "@/hooks"
-import { convertToBase64, getExtensionFromFileName, getPureBase64 } from "@/utils/global"
+import { getExtensionFromFileName } from "@/utils/global"
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toastSuccess } from "@/components/kit/toast";
-import { isDev } from "@/config/env";
 const schema = z.object({
     title: z.string().min(1, 'عنوان الزامی است'),
 
@@ -24,7 +23,6 @@ const useAddDocumentModal = (setIsAddDocumentModal: (value: boolean) => void, ge
         resolver: zodResolver(schema),
         defaultValues: {
             title: '',
-
             document: undefined,
         }
     });
@@ -35,20 +33,20 @@ const useAddDocumentModal = (setIsAddDocumentModal: (value: boolean) => void, ge
     const onSubmit = async (data: FormData) => {
         const file = data.document[0];
         if (!file) return;
-        const base64 = await convertToBase64(file);
+
         const extension = getExtensionFromFileName(file.name);
         console.log("extension", extension)
+        let formData = new FormData()
+        formData.append('reviewId', reviewId ? reviewId : "")
+        formData.append('subjectId', subjectId ? subjectId : "")
+        formData.append('title', data.title)
+        formData.append('name', data.title + "." + extension)
+        formData.append('file', file)
         setActionLoading(true)
-        const params = {
-            reviewId: reviewId,
-            subjectId: subjectId,
-            title: data.title,
-            name: data.title + "." + extension,
-            fileContentInBase64: getPureBase64(String(base64)),
-            isTest: isDev
 
-        }
-        useAxiosWithToken.post("/sabka/technical/annex/add/subject-file", params)
+        useAxiosWithToken.post("/sabka/technical/annex/add/subject-file", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        })
             .then(() => {
                 toastSuccess("سند شما با موفقیت بارگذاری شد")
                 getFileList()

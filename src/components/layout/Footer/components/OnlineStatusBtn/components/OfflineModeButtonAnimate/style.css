@@ -1,0 +1,110 @@
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none;
+}
+.circle-button {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ff4d4d, #cc0000);
+  box-shadow: 0 4px 8px rgba(255, 0, 0, 0.4);
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: transform 0.1s ease;
+}
+
+.circle-button:active {
+  transform: scale(0.95);
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.ring-bg {
+  fill: none;
+  stroke: #ffcccc;
+}
+
+.ring-progress {
+  fill: none;
+  stroke: #ffffff;
+  transition: stroke-dashoffset 0.05s linear;
+}
+.circle-button-green {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #2ebf70;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(46, 191, 112, 0.4);
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  border: none;
+  position: relative;
+}
+
+.circle-button-green:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 6px rgba(46, 191, 112, 0.3);
+}
+
+.button-label-green {
+  position: absolute;
+  z-index: 2;
+  font-size: 16px;
+}
+
+.progress-ring-green {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.ring-bg-green {
+  fill: none;
+  stroke: rgba(46, 191, 112, 0.2);
+}
+
+.ring-progress-green {
+  fill: none;
+  stroke: #ffffff;
+
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.button-label-green {
+  position: absolute;
+  top: 51%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  pointer-events: none;
+}
+.button-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  pointer-events: none;
+}

@@ -1,17 +1,9 @@
-import { openDB } from 'idb';
+import { STORES } from '@/constants/dbEnums';
+import { openDB, type IDBPDatabase } from 'idb';
 const DB_NAME = 'myDatabase';
-/* const OFFLINE_DB_NAME = "offline-db" */
+const OFFLINE_DB_NAME = "offline-db"
 const STORE_NAME = 'locateReviews';
-/* export async function initDB() {
-    const db = await openDB(DB_NAME, 1, {
-        upgrade(db) {
-            if (!db.objectStoreNames.contains(STORE_NAME)) {
-                db.createObjectStore(STORE_NAME, { keyPath: 'policyId' });
-            }
-        },
-    });
-    return db;
-} */
+
 export async function initDB() {
     const db = await openDB(DB_NAME, 1, {
         upgrade(db) {
@@ -80,22 +72,16 @@ export async function clearStore() {
     const tx = db.transaction(STORE_NAME, 'readwrite');
     await tx.objectStore(STORE_NAME).clear();
     await tx.done;
-
-    console.log(`All records from "${STORE_NAME}" have been deleted.`);
 }
-
 export async function deleteData(name: string): Promise<void> {
     const db = await initDB();
     await db.delete(STORE_NAME, name);
 }
-
-
 interface PaginatedResult<T> {
     data: T[];
     totalPages: number;
     totalItems: number;
 }
-
 export async function getPaginatedDataFromIDB<T>(
     databaseName: string,
     storeName: string,
@@ -123,17 +109,129 @@ export async function getPaginatedDataFromIDB<T>(
     };
 }
 ///create database
-/* export async function initOfflineDb() {
-    const db = await openDB(OFFLINE_DB_NAME, 1, {
+export async function initOfflineDb() {
+    const db = await openDB(OFFLINE_DB_NAME, 3.1, {
         upgrade(db) {
+
             if (!db.objectStoreNames.contains('tasks')) {
                 db.createObjectStore('tasks', {
-                   
+                    keyPath: 'personalCode'
+                    /*    autoIncrement: true, */
+                });
+            }
+            if (!db.objectStoreNames.contains('reviews')) {
+                db.createObjectStore('reviews', {
+                    keyPath: 'id'
+                });
+            }
+            if (!db.objectStoreNames.contains('documents')) {
+                db.createObjectStore('documents', {
                     autoIncrement: true,
                 });
             }
         },
     });
-
     return db;
-} */
+}
+export const addRecordToDb = async (db: IDBPDatabase, storeName: string, object: any) => {
+    try {
+        const tx = db.transaction(storeName, 'readwrite');
+        const store = tx.objectStore(storeName);
+        const id = await store.add(object);
+        await tx.done;
+        return id
+    }
+    catch (err) {
+        console.error('خطا در ذخیره اطلاعات', err);
+        throw err;
+    }
+}
+//get record from store
+export const getAllRecord = async (db: IDBPDatabase, storeName: string) => {
+    try {
+        const tx = db.transaction(storeName, 'readonly');
+        const store = tx.objectStore(storeName);
+        const allRecords = await store.getAll();
+        await tx.done;
+        return allRecords
+    }
+    catch (err) {
+        console.error('خطا در دریافت اطلاعات', err);
+        throw err;
+    }
+}
+////delete record from db
+export const deleteRecordFromDb = async (
+    db: IDBPDatabase,
+    storeName: string,
+    key: IDBValidKey
+): Promise<void> => {
+    try {
+        const tx = db.transaction(storeName, 'readwrite');
+        const store = tx.objectStore(storeName);
+        await store.delete(key);
+        await tx.done;
+    } catch (err) {
+        console.error('خطا در حذف رکورد:', err);
+        throw err;
+    }
+};
+export const getRecordById = async (
+    db: IDBPDatabase,
+    storeName: string,
+    key: IDBValidKey
+): Promise<any | undefined> => {
+    try {
+        const tx = db.transaction(storeName, 'readonly');
+        const store = tx.objectStore(storeName);
+        const record = await store.get(key);
+        await tx.done;
+        return record;
+    } catch (err) {
+        console.error('خطا در دریافت رکورد با آیدی:', err);
+        throw err;
+    }
+};
+export const updateRecordInDb = async (
+    db: IDBPDatabase,
+    storeName: string,
+    object: any
+): Promise<void> => {
+    try {
+        const tx = db.transaction(storeName, 'readwrite');
+        const store = tx.objectStore(storeName);
+        await store.put(object);  // اینجا put رکورد رو آپدیت یا اضافه می‌کنه
+        await tx.done;
+    } catch (err) {
+        console.error('خطا در آپدیت رکورد:', err);
+        throw err;
+    }
+};
+
+
+export const clearAndUpdateReviewStore = async (items: any) => {
+    const db = await initOfflineDb()
+    await db.clear(String(STORES.Reviews))
+    try {
+        for (const item of items) {
+            await addRecordToDb(db, STORES.Reviews, item);
+        }
+    }
+    catch (err: unknown) {
+        console.log("db error", err)
+
+    }
+}
+export const clearAndUpdateDocumentStore = async (items: any) => {
+    const db = await initOfflineDb()
+    await db.clear(String(STORES.Documents))
+    try {
+        for (const item of items) {
+            await addRecordToDb(db, STORES.Documents, item);
+        }
+    }
+    catch (err: unknown) {
+        console.log("db error", err)
+
+    }
+}
