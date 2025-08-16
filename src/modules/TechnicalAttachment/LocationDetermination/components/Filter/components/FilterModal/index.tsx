@@ -17,6 +17,10 @@ export default function Index({ isOpen, setIsOpen, getList }: FilterModalProp) {
                 <span className="text-primary font-bold text-sm">بخش اول:</span>
             </section>
             <section className="mt-2">
+                <span className="font-light text-slate-700 text-xs">کلید واژه:</span>
+                <CustomTextBox value={filter.keyword} onChange={(e) => { updateFilter("keyword", e) }} placeholder="شناسه موضوع را وارد کنید" />
+            </section>
+            <section className="mt-2">
                 <span className="font-light text-slate-700 text-xs">شناسه موضوع:</span>
                 <CustomTextBox value={filter.formReviewId} onChange={(e) => { updateFilter("formReviewId", e) }} placeholder="شناسه موضوع را وارد کنید" />
             </section>

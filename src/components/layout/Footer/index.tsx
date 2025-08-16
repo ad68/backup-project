@@ -11,7 +11,7 @@ import CustomButton from "@/components/kit/CustomButton";
 
 export default function Index() {
     /*     const location = useLocation(); */
-    const { logout, isLogoutModalOpen, setIsLogoutModalOpen } = useFooter()
+    const { handleLogout, isLogoutModalOpen, setIsLogoutModalOpen, actionLoading } = useFooter()
     return <section className="fixed m-auto w-full left-0 bottom-0 flex justify-center z-50">
         <section className=" shadow-[1px_4px_13px_-1px_rgba(156,156,156,0.75)] rounded-t-full flex w-full max-w-5xl justify-around  h-[60px] pt-1 pb-3 bg-white">
             <Link to="/profile" className="flex flex-col items-center justify-center">
@@ -40,7 +40,7 @@ export default function Index() {
                     <span>آیا مایل به خروج هستید؟</span>
                     <section className="flex w-full mt-4 justify-center gap-4">
                         <CustomButton onClick={() => setIsLogoutModalOpen(false)} variant="outlined" className="w-[90px]" >خیر</CustomButton>
-                        <CustomButton onClick={logout} className="w-[160px]">بله</CustomButton>
+                        <CustomButton loading={actionLoading} onClick={handleLogout} className="w-[160px]">بله</CustomButton>
                     </section>
                 </section>
             </SlidingModal>

@@ -42,7 +42,6 @@ const useCheckSpecifications = () => {
              placeId: ""
          } */
         const data = filter
-
         try {
             const res = await useAxiosWithToken.post("/sabka/technical/annex/search/locate-reviews", data);
             const aaa = [...res.data]

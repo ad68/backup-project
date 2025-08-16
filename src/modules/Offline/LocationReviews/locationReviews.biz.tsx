@@ -6,11 +6,11 @@ import { useAxios } from "@/hooks";
 
 const useLocationReviews = () => {
     const [list, setList] = useState<Array<OfflineReview>>([])
+    const [actionLoading, setActionLoading] = useState(false)
     const getAllData = async () => {
         const db = await initOfflineDb()
         try {
             const list = await getAllRecord(db, STORES.Reviews);
-
             setList(list)
         }
         catch (err: unknown) {
@@ -18,12 +18,13 @@ const useLocationReviews = () => {
         }
     }
     const syncData = () => {
+        setActionLoading(true)
         let data = [...list]
         useAxios.post("/sabka/technical/annex/sync/offline-annexes", data).then(async (res) => {
             await clearAndUpdateReviewStore(res.data)
             getAllData()
 
-        }).finally()
+        }).finally(() => setActionLoading(false))
     }
     useEffect(() => {
         getAllData()
@@ -31,7 +32,9 @@ const useLocationReviews = () => {
 
     return {
         list,
-        syncData
+        syncData,
+        actionLoading,
+
     }
 }
 export default useLocationReviews

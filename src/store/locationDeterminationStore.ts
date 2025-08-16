@@ -12,6 +12,7 @@ export type FilterState = {
     nationalCode: string;
     policyId: string;
     subSectionId: string;
+    keyword: string,
 };
 
 const initialState: FilterState = {
@@ -25,6 +26,7 @@ const initialState: FilterState = {
     nationalCode: "",
     policyId: "",
     subSectionId: "1",
+    keyword: "",
 };
 
 type SearchFilter = {

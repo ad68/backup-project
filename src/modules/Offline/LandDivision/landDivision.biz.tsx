@@ -61,6 +61,10 @@ const useLandDivision = () => {
 
     const [searchParams] = useSearchParams();
     const rawExtraInfo = searchParams.get("rawExtraInfo")
+    const virtualId = searchParams.get("virtualId")
+    const newInsured = searchParams.get("newInsured")
+    const reason = searchParams.get("reason")
+    const newExtraInfo = searchParams.get("newExtraInfo")
     const subjectItemId = searchParams.get("subjectItemId")
     const policyItemId = searchParams.get("policyItemId")
     const [actionLoading, setActionLoading] = useState(false)
@@ -104,6 +108,28 @@ const useLandDivision = () => {
             const formValue = JSONStringToObject(rawExtraInfo)
             setTimeout(() => {
                 reset({
+                    F125: formValue?.F125,
+                    F149: formValue?.F149,
+                    F3115: formValue?.F3115,
+                    F126: formValue?.F126,
+                    F127: formValue?.F127,
+                    F128: formValue?.F128,
+                    F129: formValue?.F129,
+                    F131: formValue?.F131,
+                    F132: formValue?.F132 ? new Date(formValue?.F132) : new Date(),
+                    F150: ownerShipsOptions.find(el => el.value === formValue?.F150)?.value,
+                    F134: waterResourceOptions.find(el => el.value === formValue?.F134)?.value,
+                    F2941: irrigationSystemOptions.find(el => el.value === formValue?.F2941)?.value,
+                    F2942: formValue?.F2942,
+                })
+            }, 100);
+        }
+        else if (newExtraInfo) {
+            const formValue = JSONStringToObject(newExtraInfo)
+            setTimeout(() => {
+                reset({
+                    newInsured: newInsured ? parseInt(newInsured) : 0,
+                    reason: reason ? reason : "",
                     F125: formValue?.F125,
                     F149: formValue?.F149,
                     F3115: formValue?.F3115,
@@ -174,47 +200,75 @@ const useLandDivision = () => {
         }
         setActionLoading(true)
         let arr = [...policyList]
-        const prevRecord = arr.find(el => el.policyItemId === Number(policyItemId));
+        let prevRecord;
+        if (rawExtraInfo) {
+            prevRecord = arr.find(el => el.policyItemId === Number(policyItemId));
+        }
+        else if (newExtraInfo) {
+            prevRecord = arr.find(el => el.virtualId === virtualId);
+        }
+
+        console.log("prevRecord", prevRecord)
         const newId = nanoid()
         const params: PolicyItem = {
-            actual: prevRecord.actual,
+            actual: prevRecord?.actual,
             edited: true,
             errorDesc: null,
             extraInfo: generateExtraInfo(data),
-            featureId: prevRecord.featureId,
+            featureId: prevRecord?.featureId,
             id: null,
             virtualId: newId,
-            insured: prevRecord.insured,
+            insured: prevRecord?.insured,
             newExtraInfo: `${JSON.stringify(removeKeys(data, "newInsured", "reason"))}`,
             newInsured: data.newInsured,
-            note: prevRecord.note,
+            note: prevRecord?.note,
             policyItemId: null,
-            property01: prevRecord.property01,
-            property02: prevRecord.property02,
-            property03: prevRecord.property03,
-            property04: prevRecord.property04,
+            property01: prevRecord?.property01,
+            property02: prevRecord?.property02,
+            property03: prevRecord?.property03,
+            property04: prevRecord?.property04,
             rawExtraInfo: null,
             reason: data.reason,
             subjectItemId: Number(subjectItemId),
             subjectNotExist: false,
             tag: null,
-            wkt: null,
+            wkt: newExtraInfo ? prevRecord?.wkt : null,
         }
         console.log('params', params)
         console.log('prevRecord', prevRecord)
-        let currentRecord = currentReview;
-        arr.push(params)
-        if (currentRecord) {
-            currentRecord.edited = true;
-            currentRecord.locateReviews.policy.policyItems = arr
-            console.log("currentRecord", currentRecord)
+        if (rawExtraInfo) {
+            let currentRecord = currentReview;
+            arr.push(params)
+            if (currentRecord) {
+                currentRecord.edited = true;
+                currentRecord.locateReviews.policy.policyItems = arr
+                console.log("currentRecord", currentRecord)
+            }
+            ///update record
+            const db = await initOfflineDb();
+            const task = await updateRecordInDb(db, STORES.Reviews, currentRecord);
+            console.log(task);
+            navigation(-1)
+        }
+        else if (newExtraInfo) {
+
+            let currentRecord = currentReview;
+            let recordIndex = arr.findIndex(el => el.virtualId === virtualId)
+            arr[recordIndex] = params
+            if (currentRecord) {
+                currentRecord.edited = true;
+                currentRecord.locateReviews.policy.policyItems = arr
+                console.log("currentRecord", currentRecord)
+            }
+            const db = await initOfflineDb();
+            const task = await updateRecordInDb(db, STORES.Reviews, currentRecord);
+            console.log(task);
+            navigation(-1)
+            /* currentRecord?.locateReviews.policy.policyItems */
         }
 
-        ///update record
-        const db = await initOfflineDb();
-        const task = await updateRecordInDb(db, STORES.Reviews, currentRecord);
-        console.log(task);
-        navigation(-1)
+
+
     };
     return {
         isOpenDtl, isOpenDtl1, setIsOpenDtl, setIsOpenDtl1, isInfoModalOpen, setIsInfoModalOpen, ownerShipsOptions,

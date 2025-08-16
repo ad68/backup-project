@@ -55,6 +55,8 @@ const useLandDivision = () => {
     const [searchParams] = useSearchParams();
     const rawExtraInfo = searchParams.get("rawExtraInfo")
     const subjectItemId = searchParams.get("subjectItemId")
+    const reviewId = searchParams.get("reviewId")
+    const policyId = searchParams.get("policyId")
     const [actionLoading, setActionLoading] = useState(false)
     const ownerShipsOptions = [
         { label: "استیجاری", value: "1016" },
@@ -112,6 +114,8 @@ const useLandDivision = () => {
         }
         setActionLoading(true)
         const params = {
+            policyId: policyId,
+            reviewId: reviewId,
             subjectItemId: subjectItemId,
             newInsured: data.newInsured,
             reason: data.reason,

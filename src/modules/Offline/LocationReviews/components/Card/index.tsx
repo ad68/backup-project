@@ -1,15 +1,24 @@
 
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, InfoIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { gregorianToJalali } from "@/utils/global";
 /* import useCard from "./card.biz"; */
-export default function Index({ item, id }: any) {
+export default function Index({ item, id, isError, expireDate }: any) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
     /* const { addReviewToOfflineList, actionLoading } = useCard() */
     return <section className="p-2">
-        <section className={`border relative flex flex-col gap-4 bg-white border-slate-100  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[200px]`} shadow-lg`}>
+        <div className="flex justify-center w-[90%] m-auto rounded-t-lg px-2 py-1 bg-slate-600 text-white">
+            <p className="text-center text-[11px] font-sm">
+                تاریخ انقضای این پرونده در حالت آفلاین {gregorianToJalali(expireDate)} می باشد
+            </p>
+        </div>
+        <section className={`border relative flex flex-col gap-4 ${isError ? `border-red-500` : "border-slate-100"} bg-white  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[200px]`} shadow-lg`}>
+            {isError && <div className="text-center text-red-500 text-sm flex justify-center items-center gap-2">
+                <InfoIcon className="w-[20px]" />
+                <span>پرونده دارای خطا می باشد</span>
+            </div>}
             <section className="flex justify-between w-full">
                 <section className="flex gap-1">
                     <span className="font-light text-slate-500 text-sm">بیمه نامه:</span>
@@ -87,5 +96,6 @@ export default function Index({ item, id }: any) {
             </footer>
 
         </section>
+
     </section>
 }

@@ -83,29 +83,34 @@ export default function Index({ item, lat, lng }: { item: PolicyItem, lat?: stri
                                 <Link to={`/private-info?reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&rawExtraInfo=${item?.rawExtraInfo}&subjectId=${subjectId}`}>
                                     <button className="text-[10px] bg-red-500 p-2 rounded-lg border border-red-500  text-white">تکمیل اطلاعات اختصاصی</button>
                                 </Link>
+                                {item.edited && item.virtualId && <Link to={`/offline/land-division/${id}?virtualId=${item.virtualId}&reason=${item.reason}&newInsured=${item.newInsured}&policyItemId=${item.policyItemId}&reviewId=${reviewId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&newExtraInfo=${item?.newExtraInfo}&edited=true`} >
+                                    <button className="text-[10px] bg-orange-500 p-2 rounded-lg border border-orange-500 text-white">ویرایش قلم</button>
+                                </Link>}
                             </section>
                         </PopoverContent>
                     </Popover>
 
-                    {!item.wkt && <Link to={`/offline/location-determination-type/${id}?virtualId=${item.virtualId}&reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}&wkt=${item.wkt}`}>
+                    {!item.wkt && <Link to={`/offline/location-determination-type/${id}?virtualId=${item.virtualId}&subjectNotExist=${item.subjectNotExist}&itemId=${item.virtualId}&policyItemId=${item.policyItemId}&reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}&wkt=${item.wkt}`}>
                         <button className="border w-[90px] bg-blue-500 border-blue-500 text-white shadow-md h-[30px] flex justify-center  items-center gap-2 rounded-full">
                             <span className="font-light text-sm">تعیین مکان</span>
                         </button>
                     </Link>}
-
-                    {item.wkt && <Link to={`/offline/location-on-map/${id}?virtualId=${item.virtualId}&reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}&wkt=${item.wkt}`}> <button className="border w-[110px] bg-orange-500 border-orange-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
-                        <span className="font-light text-sm">ویرایش مکان</span>
-                    </button></Link>}
+                    {item.wkt && <Link to={`/offline/location-determination-type/${id}?virtualId=${item.virtualId}&reviewId=${reviewId}&subjectId=${subjectId}&featureId=${item.featureId}&policyId=${policyId}&subjectItemId=${item.subjectItemId}&farmerName=${farmerName}&lat=${lat}&lng=${lng}&wkt=${item.wkt}`}>
+                        <button className="border w-[110px] bg-orange-500 border-orange-500 shadow-md h-[30px] flex justify-center text-white items-center gap-2 rounded-full">
+                            <span className="font-light text-sm">ویرایش مکان</span>
+                        </button></Link>}
                 </section>
                 <button onClick={() => setIsOpenDtl(!isOpenDtl)} className="bg-yellow-400 shadow-md w-[36px] h-[30px] flex justify-center items-center rounded-full">
                     {isOpenDtl ? <ChevronUp color="white" className="w-[20px]" /> : <ChevronDown color="white" className="w-[20px]" />}
                 </button>
             </footer>
-            {item.errorDesc ?
-                <div className="bg-red-600 w-[90%] left-[5%] text-center absolute bottom-[-25px] text-white rounded-b-full">{item.errorDesc}</div> :
-                (item.virtualId && !item.wkt) ? <div className="bg-red-600 w-[90%] left-[5%] text-center absolute bottom-[-25px] text-white rounded-b-full">تعیین مکان شود</div> : ""}
+
 
         </section>
-
+        <div className="flex justify-center">
+            {item.errorDesc ?
+                <div className="bg-red-600 w-[90%] px-4 text-center bottom-[-25px] text-sm text-white rounded-b-xl">{item.errorDesc}</div> :
+                (item.virtualId && !item.wkt) ? <div className="bg-red-600 w-[90%] left-[5%] text-center bottom-[-25px] text-white rounded-b-full">تعیین مکان شود</div> : ""}
+        </div>
     </section>
 }

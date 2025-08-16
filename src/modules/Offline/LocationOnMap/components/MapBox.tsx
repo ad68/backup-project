@@ -71,6 +71,13 @@ export default function Index({
     const { token } = useAuthStore()
     const { id } = useParams()
     const virtualId = searchParams.get("virtualId")
+    const subjectItemId = searchParams.get("subjectItemId")
+    const reviewId = searchParams.get("reviewId")
+    const subjectId = searchParams.get("subjectId")
+    const policyId = searchParams.get("subjectId")
+    const farmerName = searchParams.get("farmerName")
+
+
     const [policyList, setPolicyList] = useState<Array<any>>([])
     const [currentReview, setCurrentReview] = useState<OfflineReview>()
     const mapRef = useRef<HTMLDivElement | null>(null);
@@ -243,11 +250,20 @@ export default function Index({
     }
     const locateSubjectItem = async () => {
         let arr = [...policyList]
-        const recordIndex = arr.findIndex(el => el.virtualId === virtualId);
+        let recordIndex;
+
+        if (virtualId !== "null") {
+            recordIndex = arr.findIndex(el => el.virtualId === virtualId)
+        }
+        else {
+            recordIndex = arr.findIndex(el => el.subjectItemId == subjectItemId)
+        }
         arr[recordIndex].wkt = geoInWkt
+        arr[recordIndex].edited = true
         let currentRecord = currentReview;
         if (currentRecord) {
             currentRecord.token = token
+            currentRecord.edited = true
             currentRecord.locateReviews.policy.policyItems = arr
             console.log("currentRecord", currentRecord)
         }
@@ -255,7 +271,7 @@ export default function Index({
         const task = await updateRecordInDb(db, STORES.Reviews, currentRecord);
         console.log(task)
         toastSuccess("مکان با موفقیت ثبت شد")
-        navigate(-1)
+        navigate(`/offline/locate-reviews/${id}?reviewId=${reviewId}&policyId=${policyId}&subjectId=${subjectId}&farmerName=${farmerName}`)
 
     }
     const deleteAll = () => {

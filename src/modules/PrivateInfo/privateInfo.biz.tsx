@@ -108,7 +108,6 @@ const usePrivateInfo = () => {
             policyId: policyId,
             subjectItemId: subjectItemId,
             subjectId: subjectId,
-
             extraInfo: `${JSON.stringify(data)}`
         }
         useAxiosWithToken.post("/sabka/technical/annex/add/fix-extra-info", params).then().finally(() => { setActionLoading(false) })

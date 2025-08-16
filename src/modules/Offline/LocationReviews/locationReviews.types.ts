@@ -65,6 +65,8 @@ type LocateReview = {
 };
 export type OfflineReview = {
     id: number;
+    isError: boolean;
+    expireDate: string;
     username: string | null;
     locateReviews: LocateReview;
     caseStatus: string;

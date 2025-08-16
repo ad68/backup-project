@@ -1,6 +1,6 @@
 import { Toaster } from 'react-hot-toast';
 const ToasterProvider = () => {
-    return <Toaster />;
+    return <Toaster toastOptions={{ duration: 2000 }} />;
 };
 
 export default ToasterProvider;

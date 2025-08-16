@@ -38,6 +38,7 @@ import LocationOnMapOffline from '../modules/Offline/LocationOnMap'
 import DocumentUpload from '../modules/Offline/DocumentUpload'
 import Plimit from '../modules/Offline/Plimit'
 import LocationDeterminationTypeOffline from '../modules/Offline/LocationDeterminationType'
+import OfflineSubjectNotExist from '../modules/Offline/SubjectNotExist'
 import Rules from '@/modules/rules'
 /* import GoogleMap from '@/modules/GoogleMap' */
 import { useEffect } from "react";
@@ -92,6 +93,9 @@ export default function Index() {
         { path: "Plimit", element: <Plimit /> },
         { path: "location-determination-type/:id", element: <LocationDeterminationTypeOffline /> },
         { path: "document-upload", element: <DocumentUpload /> },
+        { path: "subject-not-exist/:id", element: <OfflineSubjectNotExist /> },
+
+
     ];
     return <Routes>
         <Route path="/" element={<Login />} />
