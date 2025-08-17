@@ -3,7 +3,7 @@ import { useAxiosWithToken } from "@/hooks"
 import { bulkSaveToIDB, clearStore, getPaginatedDataFromIDB } from "@/lib/indexdb"
 import { useLocationDeterminationStore } from "@/store/locationDeterminationStore"
 import { useEffect, useState } from "react"
-const useLocationDetermination = () => {
+const useCheckSpecifications = () => {
     const { filter } = useLocationDeterminationStore()
     const [data, setData] = useState<any>([])
     const [loading, setLoading] = useState(false)
@@ -51,7 +51,6 @@ const useLocationDetermination = () => {
             setTimeout(() => {
                 setLoading(false)
             }, 100);
-
             loadList(1)
         } catch (error: any) {
             setLoading(false)
@@ -89,4 +88,4 @@ const useLocationDetermination = () => {
         totalPage, showSmsModal, closeSmsModal, smsModalIsOpen, selectedItem
     }
 }
-export default useLocationDetermination
+export default useCheckSpecifications

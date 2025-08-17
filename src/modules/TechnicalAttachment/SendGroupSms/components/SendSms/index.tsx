@@ -6,10 +6,10 @@ import { useAxiosWithToken } from "@/hooks"
 import { useAuthStore } from "@/store/authStore"
 import { gregorianToJalali } from "@/utils/global"
 import { Undo2Icon } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 
-export default function Index({ rowData, closeSmsModal }: any) {
+export default function Index({ rowData, closeSmsModal, filter }: any) {
     const { userInfo } = useAuthStore()
     const hourOptions = Array.from({ length: 18 }, (_, i) => {
         const hour = (i + 4).toString();
@@ -19,19 +19,38 @@ export default function Index({ rowData, closeSmsModal }: any) {
     const [fromHour, setFromHour] = useState("")
     const [toHour, setToHour] = useState("")
     const [actionLoading, setActionLoading] = useState(false)
-    useEffect(() => {
+    /* useEffect(() => {
         console.log("rowData", rowData)
-    }, [rowData])
+        console.log("filter", filter)
+
+    }, [rowData, filter]) */
     const sendSms = () => {
-        if (selectedDate && fromHour && toHour) {
+        if (rowData && selectedDate && fromHour && toHour) {
+            setActionLoading(true)
             const params = {
                 policyId: rowData.policyId,
                 from: fromHour,
                 to: toHour,
                 persianDate: gregorianToJalali(String(selectedDate)),
-
             }
+            /*  console.log(params) */
             useAxiosWithToken.post("/sabka/technical/annex/send-sms-notify-going", params).then(() => {
+                toastSuccess("پیامک با موفقیت ارسال شد")
+                closeSmsModal()
+            }).finally(() => {
+                setActionLoading(false)
+            })
+        }
+        else if (filter && selectedDate && fromHour && toHour) {
+            setActionLoading(true)
+            let params = {
+                ...filter,
+                from: fromHour,
+                to: toHour,
+                persianDate: gregorianToJalali(String(selectedDate)),
+            }
+            console.log(params)
+            useAxiosWithToken.post("/sabka/technical/annex/send-all-sms-notify-going", params).then(() => {
                 toastSuccess("پیامک با موفقیت ارسال شد")
                 closeSmsModal()
             }).finally(() => {

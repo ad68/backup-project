@@ -75,7 +75,8 @@ export default function Index({ item, showSmsModal }: CardProp) {
                 <div className="flex gap-2">
 
 
-                    <button onClick={() => showSmsModal(item)} className="border w-[40px] h-[30px] bg-blue-500 border-blue-500 shadow-md flex justify-center items-center text-white gap-2 rounded-full">
+                    <button onClick={() => showSmsModal(item)} className="border px-3 h-[30px] bg-blue-500 border-blue-500 shadow-md flex justify-center items-center text-white gap-2 rounded-full">
+                        <span>ارسال پیام</span>
                         <MessageCircleIcon className="w-[18px]" />
                     </button>
                 </div>

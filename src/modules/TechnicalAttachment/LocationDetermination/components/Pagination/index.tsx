@@ -1,5 +1,5 @@
 import ReactPaginate from "react-paginate";
-import type { PaginationProp } from "../../locationDetermination";
+import type { PaginationProp } from "../../technicalAttachment.type";
 
 
 export default function Index({ setCurrentPage, totalPage, currentPage }: PaginationProp) {

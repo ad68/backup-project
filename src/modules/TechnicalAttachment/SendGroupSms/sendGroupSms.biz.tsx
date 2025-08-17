@@ -19,14 +19,12 @@ const useSendGroupSms = () => {
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [totalPage, setTotalPage] = useState<number>(1)
     const [smsModalIsOpen, setSmsModalIsOpen] = useState(false)
+    const [allSmsModalIsOpen, setAllSmsModalIsOpen] = useState(false)
     const [selectedItem, setSelectedItem] = useState()
     const saveToDataBase = async (data: any) => {
         await bulkSaveToIDB(data);
     };
-    const showSmsModal = (value: any) => {
-        setSelectedItem(value)
-        setSmsModalIsOpen(true)
-    }
+
     const updateFilter = (key: keyof SendGroupSmsFilter, value: string) => {
         setFilter({ ...filter, [key]: value })
     }
@@ -36,9 +34,22 @@ const useSendGroupSms = () => {
     useEffect(() => {
         console.log("filter", filter)
     }, [filter])
+
+    const showSmsModal = (value: any) => {
+        setSelectedItem(value)
+        setSmsModalIsOpen(true)
+    }
     const closeSmsModal = () => {
         setSelectedItem(undefined)
         setSmsModalIsOpen(false)
+    }
+    const closeAllSmsModal = () => {
+
+        setAllSmsModalIsOpen(false)
+    }
+    const showAllSmsModal = () => {
+
+        setAllSmsModalIsOpen(true)
     }
     const getList = async () => {
         setLoading(true);
@@ -108,7 +119,10 @@ const useSendGroupSms = () => {
         closeSmsModal,
         smsModalIsOpen,
         selectedItem,
-        clearFilter
+        clearFilter,
+        allSmsModalIsOpen,
+        showAllSmsModal,
+        closeAllSmsModal
     }
 }
 export default useSendGroupSms

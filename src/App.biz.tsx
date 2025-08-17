@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react"
-import { getAllRecord, initDB, initOfflineDb } from "./lib/indexdb"
-
+import { getAllRecord, initOfflineDb } from "./lib/indexdb"
 import { registerSW } from "virtual:pwa-register"
 import { STORES } from "./constants/dbEnums"
-
+import { useAxios } from "./hooks"
 const useApp = () => {
     const [needRefresh, setNeedRefresh] = useState(false)
     const [updateFn, setUpdateFn] = useState<null | (() => void)>(null)
@@ -20,11 +19,31 @@ const useApp = () => {
         }
     }
     useEffect(() => {
+
         if (offlineReviews?.length > 0) {
             setReviewExpireDate(offlineReviews[0].expireDate)
         }
     }, [offlineReviews])
+    const clearReviewsFromIdb = async () => {
+        const db = await initOfflineDb();
+        try {
+            await db.clear(String(STORES.Reviews))
+            /*   getAllData() */
 
+        } catch (err) {
+            console.error(err);
+
+        }
+    }
+    const clearOfflineReviews = () => {
+        let reviewIds = offlineReviews.map((item: any) => { return item.id })
+        console.log("reviewIds", reviewIds)
+        useAxios.post("/sabka/technical/annex/remove/offline-list", reviewIds)
+            .then(() => {
+                clearReviewsFromIdb()
+            })
+            .finally()
+    }
     useEffect(() => {
         if (reviewExpireDate) {
             const expireDate = new Date(reviewExpireDate)
@@ -35,21 +54,19 @@ const useApp = () => {
             console.log("expireDate", expireDate)
             if (today > expireDate) {
                 console.log("expired")
+                clearOfflineReviews()
             }
             else if (today < expireDate) {
                 console.log("not expired")
+
             }
             else if (today === expireDate) {
                 console.log("equal not expired")
+                clearOfflineReviews()
             }
         }
     }, [reviewExpireDate])
-    useEffect(() => {
-        initDB()
-        initOfflineDb()
-        getAllData()
 
-    }, [])
     useEffect(() => {
         const updateSW = registerSW({
             onNeedRefresh() {
@@ -63,7 +80,7 @@ const useApp = () => {
     }, [])
     return {
         needRefresh,
-        updateFn, setNeedRefresh
+        updateFn, setNeedRefresh, getAllData
     }
 }
 export default useApp

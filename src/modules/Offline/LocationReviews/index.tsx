@@ -6,6 +6,7 @@ import CustomButton from "@/components/kit/CustomButton";
 import { UploadCloudIcon } from "lucide-react";
 import NoRecord from "@/components/kit/NoRecord";
 export default function Index() {
+
     const { list, syncData, actionLoading } = useLocationReviews()
     return <main className="pb-[80px]">
         <PageTitle size="small" title="لیست تعیین مکان آفلاین" />

@@ -1,11 +1,13 @@
 
-import { ChevronDown, ChevronUp, InfoIcon } from "lucide-react";
+import { ChevronDown, ChevronUp, InfoIcon, Trash2Icon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { gregorianToJalali } from "@/utils/global";
+import { useOnlineStatus } from "@/hooks";
 /* import useCard from "./card.biz"; */
 export default function Index({ item, id, isError, expireDate }: any) {
+    const isOnline = useOnlineStatus();
     const [isOpenDtl, setIsOpenDtl] = useState(false)
     /* const { addReviewToOfflineList, actionLoading } = useCard() */
     return <section className="p-2">
@@ -88,7 +90,12 @@ export default function Index({ item, id, isError, expireDate }: any) {
                             {/* <EyeIcon color="#2ebf70" className="w-[30px] stroke-white" /> */}
                             مشاهده
                         </button>
+
                     </Link>
+                    {isOnline && <button className="border w-[50px] h-[30px] bg-red-500 border-red-500 shadow-md text-[12px] flex justify-center text-white items-center gap-2 rounded-full">
+                        <Trash2Icon className="w-[20px]" />
+                    </button>}
+
                 </div>
                 <button onClick={() => setIsOpenDtl(!isOpenDtl)} className="bg-yellow-400 shadow-md w-[36px] h-[30px] flex justify-center items-center rounded-full">
                     {isOpenDtl ? <ChevronUp color="white" className="w-[20px]" /> : <ChevronDown color="white" className="w-[20px]" />}

@@ -2,7 +2,7 @@
 import { ChevronDown, ChevronUp, MessageCircleIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import type { CardProp } from "../../locationDetermination";
+import type { CardProp } from "../../technicalAttachment.type";
 import { gregorianToJalali } from "@/utils/global";
 import useCard from "./card.biz";
 export default function Index({ item, showSmsModal }: CardProp) {
