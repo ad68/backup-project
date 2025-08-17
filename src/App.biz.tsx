@@ -46,6 +46,7 @@ const useApp = () => {
     }
     useEffect(() => {
         if (reviewExpireDate) {
+
             const expireDate = new Date(reviewExpireDate)
             const today = new Date()
             expireDate.setHours(0, 0, 0, 0)
@@ -60,10 +61,7 @@ const useApp = () => {
                 console.log("not expired")
 
             }
-            else if (today === expireDate) {
-                console.log("equal not expired")
-                clearOfflineReviews()
-            }
+
         }
     }, [reviewExpireDate])
 

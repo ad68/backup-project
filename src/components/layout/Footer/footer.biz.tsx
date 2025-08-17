@@ -1,4 +1,4 @@
-import { toastError } from "@/components/kit/toast"
+
 import BASE_URL from "@/config/api"
 import { useAxios } from "@/hooks"
 import { useAuthStore } from "@/store/authStore"
@@ -23,7 +23,7 @@ const useFooter = () => {
             logout()
         }).catch(err => {
             setActionLoading(false)
-            toastError(err.response.data.message)
+            logout()
         })
     }
     return {

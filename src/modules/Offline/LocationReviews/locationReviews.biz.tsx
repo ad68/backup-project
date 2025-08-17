@@ -1,9 +1,10 @@
 import { STORES } from "@/constants/dbEnums";
-import { clearAndUpdateReviewStore, getAllRecord, initOfflineDb } from "@/lib/indexdb";
+import { clearAndUpdateReviewStore, deleteRecordFromDb, getAllRecord, initOfflineDb } from "@/lib/indexdb";
 import { useEffect, useState } from "react";
 import type { OfflineReview } from "./locationReviews.types";
 import { useAxios } from "@/hooks";
 import { useAuthStore } from "@/store/authStore";
+import { toastError, toastSuccess } from "@/components/kit/toast";
 
 const useLocationReviews = () => {
     const [list, setList] = useState<Array<OfflineReview>>([])
@@ -38,6 +39,27 @@ const useLocationReviews = () => {
 
         }).finally(() => setActionLoading(false))
     }
+    const clearReviewsFromIdb = async (id: any) => {
+        const db = await initOfflineDb();
+        try {
+            await deleteRecordFromDb(db, STORES.Reviews, id);
+            getAllData()
+            toastSuccess("حذف شد");
+        } catch (err) {
+            console.error(err);
+            toastError("خطا در حذف رکورد");
+        }
+    }
+    const clearOfflineReviews = (id: any) => {
+        const question = confirm("آیا از حذف پرونده مطمئن هستید؟")
+        if (question) {
+            useAxios.post("/sabka/technical/annex/remove/offline-list", [id])
+                .then((res) => {
+                    clearReviewsFromIdb(res.data[0].id)
+                })
+                .finally()
+        }
+    }
     useEffect(() => {
         getAllData()
     }, [])
@@ -46,7 +68,7 @@ const useLocationReviews = () => {
         list,
         syncData,
         actionLoading,
-
+        clearOfflineReviews
     }
 }
 export default useLocationReviews

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { gregorianToJalali } from "@/utils/global";
 import { useOnlineStatus } from "@/hooks";
 /* import useCard from "./card.biz"; */
-export default function Index({ item, id, isError, expireDate }: any) {
+export default function Index({ item, id, isError, expireDate, clearOfflineReviews }: any) {
     const isOnline = useOnlineStatus();
     const [isOpenDtl, setIsOpenDtl] = useState(false)
     /* const { addReviewToOfflineList, actionLoading } = useCard() */
@@ -46,9 +46,7 @@ export default function Index({ item, id, isError, expireDate }: any) {
                     <span className="font-light text-slate-500 text-sm">موبایل:</span>
                     <span className="text-sm">{item.beneficiary.mobile}</span>
                 </section>
-
             </section>
-
             {isOpenDtl && <> <span className="w-full block bg-slate-200 h-[1px]"></span>
                 <section className="flex justify-between w-full">
                 </section>
@@ -67,7 +65,6 @@ export default function Index({ item, id, isError, expireDate }: any) {
                     </section> */}
                 </section>
                 <section className="flex justify-between w-full">
-
                     <section className="flex gap-1">
                         <span className="font-light text-slate-500 text-sm">تاریخ ارجاع:</span>
                         <span className="text-sm">{gregorianToJalali(item.reviewStartDate)}</span>
@@ -90,12 +87,10 @@ export default function Index({ item, id, isError, expireDate }: any) {
                             {/* <EyeIcon color="#2ebf70" className="w-[30px] stroke-white" /> */}
                             مشاهده
                         </button>
-
                     </Link>
-                    {isOnline && <button className="border w-[50px] h-[30px] bg-red-500 border-red-500 shadow-md text-[12px] flex justify-center text-white items-center gap-2 rounded-full">
+                    {isOnline && <button onClick={() => { clearOfflineReviews(item.id) }} className="border w-[50px] h-[30px] bg-red-500 border-red-500 shadow-md text-[12px] flex justify-center text-white items-center gap-2 rounded-full">
                         <Trash2Icon className="w-[20px]" />
                     </button>}
-
                 </div>
                 <button onClick={() => setIsOpenDtl(!isOpenDtl)} className="bg-yellow-400 shadow-md w-[36px] h-[30px] flex justify-center items-center rounded-full">
                     {isOpenDtl ? <ChevronUp color="white" className="w-[20px]" /> : <ChevronDown color="white" className="w-[20px]" />}
