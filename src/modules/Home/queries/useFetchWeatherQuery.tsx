@@ -12,6 +12,7 @@ const useFetchWeatherQuery = ({ currentLat, currentLng }: any) => {
         },
         staleTime: 240 * 60 * 1000,
         gcTime: 1440 * 60 * 1000,
+        enabled: false
 
     })
     return { isFetching, error, data, refetch }

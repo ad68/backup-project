@@ -8,7 +8,7 @@ import { useOfflineStore } from '@/store/useOfflineStore';
 
 
 export default function Index() {
-    const { weatherData, refetch, actionLoading } = useWeatherWidget()
+    const { weather, refetch, actionLoading } = useWeatherWidget()
     const { isOnline } = useOfflineStore()
     return <section className='w-full mt-[-100px] relative flex justify-center'>
         <section className={`w-[320px] px-[20px] flex justify-between items-center relative overflow-hidden gap-4 h-[130px] m-auto ${isOnline ? `bg-primary` : "bg-[#c79893]"}  rounded-[10px] shadow-2xl`}>
@@ -20,12 +20,12 @@ export default function Index() {
             <section className='absolute flex items-center gap-4 top-[10px] '>
                 <img src="/images/home/sun.png" alt='' className='w-[60px]' />
                 <section className='flex flex-col'>
-                    <span>{Math.trunc(weatherData?.temperature)}°</span>
-                    <span className='text-sm'>{weatherData?.cityName}</span>
+                    <span>{Math.trunc(weather.temperature)}°</span>
+                    <span className='text-sm'>{weather?.cityName}</span>
                 </section>
             </section>
             <section className='absolute flex items-center justify-center w-[140px] text-center gap-4 top-[80px] '>
-                <span className=''>{weatherData?.description}</span>
+                <span className=''>{weather?.description}</span>
             </section>
             <section className='absolute left-[6px] top-[15px] w-[145px] '>
                 <span className="block text-white">وضعیت هوا</span>

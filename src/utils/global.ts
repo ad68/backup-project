@@ -1,5 +1,8 @@
 import moment from "moment-jalaali"
-
+moment.loadPersian({
+    usePersianDigits: false,
+    dialect: "persian-modern", // این خط باعث میشه «مرداد» بشه، نه «امرداد»
+});
 export const persianToEnglishNumber = (input: string) => {
     const persianDigits: string[] = [
         '۰',
@@ -83,14 +86,9 @@ export const gregorianToJalaliDateTime = (value: string) => {
     return ''
 }
 export const getPersianDate = (): string => {
-    moment.loadPersian({ usePersianDigits: false });
     const now = moment();
-    const weekday = now.format('dddd');
-    const day = now.format('jD');
-    const month = now.format('jMMMM');
-    const year = now.format('jYYYY');
-    return `${weekday} ${day} ${month} ${year}`;
-};
+    return `${now.format("dddd")} ${now.format("jD")} ${now.format("jMMMM")} ${now.format("jYYYY")}`;
+}
 export const convertToBase64 = (file: File) => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
