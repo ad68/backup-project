@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import { devtools } from 'zustand/middleware';
 
 export type FilterState = {
     provinceId: string;
@@ -38,44 +38,42 @@ type SearchFilter = {
 
 export const useLocationDeterminationStore = create<SearchFilter>()(
     devtools(
-        persist(
-            (set) => ({
-                filter: initialState,
-                updateFilter: (key, value) =>
-                    set(
-                        (state) => ({
-                            filter: {
-                                ...state.filter,
-                                [key]: value,
-                            },
-                        }),
-                        false,
-                        'locationDetermination/updateFilter'
-                    ),
-                setFilters: (values) =>
-                    set(
-                        (state) => ({
-                            filter: {
-                                ...state.filter,
-                                ...values,
-                            },
-                        }),
-                        false,
-                        'locationDetermination/setFilters'
-                    ),
-                clearParams: () =>
-                    set(
-                        { filter: initialState },
-                        false,
-                        'locationDetermination/clearParams'
-                    ),
-            }),
-            {
-                name: 'location-determination-storage',
-            }
-        ),
+
+        (set) => ({
+            filter: initialState,
+            updateFilter: (key, value) =>
+                set(
+                    (state) => ({
+                        filter: {
+                            ...state.filter,
+                            [key]: value,
+                        },
+                    }),
+                    false,
+                    'locationDetermination/updateFilter'
+                ),
+            setFilters: (values) =>
+                set(
+                    (state) => ({
+                        filter: {
+                            ...state.filter,
+                            ...values,
+                        },
+                    }),
+                    false,
+                    'locationDetermination/setFilters'
+                ),
+            clearParams: () =>
+                set(
+                    { filter: initialState },
+                    false,
+                    'locationDetermination/clearParams'
+                ),
+        }),
         {
-            name: 'location-determination-devtools',
+            name: 'location-determination-storage',
         }
+        ,
+
     )
 );

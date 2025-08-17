@@ -20,12 +20,10 @@ type CustomSearchableSelectProps = {
     value?: string;
     className?: string;
 };
-
 const CustomSearchableSelect = forwardRef<HTMLButtonElement, CustomSearchableSelectProps>(
     ({ options, defaultValue, onChange, value, className }, ref) => {
         const [open, setOpen] = useState(false);
         const selected = options.find((opt) => opt.value === value || opt.value === defaultValue);
-
         return (
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger

@@ -2,20 +2,20 @@
 
 import Card from './components/Card'
 import Filter from './components/Filter'
-import useLocationDetermination from './locationDetermination.biz'
 import ListLoader from '@/components/kit/ListLoader'
 import NoRecord from '@/components/kit/NoRecord'
 import PageTitle from '@/components/kit/PageTitle'
 import SlidingModal from '@/components/kit/SlidingModal'
 import SendSms from './components/SendSms'
 import Pagination from './components/Pagination'
+import useSendGroupSms from './sendGroupSms.biz'
 export default function Index() {
-    const { data, loading, setCurrentPage, totalPage, currentPage, getList, closeSmsModal, selectedItem, showSmsModal, smsModalIsOpen } = useLocationDetermination()
+    const { data, loading, setCurrentPage, totalPage, currentPage, getList, closeSmsModal, selectedItem, showSmsModal, smsModalIsOpen, updateFilter, filter, clearFilter } = useSendGroupSms()
     return <>
-        <PageTitle title='تعیین مکان' />
+        <PageTitle title='ارسال پیامک گروهی' />
         <section className='pb-10 px-2 max-w-5xl m-auto'>
             <section className=''>
-                <Filter getList={getList} />
+                <Filter clearFilter={clearFilter} filter={filter} updateFilter={updateFilter} getList={getList} />
             </section>
             {data.length !== 0 && <Pagination currentPage={currentPage} totalPage={totalPage} setCurrentPage={setCurrentPage} />}
 

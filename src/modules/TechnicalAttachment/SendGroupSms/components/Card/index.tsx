@@ -1,13 +1,13 @@
 
-import { ChevronDown, ChevronUp, MessageCircleIcon, PlusIcon } from "lucide-react";
+import { ChevronDown, ChevronUp, MessageCircleIcon } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import type { CardProp } from "../../locationDetermination";
+
+import type { CardProp } from "../../sendGroupSms.types";
 import { gregorianToJalali } from "@/utils/global";
-import useCard from "./card.biz";
+
 export default function Index({ item, showSmsModal }: CardProp) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
-    const { addReviewToOfflineList, actionLoading } = useCard()
+
     return <section className="p-2">
         <section className={`border relative flex flex-col gap-4 bg-white border-slate-100  p-4 pb-12 rounded-2xl ${isOpenDtl ? `h-auto` : `h-[200px]`} shadow-lg`}>
             <section className="flex justify-between w-full">
@@ -71,19 +71,10 @@ export default function Index({ item, showSmsModal }: CardProp) {
                     <span className="block text-sm break-words">{item.region}</span>
                 </section>
             </>}
-
             <footer className="absolute flex justify-between bottom-2 px-2 w-full left-0">
                 <div className="flex gap-2">
-                    <Link to={`/insurance-detail?reviewId=${item.reviewId}&policyId=${item.policyId}&subjectId=${item.subjectId}&farmerName=${item.beneficiary.title}`}>
-                        <button className="border w-[80px] h-[30px] bg-primary border-primary shadow-md text-[12px] flex justify-center text-white items-center gap-2 rounded-full">
-                            {/* <EyeIcon color="#2ebf70" className="w-[30px] stroke-white" /> */}
-                            مشاهده
-                        </button>
-                    </Link>
-                    <button disabled={actionLoading} onClick={() => addReviewToOfflineList(item)} className="border w-[120px] h-[30px] bg-red-500 border-red-500 shadow-md text-xs flex justify-center  items-center text-white gap-2 rounded-full">
-                        {actionLoading ? <span className="tinyBtnLoader"></span> : <div className="flex items-center"><PlusIcon className="w-[20px]" /><span>افزودن به آفلاین </span></div>}
-                        {/*  <PlusIcon className="w-[20px]" /> */}
-                    </button>
+
+
                     <button onClick={() => showSmsModal(item)} className="border w-[40px] h-[30px] bg-blue-500 border-blue-500 shadow-md flex justify-center items-center text-white gap-2 rounded-full">
                         <MessageCircleIcon className="w-[18px]" />
                     </button>

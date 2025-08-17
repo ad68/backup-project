@@ -1,10 +1,10 @@
 import CustomSelect from "@/components/kit/CustomSelect";
 import CustomTextBox from "@/components/kit/CustomTextBox";
 import SlidingModal from "@/components/kit/SlidingModal";
-import type { FilterModalProp } from "@/modules/TechnicalAttachment/LocationDetermination/technicalAttachment.type";
+import type { FilterModalProp } from "@/modules/TechnicalAttachment/LocationDetermination/locationDetermination";
 import { SearchIcon, Undo2Icon } from "lucide-react";
 import useFilter from "../../Filter.biz";
-import CustomSearchableSelect from "@/components/kit/CustomSearchableSelect/inex";
+import CustomSearchableSelect from "@/components/kit/CustomSearchableSelect";
 
 export default function Index({ isOpen, setIsOpen, getList }: FilterModalProp) {
     const { provinces, counties, districts, places, ruralDistricts, products, clearForm, filter, updateFilter } = useFilter()

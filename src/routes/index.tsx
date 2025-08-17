@@ -36,7 +36,7 @@ import LocationReviewDetail from '../modules/Offline/LocationReviewDetail'
 import OfflineLandDivision from '../modules/Offline/LandDivision'
 import LocationOnMapOffline from '../modules/Offline/LocationOnMap'
 import DocumentUpload from '../modules/Offline/DocumentUpload'
-import Plimit from '../modules/Offline/Plimit'
+import SendGroupSms from '../modules/TechnicalAttachment/SendGroupSms'
 import LocationDeterminationTypeOffline from '../modules/Offline/LocationDeterminationType'
 import OfflineSubjectNotExist from '../modules/Offline/SubjectNotExist'
 import PrivateInfoOffline from '../modules/Offline/PrivateInfo'
@@ -80,7 +80,7 @@ export default function Index() {
         { path: "location-determination-type", element: <LocationDeterminationType /> },
         { path: "subject-not-exist", element: <SubjectNotExist /> },
         { path: "location-on-map", element: <LocationOnMap /> },
-        /*  { path: "/location-determination-map", element: <LocationOnMap /> }, */
+        { path: "send-group-sms", element: <SendGroupSms /> },
     ];
     const dashboardLayoutRoutes = [
         { path: "/home", element: <Home /> },
@@ -91,7 +91,6 @@ export default function Index() {
         { path: "locate-reviews/:id", element: <LocationReviewDetail /> },
         { path: "land-division/:id", element: <OfflineLandDivision /> },
         { path: "location-on-map/:id", element: <LocationOnMapOffline /> },
-        { path: "Plimit", element: <Plimit /> },
         { path: "location-determination-type/:id", element: <LocationDeterminationTypeOffline /> },
         { path: "document-upload", element: <DocumentUpload /> },
         { path: "subject-not-exist/:id", element: <OfflineSubjectNotExist /> },
