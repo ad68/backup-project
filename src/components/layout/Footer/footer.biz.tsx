@@ -21,7 +21,7 @@ const useFooter = () => {
         }).then(() => {
             setActionLoading(false)
             logout()
-        }).catch(err => {
+        }).catch(() => {
             setActionLoading(false)
             logout()
         })
