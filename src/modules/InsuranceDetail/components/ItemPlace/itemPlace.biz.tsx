@@ -8,7 +8,7 @@ const useItemPlace = () => {
     const [searchParams] = useSearchParams();
     const reviewId = searchParams.get("reviewId")
     const policyId = searchParams.get("policyId")
-    const [data, setData] = useState<Array<PolicyItem>>([])
+    const [data, setData] = useState<PolicyItem>()
     const [loading, setLoading] = useState(false)
     const getList = () => {
         setLoading(true)
