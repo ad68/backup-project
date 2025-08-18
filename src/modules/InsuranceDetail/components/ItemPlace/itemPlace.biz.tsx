@@ -9,6 +9,7 @@ const useItemPlace = () => {
     const reviewId = searchParams.get("reviewId")
     const policyId = searchParams.get("policyId")
     const [data, setData] = useState<Array<PolicyItem>>()
+    const [placeModal, setPlaceModal] = useState<any>()
     const [loading, setLoading] = useState(false)
     const getList = () => {
         setLoading(true)
@@ -20,6 +21,7 @@ const useItemPlace = () => {
             .then((res) => {
                 setLoading(false)
                 setData(res.data.policyItems)
+                setPlaceModal(res.data.placeModel)
             })
             .catch(() => {
                 setLoading(false)
@@ -31,6 +33,7 @@ const useItemPlace = () => {
     }, [])
     return {
         data,
+        placeModal,
         loading
     }
 

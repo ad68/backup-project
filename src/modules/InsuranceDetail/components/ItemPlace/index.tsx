@@ -6,14 +6,14 @@ import useItemPlace from './itemPlace.biz'
 import Card from './components/Card'
 import ListLoader from '@/components/kit/ListLoader'
 export default function Index() {
-    const { data, loading } = useItemPlace()
+    const { data, loading, placeModal } = useItemPlace()
 
     return <>
         {/*  <InsuranceInfo /> */}
         <section className='flex justify-center'>
             {loading && <ListLoader />}
         </section>
-        {data?.map((item: any, Index: number) => (<Card key={Index} item={item} lat={item.placeModel?.latitude} lng={item.placeModel?.longitude} />))}
+        {data?.map((item: any, Index: number) => (<Card key={Index} item={item} lat={placeModal.latitude} lng={placeModal.longitude} />))}
 
     </>
 }
