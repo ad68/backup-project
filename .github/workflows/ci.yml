@@ -17,8 +17,8 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: repository.bakapp.ir
-          username: ${{ secrets.NESXUS_USER }}
-          password: ${{ secrets.NEXSUS_PASS }}
+          username: ${{ secrets.NEXUS_USER }}
+          password: ${{ secrets.NEXUS_PASS }}
 
       - name: Build Docker image
         run: |
