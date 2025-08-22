@@ -1,0 +1,25 @@
+name: Build and Push Docker Image to Nexus
+
+on:
+  push:
+    branches:
+      - main   
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Log in to Nexus Docker registry
+      run: |
+        echo ${{ secrets.NEXUS_PASS }} | docker login ${{ secrets.NEXUS_URL }} -u ${{ secrets.NEXUS_USER }} --password-stdin
+
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ secrets.NEXUS_URL }}/docker-hosted/my-image:latest .
+
+    - name: Push Docker image to Nexus
+      run: |
+        docker push ${{ secrets.NEXUS_URL }}/docker-hosted/my-image:latest
