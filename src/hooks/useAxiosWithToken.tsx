@@ -9,26 +9,31 @@ const useAxiosWithToken = axios.create({
     'Content-Type': 'application/json',
   },
 });
-useAxiosWithToken.interceptors.request.use(
-  (config) => {
-    const token = useAuthStore.getState().token;
-    const methodsWithBody = ['post', 'put', 'patch', 'delete'];
-
-    if (methodsWithBody.includes(config.method || '')) {
-      if (config.data instanceof FormData) {
-        if (token) {
-          config.data.append('token', token);
-        }
-      } else {
-        config.data = {
-          ...(config.data || {}),
-          token: token,
-        };
+useAxiosWithToken.interceptors.request.use((config) => {
+  const token = useAuthStore.getState().token;
+  const methodsWithBody = ['post', 'put', 'patch', 'delete'];
+  if (methodsWithBody.includes(config.method || '')) {
+    if (config.data instanceof FormData) {
+      if (token) {
+        config.data.append('token', token);
       }
+    } else {
+      config.data = {
+        ...(config.data || {}),
+        token: token,
+      };
     }
+  }
+  if (config.method === 'get' && token) {
+    config.params = {
+      ...(config.params || {}),
+      token: token,
+    };
+  }
 
-    return config;
-  });
+  return config;
+});
+
 
 useAxiosWithToken.interceptors.response.use(
   function (response) {

@@ -8,7 +8,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toastSuccess } from "@/components/kit/toast";
 const schema = z.object({
     title: z.string().min(1, 'عنوان الزامی است'),
-
     document: z
         .custom<FileList>()
         .refine((files) => files && files.length > 0, 'انتخاب فایل الزامی است'),
@@ -33,7 +32,6 @@ const useAddDocumentModal = (setIsAddDocumentModal: (value: boolean) => void, ge
     const onSubmit = async (data: FormData) => {
         const file = data.document[0];
         if (!file) return;
-
         const extension = getExtensionFromFileName(file.name);
         console.log("extension", extension)
         let formData = new FormData()
@@ -43,7 +41,6 @@ const useAddDocumentModal = (setIsAddDocumentModal: (value: boolean) => void, ge
         formData.append('name', data.title + "." + extension)
         formData.append('file', file)
         setActionLoading(true)
-
         useAxiosWithToken.post("/sabka/technical/annex/add/subject-file", formData, {
             headers: { "Content-Type": "multipart/form-data" },
         })

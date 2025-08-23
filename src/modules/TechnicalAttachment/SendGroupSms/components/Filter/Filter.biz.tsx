@@ -98,9 +98,6 @@ const useFilter = ({ filter, clearFilter, setIsOpen, getList, updateFilter }: fi
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter.ruralDistrictId])
-
-
-
     const search = () => {
         if (filter.provinceId && filter.countyId && filter.districtId && filter.placeId && filter.ruralDistrictId) {
             getList()

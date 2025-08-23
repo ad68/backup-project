@@ -1,0 +1,10 @@
+export const MOBILE = /^[0۰][9۹][0-9۰-۹][0-9۰-۹]{8}$/;
+export const NATIONAL_CODE = /^([0-9۰-۹]){10}$/;
+export const NUMBER = /^[0-9۰-۹]+$/;
+export const EMAIL = /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z1-9]+/;
+export const CAR_SHASI = /^[A-HJ-NPR-Z0-9]{17}$/;
+export const INSURANCE_THIRD = /^[0-9۰-۹]{10}$/;
+export const PERSIAN_NAME = /^[ آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهیئيﻳﻴﻱكﻙﻚﻛ\s]+$/;
+export const SHEBA = /^\d{24}$/;
+export const CARD_NUMBER = /^\d{16}$/;
+export const ZIP_CODE = /^([0-9]){10}$/;

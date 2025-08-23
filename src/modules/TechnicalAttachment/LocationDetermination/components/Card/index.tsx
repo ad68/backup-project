@@ -33,7 +33,7 @@ export default function Index({ item, showSmsModal }: CardProp) {
                 </section>
                 <section className="flex gap-1">
                     <span className="font-light text-slate-500 text-sm">موبایل:</span>
-                    <span className="text-sm">{item.beneficiary.mobile}</span>
+                    <a href={`tel:${item.beneficiary.mobile}`} className="text-sm">{item.beneficiary.mobile}</a>
                 </section>
 
             </section>

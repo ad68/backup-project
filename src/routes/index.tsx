@@ -42,6 +42,8 @@ import OfflineSubjectNotExist from '../modules/Offline/SubjectNotExist'
 import PrivateInfoOffline from '../modules/Offline/PrivateInfo'
 import OfflineMap from '../modules/Offline/OfflineMap'
 import Rules from '@/modules/rules'
+import Reports from '@/modules/Reports/Home'
+import SmsReports from '@/modules/Reports/Sms'
 /* import GoogleMap from '@/modules/GoogleMap' */
 import { useEffect } from "react";
 export default function Index() {
@@ -85,6 +87,10 @@ export default function Index() {
     const dashboardLayoutRoutes = [
         { path: "/home", element: <Home /> },
         { path: "/technical-attachment", element: <TechnicalAttachment /> },
+    ];
+    const ReportsRoutes = [
+        { path: "", element: <Reports /> },
+        { path: "sms", element: <SmsReports /> },
     ];
     const OfflineRoutes = [
         { path: "locate-reviews", element: <LocationReviews /> },
@@ -153,8 +159,16 @@ export default function Index() {
                 />
             ))}
         </Route>
+        <Route path="reports" element={<MAIN_LAYOUT />}>
+            {ReportsRoutes.map(({ path, element }) => (
+                <Route
+                    key={path}
+                    path={path}
+                    element={<ProtectedRoute>{element}</ProtectedRoute>}
+                />
+            ))}
+        </Route>
         {/*   <Route path="/index-db" element={<Indexdb />} /> */}
-
         {/*  <Route path="screen-shot" element={<ScreenShot />} />
         <Route path="webcam" element={<Webcam />} />
         <Route path="google-map" element={<GoogleMap />} /> */}
