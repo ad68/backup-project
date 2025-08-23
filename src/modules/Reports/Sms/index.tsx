@@ -8,7 +8,7 @@ import PageTitle from '@/components/kit/PageTitle'
 import Pagination from './components/Pagination'
 import useSmsReport from './smsReport.Biz'
 export default function Index() {
-    const { data, isFetching, setCurrentPage, totalElement, currentPage, refetch, setParams } = useSmsReport()
+    const { data, isFetching, setCurrentPage, totalElement, currentPage, setParams } = useSmsReport()
     return <>
         <PageTitle size='small' title='گزارش پیامک های اطلاع رسانی' />
         <section className='pb-10 px-2 max-w-5xl m-auto'>

@@ -1,5 +1,5 @@
 import { MOBILE } from "@/constants/regext";
-import { validationMessages } from "@/constants/validationMessages";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import moment from "moment-jalaali";
 import { useForm } from "react-hook-form";

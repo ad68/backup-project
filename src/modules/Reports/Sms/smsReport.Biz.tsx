@@ -14,7 +14,7 @@ const useSmsReport = () => {
     }, [data])
     useEffect(() => {
         refetch()
-    }, [currentPage])
+    }, [currentPage, params])
     useEffect(() => {
         setCurrentPage(0)
     }, [params])
