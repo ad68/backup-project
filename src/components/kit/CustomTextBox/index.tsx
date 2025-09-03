@@ -7,13 +7,15 @@ type CustomTextBoxProps = {
     onChange: (value: string) => void;
     placeholder?: string;
     className?: string;
+    maxLength?: number
 };
 const CustomTextBox = forwardRef<HTMLInputElement, CustomTextBoxProps>(
-    ({ value, onChange, placeholder, className }, ref) => {
+    ({ value, onChange, placeholder, className, maxLength }, ref) => {
         return (
             <Input
                 ref={ref}
                 value={value}
+                maxLength={maxLength}
                 onChange={(e) => onChange(persianToEnglishNumber(e.target.value))}
                 placeholder={placeholder || "متن خود را وارد کنید"}
                 dir="rtl"

@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { nanoid } from 'nanoid';
-
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { z } from "zod";
 import type { OfflineReview, PolicyItem } from "../LocationReviews/locationReviews.types";

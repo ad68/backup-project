@@ -1,11 +1,11 @@
 
-import { ChevronDown, ChevronUp, MessageCircleIcon, PlusIcon } from "lucide-react";
+import { ChevronDown, ChevronUp, PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import type { CardProp } from "../../technicalAttachment.type";
 import { gregorianToJalali } from "@/utils/global";
 import useCard from "./card.biz";
-export default function Index({ item, showSmsModal }: CardProp) {
+export default function Index({ item }: CardProp) {
     const [isOpenDtl, setIsOpenDtl] = useState(false)
     const { addReviewToOfflineList, actionLoading } = useCard()
     return <section className="p-2">
@@ -84,9 +84,7 @@ export default function Index({ item, showSmsModal }: CardProp) {
                         {actionLoading ? <span className="tinyBtnLoader"></span> : <div className="flex items-center"><PlusIcon className="w-[20px]" /><span>افزودن به آفلاین </span></div>}
                         {/*  <PlusIcon className="w-[20px]" /> */}
                     </button>
-                    <button onClick={() => showSmsModal(item)} className="border w-[40px] h-[30px] bg-blue-500 border-blue-500 shadow-md flex justify-center items-center text-white gap-2 rounded-full">
-                        <MessageCircleIcon className="w-[18px]" />
-                    </button>
+
                 </div>
                 <button onClick={() => setIsOpenDtl(!isOpenDtl)} className="bg-yellow-400 shadow-md w-[36px] h-[30px] flex justify-center items-center rounded-full">
                     {isOpenDtl ? <ChevronUp color="white" className="w-[20px]" /> : <ChevronDown color="white" className="w-[20px]" />}

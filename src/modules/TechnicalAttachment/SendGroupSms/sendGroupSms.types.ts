@@ -31,6 +31,7 @@ export type SendGroupSmsFilter = {
     districtId: string;
     ruralDistrictId: string;
     placeId: string;
+
 };
 export type PaginationProp = {
     setCurrentPage: (value: number) => void,

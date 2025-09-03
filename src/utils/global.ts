@@ -112,8 +112,6 @@ export const getImageFormatFromBase64 = (base64: string): string | null => {
     const match = base64.match(/^data:image\/([a-zA-Z0-9+]+);base64,/);
     return match ? match[1] : null;
 };
-
-
 export const getPureBase64 = (base64: string): string => {
     const index = base64.indexOf("base64,");
     return index !== -1 ? base64.slice(index + 7) : base64;
@@ -178,7 +176,6 @@ export const plus1000 = (value: any) => {
         return value
     }
 }
-
 export const objectToQueryString = (obj: Record<string, any>): string => {
     const filteredObj = Object.fromEntries(
         Object.entries(obj).filter(
@@ -193,8 +190,6 @@ export const objectToQueryString = (obj: Record<string, any>): string => {
     const params = new URLSearchParams(filteredObj)
     return params.toString()
 }
-
-
 export const polygonToWKT = (polygon: [number, number][]): string => {
     if (!polygon?.length) return "";
 
@@ -227,7 +222,6 @@ export const downloadBase64FromApi = async (item: any, base64: string) => {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 };
-
 export function formDataToObject(formData: FormData): Record<string, any> {
     const obj: Record<string, any> = {};
     formData.forEach((value, key) => {

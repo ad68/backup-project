@@ -1,7 +1,6 @@
 import { toastError } from "@/components/kit/toast"
 import { useAxiosWithToken } from "@/hooks"
 import { bulkSaveToIDB, clearStore, getPaginatedDataFromIDB } from "@/lib/indexdb"
-
 import { useEffect, useState } from "react"
 import type { SendGroupSmsFilter } from "./sendGroupSms.types";
 const initialState: SendGroupSmsFilter = {
@@ -20,6 +19,7 @@ const useSendGroupSms = () => {
     const [totalPage, setTotalPage] = useState<number>(1)
     const [smsModalIsOpen, setSmsModalIsOpen] = useState(false)
     const [allSmsModalIsOpen, setAllSmsModalIsOpen] = useState(false)
+
     const [selectedItem, setSelectedItem] = useState()
     const saveToDataBase = async (data: any) => {
         await bulkSaveToIDB(data);

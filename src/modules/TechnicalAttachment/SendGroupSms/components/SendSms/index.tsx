@@ -1,6 +1,7 @@
 import CustomButton from "@/components/kit/CustomButton"
 import CustomDatepicker from "@/components/kit/CustomDatepicker"
 import CustomSelect from "@/components/kit/CustomSelect"
+import CustomTextBox from "@/components/kit/CustomTextBox"
 import { toastError, toastSuccess } from "@/components/kit/toast"
 import { useAxiosWithToken } from "@/hooks"
 import { useAuthStore } from "@/store/authStore"
@@ -18,6 +19,7 @@ export default function Index({ rowData, closeSmsModal, filter }: any) {
     const [selectedDate, setSelectedDate] = useState(new Date())
     const [fromHour, setFromHour] = useState("")
     const [toHour, setToHour] = useState("")
+    const [gatheringPlace, setGatheringPlace] = useState("")
     const [actionLoading, setActionLoading] = useState(false)
     /* useEffect(() => {
         console.log("rowData", rowData)
@@ -48,8 +50,9 @@ export default function Index({ rowData, closeSmsModal, filter }: any) {
                 from: fromHour,
                 to: toHour,
                 persianDate: gregorianToJalali(String(selectedDate)),
+                gatheringPlace: gatheringPlace !== "" ? `محل تجمع: ${gatheringPlace}` : ""
             }
-            console.log(params)
+            /*  console.log(params) */
             useAxiosWithToken.post("/sabka/technical/annex/send-all-sms-notify-going", params).then(() => {
                 toastSuccess("پیامک با موفقیت ارسال شد")
                 closeSmsModal()
@@ -73,26 +76,38 @@ export default function Index({ rowData, closeSmsModal, filter }: any) {
                 بیمه گذار عزیز،
                 <br /><br />
                 ارزیاب بیمه {userInfo?.fullName} در تاریخ {gregorianToJalali(String(selectedDate))} بین ساعت {fromHour} تا {toHour} جهت تکمیل و تائید پرونده بیمه نامه صندوق کشاورزی از محل بیمه بازدید به عمل می آورد.
-                <br /><br />
+                <br />
+                {
+                    !gatheringPlace || gatheringPlace !== "" && <p>محل تجمع: {gatheringPlace}</p>
+                }
+
+                <br />
                 شرکت ارزیابی ایرانیان پوشش
                 <br />
                 خدمتگزار کشاورزان و دامداران
             </p>
         </div>
         <div className="grid grid-cols-2">
-            <div className="px-2 mt-4">
-                <span>انتخاب تاریخ</span>
+            <div className="px-2 mt-4 relative">
+                <div>انتخاب تاریخ <span className="text-red-600 absolute top-[-5px] right-[-2px]">*</span></div>
                 <CustomDatepicker className="mt-2" disablePast={true} onChange={(e: any) => { setSelectedDate(e) }} value={selectedDate} />
             </div>
         </div>
         <div className="grid grid-cols-2">
-            <div className="px-2 mt-2">
-                <span className="text-">بین ساعت</span>
+            <div className="px-2 mt-2 relative">
+                <div>بین ساعت <span className="text-red-600 absolute top-[-5px] right-[-2px]">*</span></div>
                 <CustomSelect value={fromHour} onChange={(val) => setFromHour(val)} options={hourOptions} />
             </div>
-            <div className="px-2 mt-2">
-                <span>تا ساعت</span>
+            <div className="px-2 mt-2 relative">
+                <div>تا ساعت <span className="text-red-600 absolute top-[-5px] right-[-2px]">*</span></div>
                 <CustomSelect value={toHour} onChange={(val) => setToHour(val)} options={hourOptions} />
+            </div>
+        </div>
+        <div className="grid grid-cols-1">
+            <div className="px-2 mt-2">
+                <span className="text-">محل تجمع</span>
+                <CustomTextBox maxLength={20} placeholder="محل تجمع را وارد کنید" value={gatheringPlace} onChange={(val) => setGatheringPlace(val)} />
+                <p className="text-blue-600 text-xs mt-1">محل تجمع نمی تواند بیشتر از 20 حرف باشد</p>
             </div>
         </div>
         <section className="flex px-2 bg-white bottom-0 gap-2 mt-4  py-3 justify-end w-full">

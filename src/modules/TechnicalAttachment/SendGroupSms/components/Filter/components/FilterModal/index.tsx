@@ -6,6 +6,7 @@ import { SearchIcon, Undo2Icon } from "lucide-react";
 import useFilter from "../../Filter.biz";
 import CustomSearchableSelect from "@/components/kit/CustomSearchableSelect";
 import { Link } from "react-router-dom";
+import CustomTextBox from "@/components/kit/CustomTextBox";
 
 export default function Index({ isOpen, setIsOpen, getList, updateFilter, filter, clearFilter }: any) {
     const { provinces, counties, districts, places, ruralDistricts, clearForm, search } = useFilter({ filter, clearFilter, getList, setIsOpen, updateFilter })
@@ -34,6 +35,7 @@ export default function Index({ isOpen, setIsOpen, getList, updateFilter, filter
                 <span className="font-light text-slate-700 text-xs">آبادی یا شهر:</span>
                 <CustomSearchableSelect value={filter.placeId} options={places.map((item: any) => ({ label: item.title, value: item.id }))} onChange={(e) => { updateFilter("placeId", e) }} />
             </section>
+
             <section className="flex sticky bg-white bottom-0 gap-2 mt-4 border-t py-3 justify-end w-full">
                 <Link to="/technical-attachment">
                     <button className="bg-white border border-primary w-[120px] text-primary flex justify-center items-center gap-2 rounded-full py-2 px-1 text-sm">
