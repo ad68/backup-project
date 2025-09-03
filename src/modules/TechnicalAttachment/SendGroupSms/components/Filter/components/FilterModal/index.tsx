@@ -6,7 +6,7 @@ import { SearchIcon, Undo2Icon } from "lucide-react";
 import useFilter from "../../Filter.biz";
 import CustomSearchableSelect from "@/components/kit/CustomSearchableSelect";
 import { Link } from "react-router-dom";
-import CustomTextBox from "@/components/kit/CustomTextBox";
+
 
 export default function Index({ isOpen, setIsOpen, getList, updateFilter, filter, clearFilter }: any) {
     const { provinces, counties, districts, places, ruralDistricts, clearForm, search } = useFilter({ filter, clearFilter, getList, setIsOpen, updateFilter })
