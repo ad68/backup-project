@@ -76,6 +76,6 @@ export default function Index() {
         <section className="w-full absolute bottom-[45px] left-0 text-center font-light text-[12px]">
             تمام حقوق این اپلیکیشن متعلق به شرکت ایرانیان پوشش می باشد
         </section>
-        <p className="text-center absolute bottom-[20px] w-full left-0 font-semibold text-[14px]">نسخه 2.0.1</p>
+        <p className="text-center absolute bottom-[20px] w-full left-0 font-semibold text-[14px]">نسخه 2.0.2</p>
     </section>
 }
