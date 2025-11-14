@@ -13,7 +13,8 @@ type AuthState = {
     token: string | null;
     userInfo: UserInfo | undefined;
     setToken: (token: string) => void;
-    login: (token: string, userInfo: any) => void;
+    setUserInfo: (userInfo: UserInfo) => void;
+    login: (token: string) => void;
     logout: () => void;
 };
 
@@ -25,7 +26,8 @@ export const useAuthStore = create<AuthState>()(
                 token: null,
                 userInfo: undefined,
                 setToken: (token) => set({ isAuthenticated: true, token: token }, false, 'auth/setToken'),
-                login: (token, userInfo) => set({ isAuthenticated: true, token: token, userInfo: userInfo }, false, 'auth/login'),
+                login: (token) => set({ isAuthenticated: true, token: token, }, false, 'auth/login'),
+                setUserInfo: (userInfo) => set({ userInfo: userInfo }, false, 'auth/userInfo'),
                 logout: () => set({ isAuthenticated: false, token: null }, false, 'auth/logout'),
             }),
             {
