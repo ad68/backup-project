@@ -76,6 +76,12 @@ export default function Index() {
         {/*  <section className="w-full absolute bottom-[45px] left-0 text-center font-light text-[12px]">
             تمام حقوق این اپلیکیشن متعلق به شرکت ایرانیان پوشش می باشد
         </section> */}
-        <p className="text-center absolute bottom-[20px] w-full left-0 font-semibold text-[14px]">نسخه 2.0.2</p>
+        <p className="text-center absolute bottom-[30px] w-full left-0 font-semibold text-[14px]">نسخه 2.0.2</p>
+        <section className="w-full absolute flex gap-1 justify-center items-center bottom-[10px] left-0 text-center font-light text-[12px]">
+            <div> طراحی و توسعه شرکت </div>
+
+            <a href="https://iranianpooshesh.com/fa" className="text-primary font-bold">شرکت ایرانیان پوشش</a>
+            <img src="/favicon-32x32.png" className="w-[22px]" alt="" />
+        </section>
     </section>
 }

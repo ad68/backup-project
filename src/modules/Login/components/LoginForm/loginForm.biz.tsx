@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from 'react-hook-form';
-import { useAxios, useAxiosWithToken } from '@/hooks';
+import { useAxiosWithToken } from '@/hooks';
 import { toastError } from '@/components/kit/toast';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';

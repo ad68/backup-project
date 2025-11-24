@@ -5,11 +5,8 @@ import useApp from './App.biz'
 import { initDB, initOfflineDb } from './lib/indexdb'
 import { useEffect } from 'react'
 
-
-
 function App() {
   const { needRefresh, updateFn, setNeedRefresh, getAllData } = useApp()
-
   useEffect(() => {
     initDB()
     initOfflineDb()
@@ -17,9 +14,7 @@ function App() {
   }, [])
   return (
     <>
-
       <Routes />
-
       {needRefresh && updateFn && (
         <UpdatePwaModal onConfirm={() => {
           updateFn()
