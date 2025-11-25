@@ -11,9 +11,9 @@ export default defineConfig({
       registerType: 'prompt',
       includeAssets: ['favicon.ico', "icon-192x192", "icon-512x512"],
       manifest: {
-        name: 'بکاپ-بیمه کشاورزی ایرانیان پوشش',
+        name: 'بکاپ - اپلیکیشن صندوق بیمه کشاورزی',
         short_name: 'بکاپ',
-        description: 'بکاپ-بیمه کشاورزی ایرانیان پوشش',
+        description: 'بکاپ - اپلیکیشن صندوق بیمه کشاورزی',
         theme_color: '#2ebf70',
         background_color: '#2ebf70',
         display: 'standalone',

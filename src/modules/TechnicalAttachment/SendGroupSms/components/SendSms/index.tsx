@@ -81,10 +81,7 @@ export default function Index({ rowData, closeSmsModal, filter }: any) {
                     !gatheringPlace || gatheringPlace !== "" && <p>محل تجمع: {gatheringPlace}</p>
                 }
 
-                <br />
-                شرکت ارزیابی ایرانیان پوشش
-                <br />
-                خدمتگزار کشاورزان و دامداران
+
             </p>
         </div>
         <div className="grid grid-cols-2">
