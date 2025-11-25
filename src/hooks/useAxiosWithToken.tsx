@@ -11,6 +11,7 @@ const useAxiosWithToken = axios.create({
 });
 useAxiosWithToken.interceptors.request.use((config) => {
   const token = useAuthStore.getState().token;
+  /* const token = "Bearer 99d6b939-3529-46f4-88fd-727e31fe59c2" */
   const methodsWithBody = ['post', 'put', 'patch', 'delete'];
   if (methodsWithBody.includes(config.method || '')) {
     if (config.data instanceof FormData) {
