@@ -9,7 +9,7 @@ import { persianToEnglishNumber } from "@/utils/global";
 
 export default function Index() {
     const { showPassword, setShowPassword, handleLogin, control, actionLoading, errors, handleSubmit } = useLoginForm()
-    return <section className="w-full h-[60%] rounded-t-2xl absolute bottom-0 bg-white py-[38px] px-[25px]">
+    return <section className="w-full h-[60%] xl:h-[65%] rounded-t-2xl absolute bottom-0 bg-white py-[38px] px-[25px]">
         <form onSubmit={handleSubmit(handleLogin)}>
             <section>
                 <span className="text-slate-500 text-sm">نام کاربری</span>
