@@ -9,7 +9,7 @@ import { persianToEnglishNumber } from "@/utils/global";
 
 export default function Index() {
     const { showPassword, setShowPassword, handleLogin, control, actionLoading, errors, handleSubmit } = useLoginForm()
-    return <section className="w-full h-[60%] rounded-t-2xl absolute bottom-0 bg-white py-[38px] px-[25px]">
+    return <section className="w-full rounded-2xl  bg-white py-[38px] pb-[70px] px-[60px]">
         <form onSubmit={handleSubmit(handleLogin)}>
             <section>
                 <span className="text-slate-500 text-sm">نام کاربری</span>
@@ -81,7 +81,7 @@ export default function Index() {
             <div> طراحی و توسعه شرکت </div>
 
             <a href="https://iranianpooshesh.com/fa" className="text-primary font-bold">شرکت ایرانیان پوشش</a>
-            <img src="/favicon-32x32.png" className="w-[22px]" alt="" />
+            <img src="/irp-32x32.png" className="w-[22px]" alt="" />
         </section>
     </section>
 }
