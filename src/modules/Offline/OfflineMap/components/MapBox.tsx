@@ -87,7 +87,8 @@ export default function Index({
                 16
             );
             mapRefInstance.current = map;
-            const baseLayer = new (CachedTileLayer as any)("https://map.optimoai.ir/wmts/gm_layer/gm_grid/{z}/{x}/{y}.png", {
+/*             const baseLayer = new (CachedTileLayer as any)("https://map.optimoai.ir/wmts/gm_layer/gm_grid/{z}/{x}/{y}.png", {
+ */                const baseLayer = new (CachedTileLayer as any)("https://map.bakapp.ir/wmts/gm_layer/gm_grid/{z}/{x}/{y}.png", {
                 maxZoom: 20,
                 subdomains: "0123",
             });

@@ -34,7 +34,7 @@ export default defineConfig({
       workbox: {
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/map\.optimoai\.ir\/wmts\/gm_layer\/gm_grid\/.*\.png$/,
+            urlPattern: /^https:\/\/map\.bakapp\.ir\/wmts\/gm_layer\/gm_grid\/.*\.png$/,
             handler: 'CacheFirst',
             options: {
               cacheName: 'tile-cache',
