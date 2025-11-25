@@ -81,7 +81,7 @@ export default function Index() {
             <div> طراحی و توسعه شرکت </div>
 
             <a href="https://iranianpooshesh.com/fa" className="text-primary font-bold">شرکت ایرانیان پوشش</a>
-            <img src="/irp-32x32.png" className="w-[22px]" alt="" />
+            <img src="/favicon-32x32.png" className="w-[22px]" alt="" />
         </section>
     </section>
 }
