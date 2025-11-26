@@ -9,8 +9,8 @@ export default function Index() {
                     <img src="/images/login/sandoogh-logo.svg" className="w-[110px] mr-3" alt="" />
                 </section>
                 <img src="/images/login/sss.png" className="w-[80px] top-[5px] absolute rotate-[-10deg] right-0 scale-x-[-1]" alt="" />
-                <section className='w-full text-center text-white text-[28px] font-bold mt-[20px]'>بکاپ</section>
-                <span className='block mt-[5px] text-white w-full text-center'>اپلیکیشن صندوق بیمه کشاورزی</span>
+                {/*                <section className='w-full text-center text-white text-[28px] font-bold mt-[20px]'>بکاپ</section> */}
+                <span className='block mt-[5px] text-white w-full text-center text-[18px] font-bold'>سامانه ارزیابی صندوق بیمه کشاورزی</span>
             </section>
             <LoginForm />
         </section>
