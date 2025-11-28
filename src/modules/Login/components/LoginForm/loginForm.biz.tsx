@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from 'react-hook-form';
-import { useAxiosWithToken } from '@/hooks';
+
 import { toastError } from '@/components/kit/toast';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
@@ -49,10 +49,9 @@ const useLoginForm = () => {
         setActionLoading(true)
         axios.post(BASE_URL + "sabka/sso/auth", params).then((res) => {
             login(`Bearer ${res.data.Token}`)
-            setActionLoading(false)
-            /*  navigation("/home") */
             setUserInfo(res.data.sabkaActor)
-
+            setActionLoading(false)
+            navigation("/home")
         }).catch(err => {
             setActionLoading(false)
             toastError(err.response.data.Message)
