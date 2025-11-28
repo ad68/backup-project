@@ -47,29 +47,28 @@ const useLoginForm = () => {
             longLived: true,
         }
         setActionLoading(true)
-        axios.post("https://cs.sabka.ir/api/security/token", params).then((res) => {
+        axios.post(BASE_URL + "sabka/sso/auth", params).then((res) => {
             login(`Bearer ${res.data.Token}`)
             setActionLoading(false)
-            setTimeout(() => {
-                getUserInfo()
-            }, 1000);
+            /*  navigation("/home") */
+            setUserInfo(res.data.sabkaActor)
 
         }).catch(err => {
             setActionLoading(false)
             toastError(err.response.data.Message)
         })
     };
-    const getUserInfo = () => {
-        setActionLoading(true)
-        useAxiosWithToken.post(BASE_URL + "/sabka/sso/auth").then((res) => {
-            navigation("/home")
-            setUserInfo(res.data.sabkaActor)
-            setActionLoading(false)
-        }).catch(err => {
-            setActionLoading(false)
-            toastError(err.response.data.message)
-        })
-    }
+    /*    const getUserInfo = () => {
+           setActionLoading(true)
+           useAxiosWithToken.post(BASE_URL + "/sabka/sso/auth").then((res) => {
+               navigation("/home")
+               setUserInfo(res.data.sabkaActor)
+               setActionLoading(false)
+           }).catch(err => {
+               setActionLoading(false)
+               toastError(err.response.data.message)
+           })
+       } */
     return {
         showPassword,
         setShowPassword,
