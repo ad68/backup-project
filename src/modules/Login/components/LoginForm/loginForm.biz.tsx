@@ -48,7 +48,7 @@ const useLoginForm = () => {
         }
         setActionLoading(true)
         axios.post(BASE_URL + "/sabka/sso/auth", params).then((res) => {
-            login(`Bearer ${res.data.Token}`)
+            login(`Bearer ${res.data.token}`)
             setUserInfo(res.data.sabkaActor)
             setActionLoading(false)
             navigation("/home")
