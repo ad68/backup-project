@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from 'react-hook-form';
-import { useAxiosWithToken } from '@/hooks';
+/* import { useAxiosWithToken } from '@/hooks'; */
 import { toastError } from '@/components/kit/toast';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
-import BASE_URL from '@/config/api';
+/* import BASE_URL from '@/config/api'; */
 import axios from 'axios';
 
 const loginSchema = z.object({
@@ -19,7 +19,7 @@ const useLoginForm = () => {
     const navigation = useNavigate()
     const { token } = useAuthStore()
     const login = useAuthStore((state) => state.login);
-    const setUserInfo = useAuthStore((state) => state.setUserInfo)
+
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [actionLoading, setActionLoading] = useState(false)
     useEffect(() => {
@@ -49,24 +49,16 @@ const useLoginForm = () => {
         setActionLoading(true)
         axios.post("https://cs.sabka.ir/api/security/token", params).then((res) => {
             login(`Bearer ${res.data.Token}`)
-            setTimeout(() => {
-                getUserInfo()
-            }, 1000);
+            navigation("/home")
+            /*  setTimeout(() => {
+                 getUserInfo()
+             }, 1000); */
         }).catch(err => {
+            setActionLoading(false)
             toastError(err.response.data.Message)
         })
     };
-    const getUserInfo = () => {
-        setActionLoading(true)
-        useAxiosWithToken.post(BASE_URL + "/sabka/sso/auth").then((res) => {
-            navigation("/home")
-            setUserInfo(res.data.sabkaActor)
-            setActionLoading(false)
-        }).catch(err => {
-            setActionLoading(false)
-            toastError(err.response.data.message)
-        })
-    }
+
     return {
         showPassword,
         setShowPassword,
