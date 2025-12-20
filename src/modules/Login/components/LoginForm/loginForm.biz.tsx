@@ -49,13 +49,10 @@ const useLoginForm = () => {
         setActionLoading(true)
         axios.post("https://cs.sabka.ir/api/security/token", params).then((res) => {
             login(`Bearer ${res.data.Token}`)
-            setActionLoading(false)
             setTimeout(() => {
                 getUserInfo()
             }, 1000);
-
         }).catch(err => {
-            setActionLoading(false)
             toastError(err.response.data.Message)
         })
     };
