@@ -29,36 +29,48 @@ export default function Index({ rowData, closeSmsModal, filter }: any) {
     const sendSms = () => {
         if (rowData && selectedDate && fromHour && toHour) {
             setActionLoading(true)
-            const params = {
-                policyId: rowData.policyId,
-                from: fromHour,
-                to: toHour,
-                persianDate: gregorianToJalali(String(selectedDate)),
+            if (Number(fromHour) > Number(toHour)) {
+                toastError("بین ساعت نباید بزرگتر از تا ساعت باشد")
             }
-            /*  console.log(params) */
-            useAxiosWithToken.post("/sabka/technical/annex/send-sms-notify-going", params).then(() => {
-                toastSuccess("پیامک با موفقیت ارسال شد")
-                closeSmsModal()
-            }).finally(() => {
-                setActionLoading(false)
-            })
+            else {
+                const params = {
+                    policyId: rowData.policyId,
+                    from: fromHour,
+                    to: toHour,
+                    persianDate: gregorianToJalali(String(selectedDate)),
+                }
+
+                useAxiosWithToken.post("/sabka/technical/annex/send-sms-notify-going", params).then(() => {
+                    toastSuccess("پیامک با موفقیت ارسال شد")
+                    closeSmsModal()
+                }).finally(() => {
+                    setActionLoading(false)
+                })
+            }
+
         }
         else if (filter && selectedDate && fromHour && toHour) {
             setActionLoading(true)
-            let params = {
-                ...filter,
-                from: fromHour,
-                to: toHour,
-                persianDate: gregorianToJalali(String(selectedDate)),
-                gatheringPlace: gatheringPlace !== "" ? `محل تجمع: ${gatheringPlace}` : ""
+            if (Number(fromHour) > Number(toHour)) {
+                toastError("بین ساعت نباید بزرگتر از تا ساعت باشد")
             }
-            /*  console.log(params) */
-            useAxiosWithToken.post("/sabka/technical/annex/send-all-sms-notify-going", params).then(() => {
-                toastSuccess("پیامک با موفقیت ارسال شد")
-                closeSmsModal()
-            }).finally(() => {
-                setActionLoading(false)
-            })
+            else {
+                let params = {
+                    ...filter,
+                    from: fromHour,
+                    to: toHour,
+                    persianDate: gregorianToJalali(String(selectedDate)),
+                    gatheringPlace: gatheringPlace !== "" ? `محل تجمع: ${gatheringPlace}` : ""
+                }
+
+                useAxiosWithToken.post("/sabka/technical/annex/send-all-sms-notify-going", params).then(() => {
+                    toastSuccess("پیامک با موفقیت ارسال شد")
+                    closeSmsModal()
+                }).finally(() => {
+                    setActionLoading(false)
+                })
+            }
+
         }
         else {
             toastError("لطفا تمام فیلدها را پر کنید")
