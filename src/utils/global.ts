@@ -252,7 +252,6 @@ export function objectToFormData(obj: Record<string, any>): FormData {
 
     return formData;
 }
-
 export function base64ToFile(base64String: string, fileName: string): File {
     const arr = base64String.split(',');
     const mime = arr[0].match(/:(.*?);/)![1];
@@ -263,6 +262,26 @@ export function base64ToFile(base64String: string, fileName: string): File {
     while (n--) {
         u8arr[n] = bstr.charCodeAt(n);
     }
-
     return new File([u8arr], fileName, { type: mime });
+}
+export function hasKeyInObj(obj: any, targetKey: string): boolean {
+    if (obj === null || typeof obj !== "object") return false;
+
+    if (Object.prototype.hasOwnProperty.call(obj, targetKey)) {
+        return true;
+    }
+
+    for (const key in obj) {
+        if (hasKeyInObj(obj[key], targetKey)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+export function removeKeys(obj: any, key1: any, key2: any) {
+    const newObj = { ...obj };
+    delete newObj[key1];
+    delete newObj[key2];
+    return newObj;
 }

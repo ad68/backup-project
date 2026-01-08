@@ -61,7 +61,7 @@ export default function Index({ isOpen, setIsOpen, getList }: FilterModalProp) {
             </section>
             <section className="mt-1">
                 <span className="font-light text-slate-700 text-xs">زیربخش:</span>
-                <CustomSearchableSelect value={filter.subSectionId} options={[{ label: "محصولات زراعی", value: "1" }]} onChange={(e) => updateFilter("subSectionId", e)} />
+                <CustomSearchableSelect value={filter.subSectionId} options={[{ label: "محصولات زراعی", value: "1" }, { label: "محصولات باغی", value: "4" }]} onChange={(e) => updateFilter("subSectionId", e)} />
             </section>
             <section className="mt-1">
                 <span className="font-light text-slate-700 text-xs"> موضوع:</span>
